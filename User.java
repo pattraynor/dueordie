@@ -1,11 +1,8 @@
 public class User {
-	private String userName;
-	private String userType;
-	private String answer1;
-	private String answer2; 
-	private String answer3;
-	private int pin;
-	private int userID;
+	protected String userName;
+	protected String userType;
+	protected String answer1, answer2, answer3;
+	protected int pin, userID;
 
 
 public String getAnswer1(){
@@ -17,10 +14,15 @@ public String getAnswer2(){
 public String getAnswer3(){
 	return answer3;
 }
+public void setAnswers(String a1, String a2, String a3){
+	answer1 = a1;
+	answer2 = a2;
+	answer3 = a3;
+}
 public void setUserID(int newID){
 	userID = newID;
 }
-public int changePin(int newPin){
+public int setPin(int newPin){
 	pin = newPin;
 	return pin;
 }
