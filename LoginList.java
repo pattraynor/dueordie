@@ -22,7 +22,7 @@ public class LoginList
         currentUser = null;
         question1 = "Where did you attend HighSchool?";
         question2 = "What is your favorite animal?";
-        question3 = "What is your mothers maiden name?";
+        question3 = "What is your mother's maiden name?";
 
 
     }
@@ -95,6 +95,28 @@ public class LoginList
 
         return newUserID;
     }
+
+    // ----------------------------------------
+    // stores updated user back into the list
+    // -----------------------------------------
+    public void saveUserChanges(User updatedUser)
+    {
+        Node iterNode = head;
+        while(iterNode != null)
+        {
+            if(iterNode.getUserAccount().getUserID() == updatedUser.getUserID())
+            {
+                iterNode.setUserAccount(updatedUser);
+                currentUser = updatedUser;
+            }
+            iterNode = iterNode.getNext();
+        }
+
+    }
+
+    //----------------------------------
+    // used to get current user easily
+    //-----------------------------------
     public void setCurrentUser(User newCurrentUser)
     {
         currentUser = newCurrentUser;
@@ -183,6 +205,11 @@ public class LoginList
         else
             return null;
     }
+
+    //-----------------------------------------------
+    // Used to recover account password, compares
+    // security questions, and if equal returns pin
+    // ----------------------------------------------
     public int recoverAccount(String attemptedAnswer, int userID, int questionNumber)
     {
         User accountRecovering = searchUserID(userID);
@@ -218,7 +245,7 @@ public class LoginList
     // ---------------------------------------------------------
     private class Node
     {
-        Node next;
+        private Node next;
 
         User userAccount;
 
@@ -236,6 +263,10 @@ public class LoginList
         public User getUserAccount()
         {
             return userAccount;
+        }
+        public void setUserAccount(User _newUser)
+        {
+            userAccount = _newUser;
         }
 
         public Node getNext()
