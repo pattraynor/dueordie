@@ -1,4 +1,3 @@
-
 public class Visit 
 {
   private int year;
