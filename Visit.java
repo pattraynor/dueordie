@@ -14,6 +14,52 @@ public class Visit
 	private String symptoms;
 	private String notes;
 	
+	public Visit()
+	{
+		year = 0;
+		day = 0;
+		month = 0;
+		bloodPressure = 0;
+		sugar = 0;
+		weight = 0;
+		height = 0;
+		temperature = 0;
+		prescriptions = "";
+		symptoms = "";
+		notes = "";	
+	}
+	
+	public Visit(int mon, int today, int nowyear)
+	{
+		month = mon;
+		day = today;
+		year = nowyear;
+		bloodPressure = 0;
+		sugar = 0;
+		weight = 0;
+		height = 0;
+		temperature = 0;
+		prescriptions = "";
+		symptoms = "";
+		notes = "";	
+	}
+	
+	public Visit(int mon, int today, int nowyear, double pressure, double sweet, double pounds, 
+			double inches, double fever, String drugs, String problems, String comments)
+	{
+		month = mon;
+		day = today;
+		year = nowyear;
+		bloodPressure = pressure;
+		sugar = sweet;
+		weight = pounds;
+		height = inches;
+		temperature = fever;
+		prescriptions = drugs;
+		symptoms = problems;
+		notes = comments;
+		
+	}
 	public int getDay()
 	{
 		return day;
@@ -123,5 +169,15 @@ public class Visit
 	public void setSymptoms(String newSymp)
 	{
 		symptoms = newSymp;
+	}
+	
+	public void setHeight(double newHeight)
+	{
+		height = newHeight;
+	}
+	
+	public double getHeight()
+	{
+		return height;
 	}
 }
