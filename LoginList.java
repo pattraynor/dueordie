@@ -1,4 +1,7 @@
-
+/**
+ * Author : Matthew Potts
+ * Original 3/29 Updated 4/3/2013
+ */
 
 import sun.org.mozilla.javascript.internal.ast.WhileLoop;
 
@@ -71,10 +74,17 @@ public class LoginList
         return newUserID;
     }
 
+    //-------------------------------------------------
+    // Saves LoginList and all user information to file
+    // -------------------------------------------------
     public int saveList()
     {
          return 0;
     }
+
+    //-------------------------------------------------
+    // loads LoginList and all user information from file
+    // -------------------------------------------------
     public int loadList()
     {
          return 0;
@@ -101,15 +111,15 @@ public class LoginList
     // -----------------------------------------
     public void saveUserChanges(User updatedUser)
     {
-        Node iterNode = head;
-        while(iterNode != null)
+        Node iterationNode = head;
+        while(iterationNode != null)
         {
-            if(iterNode.getUserAccount().getUserID() == updatedUser.getUserID())
+            if(iterationNode.getUserAccount().getUserID() == updatedUser.getUserID())
             {
-                iterNode.setUserAccount(updatedUser);
+                iterationNode.setUserAccount(updatedUser);
                 currentUser = updatedUser;
             }
-            iterNode = iterNode.getNext();
+            iterationNode = iterationNode.getNext();
         }
 
     }
@@ -247,7 +257,7 @@ public class LoginList
     {
         private Node next;
 
-        User userAccount;
+        User userAccount = new User();
 
         public Node(User _newUser)
         {
