@@ -4,7 +4,15 @@ public class User {
 	protected String answer1, answer2, answer3;
 	protected int pin, userID;
 
-
+public User(){
+	userName = null;
+	userType = null;
+	answer1 = null;
+	answer2 = null;
+	answer3 = null;
+	pin = 0000;
+	userID = 000000;
+}
 public String getAnswer1(){
 	return answer1;
 }
@@ -36,6 +44,6 @@ public String getUserName(){
 	return userName;
 }
 public String getUserType(){
-	return userName;
+	return userType;
 }
 }
