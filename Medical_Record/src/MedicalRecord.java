@@ -16,14 +16,14 @@ public class MedicalRecord
     protected int visitCount;
     
     //ArrayLists to Implement for charts:_____________________________________
-    protected ArrayList<Double> sugarChart = new ArrayList<Double>();
+    protected ArrayList<double> sugarChart = new ArrayList<double>();
                 // How to add into double arraylist: 
                 // intList.add(1);
                 // intList.add(2);
-    protected ArrayList<Double> weightChart = new ArrayList<Double>();
-    protected ArrayList<Double> heightChart = new ArrayList<Double>();
-    protected ArrayList<Double> temperatureChart = new ArrayList<Double>();
-    protected ArrayList<Double> bloodPressureChart = new ArrayList<Double>();
+    protected ArrayList<double> weightChart = new ArrayList<double>();
+    protected ArrayList<double> heightChart = new ArrayList<double>();
+    protected ArrayList<double> temperatureChart = new ArrayList<double>();
+    protected ArrayList<double> bloodPressureChart = new ArrayList<double>();
     protected ArrayList<String> prescriptions = new ArrayList<String>();
     //___________________________________________________________________
     public MedicalRecord()
@@ -38,20 +38,69 @@ public class MedicalRecord
        
         return null;
     }
+    
     public Visit getVisit(int year, int month, int day)
     {
         
-        return 
+        //return 
     }
+    
     public int getVisitCount()
     {  
         return visitCount;
         
     }
-    public Arraylist getSugarChart()
+    
+    public Array getSugarChart()
     {
         return ..;
     }
-    public
+    
+    public Array getWeightChart()
+    {
+        
+    }
+    public Array getHeightChart()
+    {
+        
+    }
+    
+    public Array getTemperatureChart()
+    {
+        
+    }
+    public String getAllPrescriptions()
+    {
+        for(int i=0; i<prescriptions.getlength(); i++)
+        {
+            System.out.println(prescriptions[i]);
+        }
+    }
+    public void addSugar()
+    {
+        
+    }
+    public void addWeight()
+    {
+        
+    }
+    public void addHeight()
+    {
+        
+    }
+    
+    public void addTempetature()
+    {
+        
+    }
+    
+    public void addPrescription()
+    {
+        
+    }
+    public void addVisit(new Visit)
+    {
+        
+    }
     
 }
