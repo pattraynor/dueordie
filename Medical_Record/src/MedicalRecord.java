@@ -102,5 +102,16 @@ public class MedicalRecord
     {
         
     }
+ 
+    private class Node
+    {
+        public Visit visit = new Visit();
+        public Node next;
+    }
+        
+    private Node first;
+        
     
+        
+        
 }
