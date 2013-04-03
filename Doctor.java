@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 public class Doctor extends User {
-	public int[] patients = new int[20];
+	private int[] patients = new int[20];
 	
 
 	public Doctor(){
@@ -62,6 +62,9 @@ public class Doctor extends User {
 	}
 	public String[] getPrescriptions(LoginList userDatabase, int userID){
 		return userDatabase.searchUserID(userID).getMedicalRecord().perscription;
+	}
+	public String getPatientInsurance(Patient currentPatient){
+		return currentPatient.insurance;
 	}
 	
 	
