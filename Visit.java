@@ -44,10 +44,84 @@ public class Visit
 		year = newYear;
 	}
 	
+	public String getDate()
+	{
+		if(month != 0 && day != 0 && year !=0)
+		{
+			return month + "/" + day + "/" + year;
+		}else
+		{
+			return "Please enter month, day, and year";
+		}
+	}
+	
 	public void setNotes(String newNotes)
 	{
 		notes = newNotes;
 	}
 	
+	public double getBloodPressure()
+	{
+		return bloodPressure;
+	}
 	
+	public String getNotes()
+	{
+		return notes;
+	}
+	
+	public double getSugar()
+	{
+		return sugar;
+	}
+	
+	public double getWeight()
+	{
+		return weight;
+	}
+	
+	public double getTemperature()
+	{
+		return temperature;
+	}
+	
+	public String getPrescription()
+	{
+		return prescriptions;
+	}
+	
+	public String getSymptoms()
+	{
+		return symptoms;
+	}
+	
+	public void setBloodPressure(double newbloodPressure)
+	{
+		bloodPressure = newbloodPressure;
+	}
+	
+	public void setSugar(double newSugar)
+	{
+		sugar = newSugar;
+	}
+	
+	public void setWeight(double newWeight)
+	{
+		weight = newWeight;
+	}
+	
+	public void setTemperature(int newTemp)
+	{
+		temperature = newTemp;
+	}
+	
+	public void setPrescription(String newPres)
+	{
+		prescriptions = newPres;
+	}
+	
+	public void setSymptoms(String newSymp)
+	{
+		symptoms = newSymp;
+	}
 }
