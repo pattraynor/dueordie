@@ -22,7 +22,7 @@ import java.awt.Color;
 
 public class Main extends JFrame {
 
-  private JPanel contentPane;
+	private JPanel contentPane;
 	private JTextField textField;
 	private JLabel lblPin;
 	private JTextField textField_1;
@@ -31,8 +31,7 @@ public class Main extends JFrame {
 	private JLabel lblNewLabel;
 	private JLabel lblnoSpaces;
 	private JLabel lblDigits;
-	private JButton btnNewButton;
-	public LoginList userDatabase = new LoginList(); 
+	private JButton btnNewButton; 
 
 	/**
 	 * Launch the application.
