@@ -1,55 +1,93 @@
 public class Patient extends User{
-    
-    public int doctor;
-    public String insurance;
-    public String address;
-    public String phoneNumber;
-    public MedicalRecord patientRecord;
 
-    public Patient(){
+    private int doctor;
+    private String insurance, address, phoneNumber;
+    private MedicalRecord patientRecord;
+
+    public Patient(String _userName, int _newPin)
+    {
+        super(_userName, _newPin);
         userType = "Patient";
+        doctor = 0;
+        insurance = "";
+        address = "";
+        phoneNumber = "";
+
     }
-    
-    public void setInsurance(String newInsurance){        
+    public Patient()
+    {
+        userType = "Patient";
+        userName = "";
+        doctor = 0;
+        insurance = "";
+        address = "";
+        phoneNumber = "";
+
+    }
+    public void setInsurance(String newInsurance)
+    {
         insurance = newInsurance;
     }
-    
+
     public void setAddress(String newAddress){
-        address = newAddress;    
+
+        address = newAddress;
+
     }
-    
-    public void setDoctor(int userID){
+
+    public void setDoctor(int userID)
+    {
+
         doctor = userID;
+
     }
-    
+
     public void setPhoneNumber(String setNumber){
-        phoneNumber = setNumber;        
+
+        phoneNumber = setNumber;
+
     }
-    
-    public String getAddress(){        
-        return address;        
+
+    public String getAddress(){
+
+        return address;
+
     }
-    
-    public String getInsurance(){        
-        return insurance;        
+
+    public String getInsurance(){
+
+        return insurance;
+
     }
-    
-    public int getDoctor(){        
-        return doctor;        
+
+    public int getDoctor(){
+
+        return doctor;
+
     }
-    
-    public void addDailyInformation(){
-        
+
+    /*
+    public void addDailyInformation()
+    {
+
     }
-    
-    public String[] getPrescriptions(){    
-        return patientRecord.prescription;    
-    } 
-    
-    public MedicalRecord getMedicalRecord(){    
-        return patientRecord;    
+    */
+
+    public String[] getPrescriptions(){
+
+        return patientRecord.getPrescriptions();
+
     }
-    
-    public phoneNumber getPhoneNumber(){        
+
+    public MedicalRecord getMedicalRecord(){
+
+        return patientRecord;
+
+    }
+
+    public int getPhoneNumber()
+    {
+           return phoneNumber;
     }
 }
+
