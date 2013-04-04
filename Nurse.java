@@ -1,14 +1,10 @@
-
 public class Nurse extends User
 {
 
     public Nurse(String setName, int setPin)
     {
         super(setName, setPin);
-        userType = "Nurse";
-        answer1 = "";
-        answer2 = "";
-        answer3 = "";
+        userType = "Nurse"
 
     }
 
