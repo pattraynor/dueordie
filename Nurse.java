@@ -1,7 +1,4 @@
-/**
- * Author: Matthew
- * Date: 4/3/13
- */
+
 public class Nurse extends User
 {
 
