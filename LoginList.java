@@ -3,7 +3,6 @@
  * Original 3/29 Updated 4/3/2013
  */
 
-import sun.org.mozilla.javascript.internal.ast.WhileLoop;
 
 import java.util.Random;
 
@@ -214,6 +213,15 @@ public class LoginList
         }
         else
             return null;
+    }
+
+    //-------------------------------------
+    // sets the currentUser to null
+    // used when logout is pressed in GUI
+    //-------------------------------------
+    public void logout()
+    {
+        currentUser = null;
     }
 
     //-----------------------------------------------
