@@ -66,26 +66,27 @@ public class Patient extends User{
 
     }
 
-    /*
+
     public void addDailyInformation()
     {
 
     }
-    */
+
 
     public String[] getPrescriptions(){
 
-        return patientRecord.getPrescriptions();
+        return patientRecord.getAllPrescriptions();
 
     }
 
-    public MedicalRecord getMedicalRecord(){
+    public MedicalRecord getMedicalRecord()
+    {
 
         return patientRecord;
 
     }
 
-    public int getPhoneNumber()
+    public String getPhoneNumber()
     {
            return phoneNumber;
     }
