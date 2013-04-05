@@ -52,18 +52,30 @@ public class MedicalRecord
         return visitCount;
         
     }
-    
-    public Double[] getSugarChart()
+    public double[] getBloodPressureTopChart()
     {
         //Store values from ArrayList into normal array.
-        Double[] sugarChart = {};
+        double[] bloodPressureTopChart = {};
+        return bloodPressureTopChart;
+    }
+    public double[] getBloodPressureBotChart()
+    {
+        //Store values from ArrayList into normal array.
+        double[] bloodPressureBotChart = {};
+        return bloodPressureBotChart;
+    }
+    
+    public double[] getSugarChart()
+    {
+        //Store values from ArrayList into normal array.
+        double[] sugarChart = {};
         return sugarChart;
     }
     
-    public Double[] getWeightChart()
+    public double[] getWeightChart()
     {
         //Store values from ArrayList into normal array.
-        Double[] weightChart = {};
+        double[] weightChart = {};
         return weightChart;
         
     }
@@ -75,10 +87,10 @@ public class MedicalRecord
         
     }
     
-    public Double[] getTemperatureChart()
+    public double[] getTemperatureChart()
     {
         //Store values from ArrayList into normal array.
-        Double[] temperatureChart = {};
+        double[] temperatureChart = {};
         return temperatureChart;
         
     }
@@ -92,9 +104,23 @@ public class MedicalRecord
             System.out.println(prescriptions[i]);
         }*/
     }
+    public String[] getDates()
+    {
+        //Store values from ArrayList into normal array.
+        String[] dates = {};
+        return dates;
+    }
     public void addSugar()
     {
         
+    }
+    public void addBloodPressureTop()
+    {
+
+    }
+    public void addBloodPressureBot()
+    {
+
     }
     public void addWeight()
     {
@@ -113,6 +139,10 @@ public class MedicalRecord
     public void addPrescription(String newPrescription)
     {
         
+    }
+    public void addDate(String newDate)
+    {
+
     }
     public void addVisit(Visit newVisit)
     {

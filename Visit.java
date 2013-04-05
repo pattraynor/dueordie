@@ -5,7 +5,8 @@ public class Visit
 	private int year;
 	private int day;
 	private int month;
-	private double bloodPressure;
+	private double bloodPressureTop;
+    private double bloodPressureBot;
 	private double sugar;
 	private double weight; //measured in inches
 	private double height; //measured in pounds
@@ -19,7 +20,8 @@ public class Visit
 		year = 0;
 		day = 0;
 		month = 0;
-		bloodPressure = 0;
+		bloodPressureTop = 0;
+        bloodPressureBot = 0;
 		sugar = 0;
 		weight = 0;
 		height = 0;
@@ -34,7 +36,8 @@ public class Visit
 		month = mon;
 		day = today;
 		year = nowyear;
-		bloodPressure = 0;
+		bloodPressureTop = 0;
+        bloodPressureBot = 0;
 		sugar = 0;
 		weight = 0;
 		height = 0;
@@ -44,13 +47,14 @@ public class Visit
 		notes = "";	
 	}
 	
-	public Visit(int mon, int today, int nowyear, double pressure, double sweet, double pounds, 
+	public Visit(int mon, int today, int nowyear, double pressureTop, double pressureBot, double sweet, double pounds,
 			double inches, double fever, String drugs, String problems, String comments)
 	{
 		month = mon;
 		day = today;
 		year = nowyear;
-		bloodPressure = pressure;
+		bloodPressureTop = pressureTop;
+        bloodPressureBot = pressureBot;
 		sugar = sweet;
 		weight = pounds;
 		height = inches;
@@ -106,12 +110,17 @@ public class Visit
 		notes = newNotes;
 	}
 	
-	public double getBloodPressure()
+	public double getBloodPressureTop()
 	{
-		return bloodPressure;
+		return bloodPressureTop;
 	}
-	
-	public String getNotes()
+    public double getBloodPressureBot()
+    {
+        return bloodPressureBot;
+    }
+
+
+    public String getNotes()
 	{
 		return notes;
 	}
@@ -141,10 +150,14 @@ public class Visit
 		return symptoms;
 	}
 	
-	public void setBloodPressure(double newbloodPressure)
+	public void setBloodPressureTop(double newbloodPressureTop)
 	{
-		bloodPressure = newbloodPressure;
+		bloodPressureTop = newbloodPressureTop;
 	}
+    public void setBloodPressureBot(double newbloodPressureBot)
+    {
+        bloodPressureBot = newbloodPressureBot;
+    }
 	
 	public void setSugar(double newSugar)
 	{
