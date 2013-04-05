@@ -13,6 +13,16 @@ public User(){
 	pin = 0000;
 	userID = 000000;
 }
+public User(String setName,int setPin)
+{
+        userName = setName;
+        userType = null;
+        answer1 = null;
+        answer2 = null;
+        answer3 = null;
+        pin = setPin;
+        userID = 000000;
+}
 public String getAnswer1(){
 	return answer1;
 }
