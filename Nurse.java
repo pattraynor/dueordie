@@ -4,7 +4,7 @@ public class Nurse extends User
     public Nurse(String setName, int setPin)
     {
         super(setName, setPin);
-        userType = "Nurse"
+        userType = "Nurse";
 
     }
 
@@ -25,7 +25,7 @@ public class Nurse extends User
         }
         if (userType == "Doctor")
         {
-            Nurse newDoctor = new Doctor(_userName, setPin);
+            Doctor newDoctor = new Doctor(_userName, setPin);
             return newDoctor;
         }
         if (userType == "Patient")
