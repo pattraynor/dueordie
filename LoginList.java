@@ -28,7 +28,7 @@ public class LoginList
 
 
     }
-    private int getListSize()
+    public int getListSize()
     {
         return listSize;
     }
@@ -97,10 +97,11 @@ public class LoginList
     public int addUser(User newUser)
     {
         listSize++;
-        int newUserID = newUser.getPin();
-        newUser.setPin(newUserID);
-        Node newNode = new Node(newUser, head);
-        head = newNode;
+
+        int newUserID = generateUserID();
+        newUser.setUserID(newUserID);
+        Node newHead = new Node(newUser, head);
+        head = newHead;
 
         return newUserID;
     }
@@ -142,9 +143,8 @@ public class LoginList
     public User searchUserName(String userName)
     {
         Node tempNode = head;
-        if (tempNode.getUserAccount() != null)
-        {
-            do
+
+            while (tempNode.getUserAccount() != null)
             {
                 String userNameCompare;
                 userNameCompare = tempNode.getUserAccount().getUserName();
@@ -152,8 +152,9 @@ public class LoginList
                 {
                     return tempNode.getUserAccount();
                 }
-            }while (tempNode.getNext().getUserAccount() != null);
-        }
+                tempNode = tempNode.getNext();
+            }
+
         return null;
     }
 
@@ -163,20 +164,23 @@ public class LoginList
     public User searchUserID(int userID)
     {
         Node tempNode = head;
-        if (tempNode.getUserAccount() != null)
+
+        while (tempNode.getUserAccount() != null)
         {
-            do
+
+            int userIDCompare;
+            userIDCompare = tempNode.getUserAccount().getUserID();
+            if (userIDCompare == userID)
             {
-                int userIDCompare;
-                userIDCompare = tempNode.getUserAccount().getUserID();
-                if (userIDCompare == userID)
-                {
-                    return tempNode.getUserAccount();
-                }
-            }while (tempNode.getNext().getUserAccount() != null);
+               return tempNode.getUserAccount();
+            }
+            tempNode = tempNode.getNext();
+
         }
+
         return null;
     }
+
     //================================================
     // get security questions
     //================================================
@@ -265,7 +269,7 @@ public class LoginList
     {
         private Node next;
 
-        User userAccount = new User();
+        private User userAccount;
 
         public Node(User _newUser)
         {
