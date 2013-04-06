@@ -12,6 +12,7 @@ public class Patient extends User{
         insurance = "";
         address = "";
         phoneNumber = "";
+        patientRecord = null;
 
     }
     public Patient()
@@ -22,6 +23,7 @@ public class Patient extends User{
         insurance = "";
         address = "";
         phoneNumber = "";
+        patientRecord = null;
 
     }
     public void setInsurance(String newInsurance)
@@ -46,6 +48,10 @@ public class Patient extends User{
 
         phoneNumber = setNumber;
 
+    }
+    public void setMedicalRecord(MedicalRecord newMedicalRecord)
+    {
+        patientRecord = newMedicalRecord;
     }
 
     public String getAddress(){

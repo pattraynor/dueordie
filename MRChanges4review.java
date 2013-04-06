@@ -23,8 +23,10 @@ public class MedicalRecord
     protected ArrayList<Double> weightChart = new ArrayList<Double>();
     protected ArrayList<Double> heightChart = new ArrayList<Double>();
     protected ArrayList<Double> temperatureChart = new ArrayList<Double>();
-    protected ArrayList<Double> bloodPressureChart = new ArrayList<Double>();
+    protected ArrayList<Double> bloodPressureTopChart = new ArrayList<Double>();
+    protected ArrayList<Double> bloodPressureBotChart = new ArrayList<Double>();
     protected ArrayList<String> prescriptions = new ArrayList<String>();
+    protected ArrayList<String> dates = new ArrayList<String>();
     //___________________________________________________________________
     public MedicalRecord()
     {
@@ -32,7 +34,31 @@ public class MedicalRecord
         listSize = 0;
         visitCount = 0;
     }
-    
+
+    // takes in Double ArrayList and returns double[]
+    private double[] createDoubleArray(ArrayList<Double> arrayList)
+    {
+        int arraySize = arrayList.size();
+        double newDouble[] = new double[arraySize];
+        int iterNode = 0;
+        while(iterNode < arraySize)
+        {
+            newDouble[arraySize] = arrayList.get(arraySize);
+            iterNode++;
+
+        }
+        return newDouble;
+    }
+
+    //takes String ArrayList and returns String[]
+    private String[] createStringArray(ArrayList<String> arrayList)
+    {
+        int arraySize = arrayList.size();
+        String newString[] = new String[arraySize];
+        newString = arrayList.toArray(newString);
+        return newString;
+    }
+
     public Visit getLastVisit()
     {
         Visit lastVisit = head.getVisit();
@@ -41,7 +67,21 @@ public class MedicalRecord
     
     public Visit getVisit(int year, int month, int day)
     {
-        //search for visit then set it equal to visitFound
+        Node tempNode = head;
+        while(tempNode.getVisit() != null)
+        {
+            if(tempNode.getVisit().getYear() == year)
+            {
+                if(tempNode.getVisit().getMonth() == month)
+                {
+                    if(tempNode.getVisit().getDay() == day)
+                    {
+                        return tempNode.getVisit();
+                    }
+                }
+            }
+            tempNode = tempNode.getNext();
+        }
         Visit visitFound = new Visit();
         return visitFound;
 
@@ -52,100 +92,95 @@ public class MedicalRecord
         return visitCount;
         
     }
+
     public double[] getBloodPressureTopChart()
     {
-        //Store values from ArrayList into normal array.
-        double[] bloodPressureTopChart = {};
-        return bloodPressureTopChart;
+        double tempChart[] = (createDoubleArray(bloodPressureTopChart));
+        return tempChart;
     }
     public double[] getBloodPressureBotChart()
     {
-        //Store values from ArrayList into normal array.
-        double[] bloodPressureBotChart = {};
-        return bloodPressureBotChart;
+        double tempChart[] = (createDoubleArray(bloodPressureBotChart));
+        return tempChart;
     }
     
     public double[] getSugarChart()
     {
-        //Store values from ArrayList into normal array.
-        double[] sugarChart = {};
-        return sugarChart;
+        double tempChart[] = (createDoubleArray(sugarChart));
+        return tempChart;
     }
     
     public double[] getWeightChart()
     {
-        //Store values from ArrayList into normal array.
-        double[] weightChart = {};
-        return weightChart;
+        double tempChart[] = (createDoubleArray(weightChart));
+        return tempChart;
         
     }
-    public Double[] getHeightChart()
+    public double[] getHeightChart()
     {
-        //Store values from ArrayList into normal array.
-        Double[] heightChart = {};
-        return heightChart;
+        double tempChart[] = (createDoubleArray(heightChart));
+        return tempChart;
         
     }
     
     public double[] getTemperatureChart()
     {
-        //Store values from ArrayList into normal array.
-        double[] temperatureChart = {};
-        return temperatureChart;
+        double tempChart[] = createDoubleArray(temperatureChart);
+        return tempChart;
         
     }
     public String[] getAllPrescriptions()
     {
-        //Store values from ArrayList into normal array.
-        String[] prescriptions = {};
-        return prescriptions;
-       /* for(int i=0; i<prescriptions.getlength(); i++)
-        {
-            System.out.println(prescriptions[i]);
-        }*/
+        String tempChart[] = createStringArray(prescriptions);
+        return tempChart;
     }
     public String[] getDates()
     {
-        //Store values from ArrayList into normal array.
-        String[] dates = {};
-        return dates;
+        String tempChart[] = createStringArray(dates);
+        return tempChart;
     }
-    public void addSugar()
+    public void addSugar(double newSugar)
     {
+        sugarChart.add(newSugar);
         
     }
-    public void addBloodPressureTop()
+    public void addBloodPressureTop(double newBPTop)
     {
-
+       bloodPressureTopChart.add(newBPTop);
     }
-    public void addBloodPressureBot()
+    public void addBloodPressureBot(double newBPBot)
     {
-
+       bloodPressureBotChart.add(newBPBot);
     }
-    public void addWeight()
+    public void addWeight(double newWeight)
     {
-        
+        weightChart.add(newWeight);
     }
-    public void addHeight()
+    public void addHeight(double newHeight)
     {
-        
+        heightChart.add(newHeight);
     }
     
-    public void addTempetature()
+    public void addTempetature(double newTemperature)
     {
-        
+        temperatureChart.add(newTemperature);
     }
     
     public void addPrescription(String newPrescription)
     {
-        
+        prescriptions.add(newPrescription);
     }
     public void addDate(String newDate)
     {
-
+        dates.add(newDate);
     }
     public void addVisit(Visit newVisit)
     {
+        visitCount++;
+
+
+        Node newHead = new Node(newVisit, head);
+        head = newHead;
         
     }
  
