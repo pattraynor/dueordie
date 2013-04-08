@@ -31,11 +31,11 @@ public class Visit
 		notes = "";	
 	}
 	
-	public Visit(int mon, int today, int nowyear)
+	public Visit(int mon, int today, int newYear)
 	{
 		month = mon;
 		day = today;
-		year = nowyear;
+		year = newYear;
 		bloodPressureTop = 0;
         bloodPressureBot = 0;
 		sugar = 0;
@@ -47,12 +47,12 @@ public class Visit
 		notes = "";	
 	}
 	
-	public Visit(int mon, int today, int nowyear, double pressureTop, double pressureBot, double sweet, double pounds,
+	public Visit(int mon, int today, int newYear, double pressureTop, double pressureBot, double sweet, double pounds,
 			double inches, double fever, String drugs, String problems, String comments)
 	{
 		month = mon;
 		day = today;
-		year = nowyear;
+		year = newYear;
 		bloodPressureTop = pressureTop;
         bloodPressureBot = pressureBot;
 		sugar = sweet;

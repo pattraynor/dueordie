@@ -11,9 +11,9 @@ import java.util.Random;
 
 public class MedicalRecord 
 {
-    protected Node head;
-    protected int listSize;
-    protected int visitCount;
+    private Node head;
+    private int listSize;
+    private int visitCount;
     
     //ArrayLists to Implement for charts:_____________________________________
     protected ArrayList<Double> sugarChart = new ArrayList<Double>();
@@ -30,7 +30,8 @@ public class MedicalRecord
     //___________________________________________________________________
     public MedicalRecord()
     {
-        head = null;        
+        head = null;
+
         listSize = 0;
         visitCount = 0;
     }
@@ -43,7 +44,7 @@ public class MedicalRecord
         int iterNode = 0;
         while(iterNode < arraySize)
         {
-            newDouble[arraySize] = arrayList.get(arraySize);
+            newDouble[iterNode] = arrayList.get(iterNode);
             iterNode++;
 
         }
@@ -65,17 +66,20 @@ public class MedicalRecord
         return lastVisit;
     }
     
-    public Visit getVisit(int year, int month, int day)
+    public Visit getVisit(int month, int day, int year)
     {
         Node tempNode = head;
-        while(tempNode.getVisit() != null)
+        while(tempNode != null)
         {
+
             if(tempNode.getVisit().getYear() == year)
             {
+
                 if(tempNode.getVisit().getMonth() == month)
                 {
                     if(tempNode.getVisit().getDay() == day)
                     {
+
                         return tempNode.getVisit();
                     }
                 }
@@ -161,7 +165,7 @@ public class MedicalRecord
         heightChart.add(newHeight);
     }
     
-    public void addTempetature(double newTemperature)
+    public void addTemperature(double newTemperature)
     {
         temperatureChart.add(newTemperature);
     }
@@ -174,15 +178,36 @@ public class MedicalRecord
     {
         dates.add(newDate);
     }
+
+    //-----------------------------------------
+    // adds a visit instance to the list
+    //----------------------------------------
     public void addVisit(Visit newVisit)
     {
         visitCount++;
 
-
+        this.addToCharts(newVisit);
         Node newHead = new Node(newVisit, head);
         head = newHead;
         
     }
+    // -------------------------------------------------------------
+    // used by addVisit, when a new visit is added to the list-
+    // it calls this method to add all information into designated-
+    // Array Lists
+    //--------------------------------------------------------------
+    private void addToCharts(Visit newVisit)
+    {
+        this.addTemperature(newVisit.getTemperature());
+        this.addBloodPressureBot(newVisit.getBloodPressureBot());
+        this.addBloodPressureTop(newVisit.getBloodPressureTop());
+        this.addHeight(newVisit.getHeight());
+        this.addWeight(newVisit.getHeight());
+        this.addSugar(newVisit.getSugar());
+        this.addDate(newVisit.getDate());
+        this.addPrescription(newVisit.getPrescription());
+    }
+
  
     private class Node
     {
