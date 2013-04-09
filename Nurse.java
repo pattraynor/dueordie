@@ -3,13 +3,14 @@ public class Nurse extends User
 
     public Nurse(String setName, int setPin)
     {
-        super(setName, setPin);
+        super(setName, setPin, Globals.NURSE);
         userType = "Nurse";
 
     }
 
     public Visit newVisit(int patientID)
     {
+    
         Visit _newVisit = new Visit();
         return _newVisit;
 

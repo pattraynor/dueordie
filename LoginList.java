@@ -9,7 +9,8 @@ import java.util.Random;
 public class LoginList
 {
 
-    private Node head;
+    private Node head, next;
+    
     private int listSize;
     private User currentUser;
     private String question1, question2, question3;
@@ -20,6 +21,7 @@ public class LoginList
     public LoginList()
     {
         head = null;
+        next = null;
         listSize = 0;
         currentUser = null;
         question1 = "Where did you attend HighSchool?";
@@ -143,8 +145,8 @@ public class LoginList
     public User searchUserName(String userName)
     {
         Node tempNode = head;
-
-            while (tempNode.getUserAccount() != null)
+        	
+            while (tempNode != null)
             {
                 String userNameCompare;
                 userNameCompare = tempNode.getUserAccount().getUserName();
@@ -165,7 +167,7 @@ public class LoginList
     {
         Node tempNode = head;
 
-        while (tempNode.getUserAccount() != null)
+        while (tempNode != null)
         {
 
             int userIDCompare;

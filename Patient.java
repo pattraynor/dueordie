@@ -6,8 +6,7 @@ public class Patient extends User{
 
     public Patient(String _userName, int _newPin)
     {
-        super(_userName, _newPin);
-        userType = "Patient";
+        super(_userName, _newPin, Globals.PATIENT);
         doctor = 0;
         insurance = "";
         address = "";
@@ -17,7 +16,7 @@ public class Patient extends User{
     }
     public Patient()
     {
-        userType = "Patient";
+        userType = Globals.PATIENT;
         userName = "";
         doctor = 0;
         insurance = "";

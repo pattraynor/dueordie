@@ -19,7 +19,7 @@ public class Doctor extends User
     // -----------------------------------------------
     public Doctor(String setName,int setPin)
     {
-        super(setName, setPin);
+        super(setName, setPin, Globals.NURSE);
         userType = "doctor";
     }
 

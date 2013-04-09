@@ -5,18 +5,18 @@ public class User {
 	protected int pin, userID;
 
 public User(){
-	userName = null;
-	userType = null;
-	answer1 = null;
-	answer2 = null;
-	answer3 = null;
+	userName = "";
+	userType = "User";
+	answer1 = "";
+	answer2 = "";
+	answer3 = "";
 	pin = 0000;
 	userID = 000000;
 }
-public User(String setName,int setPin)
+public User(String setName,int setPin, String setType)
 {
         userName = setName;
-        userType = null;
+        userType = setType;
         answer1 = null;
         answer2 = null;
         answer3 = null;

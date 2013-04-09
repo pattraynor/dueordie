@@ -48,7 +48,7 @@ public class Visit
 	}
 	
 	public Visit(int mon, int today, int newYear, double pressureTop, double pressureBot, double sweet, double pounds,
-			double inches, double fever, String drugs, String problems, String comments)
+			double inches, double fever, String problems)
 	{
 		month = mon;
 		day = today;
@@ -59,9 +59,10 @@ public class Visit
 		weight = pounds;
 		height = inches;
 		temperature = fever;
-		prescriptions = drugs;
 		symptoms = problems;
-		notes = comments;
+		prescriptions = "";
+		notes = "";	
+		
 		
 	}
 	public int getDay()
@@ -192,5 +193,14 @@ public class Visit
 	public double getHeight()
 	{
 		return height;
+	}
+	
+	public String toString()
+	{
+		String print;
+		print = "Temperature : " + temperature + " (F)" + "\nWeight : " + weight + " (lbs)" + "\nHeight : " + height +
+		"(inches)" + "\nBloodPressure : " + bloodPressureTop + "/" + bloodPressureBot + "\nBlood Sugar : " + sugar +
+		"(mg/dL)" + "\n\nPrescriptions : " + prescriptions + "\n\nDoctor's Notes : " + notes + "\n\nSymptoms : " + symptoms;
+		return print;
 	}
 }

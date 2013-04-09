@@ -1,5 +1,6 @@
-import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
+import java.awt.SystemColor;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,139 +21,77 @@ import java.awt.Font;
 import java.awt.Color;
 
 
-public class Main extends JFrame {
-
-	private JPanel contentPane;
-	private JTextField textField;
-	private JLabel lblPin;
-	private JTextField textField_1;
-	private JLabel lblUserType;
-	private JComboBox comboBox;
-	private JLabel lblNewLabel;
-	private JLabel lblnoSpaces;
-	private JLabel lblDigits;
-	private JButton btnNewButton; 
-
-	/**
-	 * Launch the application.
-	 */
+public class main {
 	public static void main(String[] args) {
+		
+		
+	 	Patient patient1 = new Patient("Matt Potts", 1);
+	 
+	 	String address = "1231 north road";
+	 	patient1.setAddress(address);
+	   
+
+	    Patient patient2 = new Patient("Tanner Narramore", 2);
+	    patient2.setAddress("1232 north road");
+
+	    Patient patient3 = new Patient("James Potts", 3);
+	    patient3.setAddress("1233 north road");
+
+	    Patient patient4 = new Patient("Alex", 4);
+	    patient4.setAddress("1234 north road");
+
+	    Patient patient5 = new Patient("Jason", 5);
+	    patient5.setAddress("1235 north road");
+
+	    Patient patient6 = new Patient("John", 6);
+	    patient6.setAddress("1236 north road");
+
+	    
+
+	   
+
+	        int userID1 = Globals.userDatabase.addUser(patient1);
+	        System.out.println(userID1);
+	        int userID2 = Globals.userDatabase.addUser(patient2);
+	        int userID3 = Globals.userDatabase.addUser(patient3);
+	        int userID4 = Globals.userDatabase.addUser(patient4);
+	        int userID5 = Globals.userDatabase.addUser(patient5);
+	        int userID6 = Globals.userDatabase.addUser(patient6);
+	        int listSize = Globals.userDatabase.getListSize();
+	       
+	        Globals.userDatabase.setCurrentUser(patient1);
+	        
+	        Patient tempPatient1 = (Patient)Globals.userDatabase.searchUserName("Matt Potts");
+	        Patient tempPatient2 = (Patient)Globals.userDatabase.searchUserID(userID2);
+	        Patient tempPatient3 = (Patient)Globals.userDatabase.searchUserID(userID3);
+	        Patient tempPatient4 = (Patient)Globals.userDatabase.searchUserID(userID4);
+	        Patient tempPatient5 = (Patient)Globals.userDatabase.searchUserID(userID5);
+	        Patient tempPatient6 = (Patient)Globals.userDatabase.searchUserID(userID6);
+
+
+	       
+
+
+
+	       
+
+	     
+
+	
+	
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Main frame = new Main();
-					frame.setVisible(true);
+					Login window = new Login();
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public Main() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{52, 81, 142, 0, 0, 0, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{25, 20, 20, 20, 0, 0, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		contentPane.setLayout(gbl_contentPane);
-		
-		lblNewLabel = new JLabel("Create Account");
-		lblNewLabel.setBackground(Color.MAGENTA);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridwidth = 2;
-		gbc_lblNewLabel.gridx = 1;
-		gbc_lblNewLabel.gridy = 0;
-		contentPane.add(lblNewLabel, gbc_lblNewLabel);
-		
-		JLabel lblUserName = new JLabel("User Name");
-		GridBagConstraints gbc_lblUserName = new GridBagConstraints();
-		gbc_lblUserName.anchor = GridBagConstraints.EAST;
-		gbc_lblUserName.insets = new Insets(0, 0, 5, 5);
-		gbc_lblUserName.gridx = 0;
-		gbc_lblUserName.gridy = 2;
-		contentPane.add(lblUserName, gbc_lblUserName);
-		
-		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 2;
-		contentPane.add(textField, gbc_textField);
-		textField.setColumns(10);
-		
-		lblnoSpaces = new JLabel("(no spaces)");
-		GridBagConstraints gbc_lblnoSpaces = new GridBagConstraints();
-		gbc_lblnoSpaces.anchor = GridBagConstraints.WEST;
-		gbc_lblnoSpaces.insets = new Insets(0, 0, 5, 5);
-		gbc_lblnoSpaces.gridx = 2;
-		gbc_lblnoSpaces.gridy = 2;
-		contentPane.add(lblnoSpaces, gbc_lblnoSpaces);
-		
-		lblPin = new JLabel("Pin");
-		GridBagConstraints gbc_lblPin = new GridBagConstraints();
-		gbc_lblPin.anchor = GridBagConstraints.EAST;
-		gbc_lblPin.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPin.gridx = 0;
-		gbc_lblPin.gridy = 3;
-		contentPane.add(lblPin, gbc_lblPin);
-		
-		textField_1 = new JTextField();
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.gridx = 1;
-		gbc_textField_1.gridy = 3;
-		contentPane.add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
-		
-		lblDigits = new JLabel("(4 digits 0-9)");
-		GridBagConstraints gbc_lblDigits = new GridBagConstraints();
-		gbc_lblDigits.anchor = GridBagConstraints.WEST;
-		gbc_lblDigits.insets = new Insets(0, 0, 5, 5);
-		gbc_lblDigits.gridx = 2;
-		gbc_lblDigits.gridy = 3;
-		contentPane.add(lblDigits, gbc_lblDigits);
-		
-		lblUserType = new JLabel("User Type");
-		GridBagConstraints gbc_lblUserType = new GridBagConstraints();
-		gbc_lblUserType.anchor = GridBagConstraints.NORTHEAST;
-		gbc_lblUserType.insets = new Insets(0, 0, 5, 5);
-		gbc_lblUserType.gridx = 0;
-		gbc_lblUserType.gridy = 4;
-		contentPane.add(lblUserType, gbc_lblUserType);
-		
-		comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Doctor", "Nurse", "Patient"}));
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.anchor = GridBagConstraints.NORTH;
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 4;
-		contentPane.add(comboBox, gbc_comboBox);
-		
-		btnNewButton = new JButton("Create");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton.gridx = 1;
-		gbc_btnNewButton.gridy = 6;
-		contentPane.add(btnNewButton, gbc_btnNewButton);
-	}
+	
+}
 
 }
+
+

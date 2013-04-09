@@ -12,7 +12,6 @@ import java.util.Random;
 public class MedicalRecord 
 {
     private Node head;
-    private int listSize;
     private int visitCount;
     
     //ArrayLists to Implement for charts:_____________________________________
@@ -31,8 +30,6 @@ public class MedicalRecord
     public MedicalRecord()
     {
         head = null;
-
-        listSize = 0;
         visitCount = 0;
     }
 
@@ -62,8 +59,13 @@ public class MedicalRecord
 
     public Visit getLastVisit()
     {
+    	if(head != null)
+    	{
         Visit lastVisit = head.getVisit();
         return lastVisit;
+    	}
+    	else 
+    		return null;
     }
     
     public Visit getVisit(int month, int day, int year)
@@ -237,7 +239,7 @@ public class MedicalRecord
         }
     }
         
-    private Node first;
+    
         
     
         
