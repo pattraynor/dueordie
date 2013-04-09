@@ -50,7 +50,7 @@ public class NurseEnterInformation {
 	/**
 	 * Create the application.
 	 */
-	public nurseMain() {
+	public NurseEnterInformation() {
 		initialize();
 	}
 
@@ -346,8 +346,8 @@ public class NurseEnterInformation {
 			public void actionPerformed(ActionEvent e) {
 				
 				frame.dispose();
-				DisplayMedicalInformation window2 = new DisplayMedicalInformation();
-				window2.frame.setVisible(true);
+				PatientDisplayInformation window  = new PatientDisplayInformation();
+                window.frame.setVisible(true);
 			}
 		});
 		btnViewInformation.setBounds(29, 388, 89, 23);
