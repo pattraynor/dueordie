@@ -7,7 +7,7 @@
  * @author Patrick Traynor
  */
 import java.util.ArrayList;
-import java.util.Random;
+
 
 public class MedicalRecord 
 {
@@ -16,9 +16,7 @@ public class MedicalRecord
     
     //ArrayLists to Implement for charts:_____________________________________
     protected ArrayList<Double> sugarChart = new ArrayList<Double>();
-                // How to add into double arraylist: 
-                // intList.add(1);
-                // intList.add(2);
+             
     protected ArrayList<Double> weightChart = new ArrayList<Double>();
     protected ArrayList<Double> heightChart = new ArrayList<Double>();
     protected ArrayList<Double> temperatureChart = new ArrayList<Double>();
@@ -222,11 +220,12 @@ public class MedicalRecord
             next = setNext;
             visit = setVisit;
         }
-        public Node()
+        /*public Node()
         {
             next = null;
             visit = null;
         }
+        */
 
         public Visit getVisit()
         {

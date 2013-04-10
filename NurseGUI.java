@@ -1,16 +1,10 @@
-import java.awt.EventQueue;
+
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
-import java.awt.BorderLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import javax.swing.Box;
-import java.awt.Component;
 import java.awt.Color;
-import javax.swing.JTextArea;
-import javax.swing.JList;
-import javax.swing.JScrollBar;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.SystemColor;
@@ -18,9 +12,12 @@ import javax.swing.UIManager;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.BorderFactory;
+import javax.swing.JTextPane;
+import javax.swing.border.Border;
 
 
-public class NurseEnterInformation {
+public class NurseGUI {
 
 	
 	
@@ -31,17 +28,17 @@ public class NurseEnterInformation {
 	private JTextField bloodPressureTopBox;
 	private JTextField bloodPressureBotBox;
 	private JTextField bloodSugarBox;
-	private JTextField symptomsBox;
-	private JComboBox dayComboBox = new JComboBox();
-	private JComboBox monthComboBox = new JComboBox();
-	private JComboBox yearComboBox = new JComboBox();
+	private JComboBox<String> dayComboBox = new JComboBox<String>();
+	private JComboBox<String> monthComboBox = new JComboBox<String>();
+	private JComboBox<String> yearComboBox = new JComboBox<String>();
 	private JTextField nameBox;
 	private JTextField patientIDBox;
 	private JLabel lblUserExists = new JLabel("User Exists");
 	private JLabel lblUserNotFound = new JLabel("User not Found");
 	private double temperature, weight, height, bloodPressureTop, bloodPressureBot, bloodSugar;
-	private String symptoms, name; 
-	private int ID;
+	private String symptoms, name, ID; 
+	private JTextPane symptomsBox;
+
 	/**
 	 * Launch the application.
 	 */
@@ -50,7 +47,7 @@ public class NurseEnterInformation {
 	/**
 	 * Create the application.
 	 */
-	public NurseEnterInformation() {
+	public NurseGUI() {
 		initialize();
 	}
 
@@ -60,20 +57,21 @@ public class NurseEnterInformation {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setForeground(UIManager.getColor("Menu.selectionForeground"));
-		frame.getContentPane().setBackground(UIManager.getColor("text"));
+		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBounds(100, 100, 500, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JButton btnGoBack = new JButton("<-  Go Back");
+		JButton btnGoBack = new JButton("<- Back");
 		btnGoBack.setFont(new Font("Consolas", Font.PLAIN, 11));
 		btnGoBack.setBackground(Color.LIGHT_GRAY);
-		btnGoBack.setBounds(10, 11, 110, 23);
+		btnGoBack.setBounds(10, 11, 83, 23);
 		frame.getContentPane().add(btnGoBack);
 		
-		JButton btnEnter = new JButton("Enter");
-		btnEnter.setForeground(SystemColor.textHighlight);
-		btnEnter.setBackground(Color.LIGHT_GRAY);
+		JButton btnEnter = new JButton("ENTER");
+		btnEnter.setFont(new Font("Monospaced", Font.BOLD, 13));
+		btnEnter.setForeground(Color.BLACK);
+		btnEnter.setBackground(SystemColor.textHighlight);
 		btnEnter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -160,7 +158,7 @@ public class NurseEnterInformation {
 				{
 					if(patientIDBox.getText().length() > 0)
 					{
-						ID = Integer.parseInt(patientIDBox.getText().toString());
+						ID = patientIDBox.getText().toString();
 						Patient tempPatient;
 						User tempUser;
 						if(Globals.userDatabase.searchUserID(ID) != null)
@@ -245,22 +243,22 @@ public class NurseEnterInformation {
 		frame.getContentPane().add(bloodPressureBotLabel);
 		
 		JLabel lblSymptoms = new JLabel("Symptoms");
-		lblSymptoms.setBounds(11, 297, 74, 14);
+		lblSymptoms.setBounds(10, 311, 74, 14);
 		frame.getContentPane().add(lblSymptoms);
-		String symptoms = lblSymptoms.getText();
+		
 		
 		
 		monthComboBox.setForeground(UIManager.getColor("Menu.foreground"));
 		monthComboBox.setBackground(SystemColor.text);
 		monthComboBox.setFont(new Font("Consolas", Font.PLAIN, 11));
-		monthComboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
+		monthComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
 		monthComboBox.setToolTipText("1, 2 ,3\r\n");
 		monthComboBox.setBounds(62, 215, 37, 20);
 		frame.getContentPane().add(monthComboBox);
 
 		dayComboBox.setBackground(SystemColor.text);
 		dayComboBox.setFont(new Font("Consolas", Font.PLAIN, 11));
-		dayComboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
+		dayComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
 		dayComboBox.setToolTipText("1, 2 ,3\r\n");
 		dayComboBox.setBounds(109, 215, 37, 20);
 		frame.getContentPane().add(dayComboBox);
@@ -268,20 +266,15 @@ public class NurseEnterInformation {
 
 		yearComboBox.setBackground(SystemColor.text);
 		yearComboBox.setFont(new Font("Consolas", Font.PLAIN, 11));
-		yearComboBox.setModel(new DefaultComboBoxModel(new String[] {"2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"}));
+		yearComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"}));
 		yearComboBox.setToolTipText("1, 2 ,3\r\n");
 		yearComboBox.setBounds(156, 215, 58, 20);
 		frame.getContentPane().add(yearComboBox);
 		
 		
 		JLabel lblDate = new JLabel("Date");
-		lblDate.setBounds(6, 217, 46, 14);
+		lblDate.setBounds(10, 217, 46, 14);
 		frame.getContentPane().add(lblDate);
-		
-		symptomsBox = new JTextField();
-		symptomsBox.setBounds(11, 325, 135, 20);
-		frame.getContentPane().add(symptomsBox);
-		symptomsBox.setColumns(10);
 		
 		JLabel lblMonth = new JLabel("Month");
 		lblMonth.setFont(new Font("Tahoma", Font.PLAIN, 9));
@@ -305,13 +298,13 @@ public class NurseEnterInformation {
 		
 		JLabel lblPatientNameOr = new JLabel("Patient Name");
 		lblPatientNameOr.setForeground(SystemColor.textHighlight);
-		lblPatientNameOr.setFont(new Font("Monospaced", Font.BOLD, 11));
+		lblPatientNameOr.setFont(new Font("Consolas", Font.BOLD, 13));
 		lblPatientNameOr.setBounds(109, 74, 94, 14);
 		frame.getContentPane().add(lblPatientNameOr);
 		
 		JLabel lblPatientId = new JLabel("Patient ID");
 		lblPatientId.setForeground(SystemColor.textHighlight);
-		lblPatientId.setFont(new Font("Monospaced", Font.BOLD, 11));
+		lblPatientId.setFont(new Font("Consolas", Font.BOLD, 13));
 		lblPatientId.setBounds(109, 111, 89, 14);
 		frame.getContentPane().add(lblPatientId);
 		
@@ -321,6 +314,7 @@ public class NurseEnterInformation {
 		frame.getContentPane().add(patientIDBox);
 		
 		JLabel lblEnterPatientName = new JLabel("Enter Patient Name\r\n or Patient ID");
+		lblEnterPatientName.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		lblEnterPatientName.setBounds(169, 37, 201, 23);
 		frame.getContentPane().add(lblEnterPatientName);
 		lblUserExists.setForeground(Color.GREEN);
@@ -338,30 +332,32 @@ public class NurseEnterInformation {
 		lblUserNotFound.setVisible(false);
 		
 		JButton btnCheck = new JButton("Check");
+		btnCheck.setFont(new Font("Consolas", Font.PLAIN, 11));
+		btnCheck.setForeground(Color.BLACK);
+		btnCheck.setBackground(Color.LIGHT_GRAY);
 		btnCheck.setBounds(324, 70, 73, 23);
 		frame.getContentPane().add(btnCheck);
 		
-		JButton btnViewInformation = new JButton("view information");
-		btnViewInformation.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				frame.dispose();
-				PatientDisplayInformation window  = new PatientDisplayInformation();
-                window.frame.setVisible(true);
-			}
-		});
-		btnViewInformation.setBounds(29, 388, 89, 23);
-		frame.getContentPane().add(btnViewInformation);
+		symptomsBox = new JTextPane();
+		symptomsBox.setFont(new Font("Arial", Font.PLAIN, 12));
+		symptomsBox.setBackground(Color.WHITE);
+		symptomsBox.setBounds(10, 336, 204, 75);
+		Border border = BorderFactory.createLineBorder(Color.BLACK);
+		symptomsBox.setBorder(BorderFactory.createCompoundBorder(border, 
+		            BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+		frame.getContentPane().add(symptomsBox);
+		
 		btnCheck.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg1) 
 			{
 				String tempName;
-				int tempID;
+				String tempID;
 				if(nameBox.getText().length() > 0)
 				{
 					tempName = nameBox.getText();
-					if(Globals.userDatabase.searchUserName(tempName) != null)
+					User tempUser = Globals.userDatabase.searchUserName(tempName);
+					if(tempUser != null && tempUser instanceof Patient)
 					{
 						lblUserNotFound.setVisible(false);
 						lblUserExists.setVisible(true);
@@ -377,9 +373,10 @@ public class NurseEnterInformation {
 					if(patientIDBox.getText().length() > 0)
 					{
 						
-						tempID = Integer.parseInt(patientIDBox.getText().toString());
+						tempID =patientIDBox.getText().toString();
 						
-						if(Globals.userDatabase.searchUserID(tempID) != null)
+						User tempUser = Globals.userDatabase.searchUserID(tempID);
+						if(tempUser != null && tempUser instanceof Patient)
 						{
 							lblUserNotFound.setVisible(false);
 							lblUserExists.setVisible(true);

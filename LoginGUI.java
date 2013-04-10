@@ -1,4 +1,4 @@
-import java.awt.EventQueue;
+
 
 import javax.swing.JFrame;
 import java.awt.CardLayout;
@@ -11,17 +11,21 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
-import java.awt.Window;
+
+
+
 
 import javax.swing.UIManager;
-import javax.swing.JSeparator;
+import javax.swing.JPasswordField;
+import javax.swing.JTextArea;
 
 
-public class Login {
+public class LoginGUI {
 	
 	JFrame frame;
 	private JTextField userID;
-	private JTextField password;
+	private JPasswordField password;
+	private JTextArea txtWrongUser = new JTextArea();
 	
 	/**
 	 * Launch the application.
@@ -31,7 +35,7 @@ public class Login {
 	/**
 	 * Create the application.
 	 */
-	public Login() {
+	public LoginGUI() {
 		initialize();
 		
 	}
@@ -47,7 +51,7 @@ public class Login {
 		
 
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(700, 350, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
 		
@@ -62,10 +66,7 @@ public class Login {
 		login.add(userID);
 		userID.setColumns(10);
 		
-		password = new JTextField();
-		password.setBounds(148, 109, 130, 20);
-		login.add(password);
-		password.setColumns(10);
+		
 		
 		JButton btnLogin = new JButton("LOGIN");
 		btnLogin.setBackground(SystemColor.textHighlight);
@@ -74,11 +75,13 @@ public class Login {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{	
-				int loginID, loginPin;
+				
 				if(userID.getText().length() > 0)
 				{
-					loginID = Integer.parseInt(userID.getText());
-					loginPin = Integer.parseInt(password.getText());
+                    String loginID, loginPin;
+					loginID = userID.getText();
+					char[] passwordInput = password.getPassword();
+					loginPin = new String(passwordInput);
 					User tempUser = Globals.userDatabase.login(loginID, loginPin);
 					if(tempUser != null)
 					{
@@ -86,12 +89,23 @@ public class Login {
 						if(tempUser instanceof Patient)
 						{
 							frame.dispose();
-							PatientMain window = new PatientMain();
+							PatientGUI window = new PatientGUI();
+							window.frame.setVisible(true);
+							
+						}
+						if(tempUser instanceof Nurse)
+						{
+							frame.dispose();
+							NurseGUI window = new NurseGUI();
 							window.frame.setVisible(true);
 							
 						}
 						Globals.userDatabase.setCurrentUser(tempUser);
 					}
+					else
+						txtWrongUser.setVisible(true);
+					
+						
 				}
 						
 					
@@ -105,6 +119,10 @@ public class Login {
 		btnForgotPassword.setForeground(SystemColor.textInactiveText);
 		btnForgotPassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				RecoverAccountGUI window = new RecoverAccountGUI();
+				window.frame.setVisible(true);
 				
 			}
 		});
@@ -129,7 +147,12 @@ public class Login {
 		lblMedrecSoftware.setBounds(148, 11, 130, 48);
 		login.add(lblMedrecSoftware);
 		
+		password = new JPasswordField();
+		password.setBounds(148, 109, 130, 20);
+		login.add(password);
 		
+		
+	
 		frame.getContentPane().add(nursePage, "name_26039116238459");
 		nursePage.setLayout(null);
 		
@@ -146,7 +169,7 @@ public class Login {
 		nursePage.add(btnNewButton_1);
 	}
 
-	public static void setVisible(boolean b) {
+	public void setVisible(boolean b) {
 		// TODO Auto-generated method stub
 		
 	}

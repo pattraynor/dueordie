@@ -1,13 +1,13 @@
 public class Patient extends User{
 
-    private int doctor;
+    private String doctor;
     private String insurance, address, phoneNumber;
     private MedicalRecord patientRecord;
 
-    public Patient(String _userName, int _newPin)
+    public Patient(String _userName, String _newPin)
     {
         super(_userName, _newPin, Globals.PATIENT);
-        doctor = 0;
+        doctor = "";
         insurance = "";
         address = "";
         phoneNumber = "";
@@ -18,7 +18,7 @@ public class Patient extends User{
     {
         userType = Globals.PATIENT;
         userName = "";
-        doctor = 0;
+        doctor = "";
         insurance = "";
         address = "";
         phoneNumber = "";
@@ -36,7 +36,7 @@ public class Patient extends User{
 
     }
 
-    public void setDoctor(int userID)
+    public void setDoctor(String userID)
     {
 
         doctor = userID;
@@ -65,7 +65,7 @@ public class Patient extends User{
 
     }
 
-    public int getDoctor(){
+    public String getDoctor(){
 
         return doctor;
 
@@ -94,6 +94,23 @@ public class Patient extends User{
     public String getPhoneNumber()
     {
            return phoneNumber;
+    };
+    
+    public String toString()
+    {
+    	String doctorName;
+    	User tempUser = Globals.userDatabase.searchUserID(doctor);
+    	if(tempUser != null)
+    	{
+    		doctorName = tempUser.getUserName();
+    	}
+    	else
+    		doctorName = "N/A";
+    		
+    	
+    	String print = "\nInsurance: \t" + insurance + "\n\nAddress: \t" + address + "\n\nPhone Number: \t" + phoneNumber + "\n\nDoctor: \t" + doctorName;
+    	
+    	return print;
     }
 }
 

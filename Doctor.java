@@ -1,6 +1,5 @@
 
 
-import java.util.Arrays;
 
 public class Doctor extends User
 {
@@ -17,7 +16,7 @@ public class Doctor extends User
     //------------------------------------------------
     // Constructor that sets userName and pin
     // -----------------------------------------------
-    public Doctor(String setName,int setPin)
+    public Doctor(String setName,String setPin)
     {
         super(setName, setPin, Globals.NURSE);
         userType = "doctor";
@@ -55,7 +54,7 @@ public class Doctor extends User
 			}else i++;
 		} return 0;
 	}
-	public int enterprescription(LoginList userDatabase, int userID, String prescription)
+	public int enterprescription(LoginList userDatabase, String userID, String prescription)
     {
         User tempPatient = userDatabase.searchUserID(userID);
         Patient newPatient = (Patient) tempPatient;
@@ -64,7 +63,7 @@ public class Doctor extends User
 		return 0;
 	}
 	
-	public int enterNotes(LoginList userDatabase, int userID, String notes)
+	public int enterNotes(LoginList userDatabase, String userID, String notes)
     {
         User tempPatient = userDatabase.searchUserID(userID);
         Patient newPatient = (Patient) tempPatient;
@@ -82,7 +81,7 @@ public class Doctor extends User
 //		System.out.println("Height: "+Arrays.toString(tempUser.getMedicalRecord().height));
 //		System.out.println("Temperature: "+Arrays.toString(tempUser.getMedicalRecord().temperature));
 //	}
-	public String[] getPrescriptions(LoginList userDatabase, int userID)
+	public String[] getPrescriptions(LoginList userDatabase, String userID)
     {
 
 

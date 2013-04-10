@@ -9,7 +9,7 @@ import java.util.Random;
 public class LoginList
 {
 
-    private Node head, next;
+    private Node head;
     
     private int listSize;
     private User currentUser;
@@ -21,12 +21,11 @@ public class LoginList
     public LoginList()
     {
         head = null;
-        next = null;
         listSize = 0;
         currentUser = null;
-        question1 = "Where did you attend HighSchool?";
-        question2 = "What is your favorite animal?";
-        question3 = "What is your mother's maiden name?";
+        question1 = Globals.QUESTION1;
+        question2 = Globals.QUESTION2;
+        question3 = Globals.QUESTION3;
 
 
     }
@@ -36,14 +35,14 @@ public class LoginList
     }
 
     // ------------------------------------------------------
-    // generates a 7 digit int for UserID based on listSize
+    // generates a 7 digit integer for UserID based on listSize
     // ------------------------------------------------------
-    private int generateUserID()
+    private String generateUserID()
     {
         int tempCount = getListSize();
 
         String stringID = "", string1, string2, string3;
-        int newUserID, temp1, temp2, temp3;
+        int temp1, temp2, temp3;
 
         Random randomGenerator = new Random();
         //creates 3 random numbers that are less than 10
@@ -67,12 +66,11 @@ public class LoginList
             stringID = stringID + "0";
         }
 
-        //creates the final string by adding the randoms with zeros to the userCount
-        stringID = stringID + Integer.toString(listSize);
-        //creates newUserID int from the string
-        newUserID = Integer.parseInt(stringID);
+        //creates the final string by adding the random with zeros to the userCount
+        stringID = stringID + Integer.toString(tempCount);
 
-        return newUserID;
+
+        return stringID;
     }
 
     //-------------------------------------------------
@@ -96,11 +94,11 @@ public class LoginList
     // ==========================================
     // adds a newUser to the linked list
     // ==========================================
-    public int addUser(User newUser)
+    public String addUser(User newUser)
     {
         listSize++;
 
-        int newUserID = generateUserID();
+        String newUserID = generateUserID();
         newUser.setUserID(newUserID);
         Node newHead = new Node(newUser, head);
         head = newHead;
@@ -163,16 +161,16 @@ public class LoginList
     //===============================================
     // searches the linked list by userID
     //===============================================
-    public User searchUserID(int userID)
+    public User searchUserID(String userID)
     {
         Node tempNode = head;
 
         while (tempNode != null)
         {
 
-            int userIDCompare;
+            String userIDCompare;
             userIDCompare = tempNode.getUserAccount().getUserID();
-            if (userIDCompare == userID)
+            if (userIDCompare.equals(userID))
             {
                return tempNode.getUserAccount();
             }
@@ -203,7 +201,7 @@ public class LoginList
     //-----------------------------------------------------------
     // checks if user exists then checks the pin to enable login
     //-----------------------------------------------------------
-    public User login(int loginID, int loginPin)
+    public User login(String loginID, String loginPin)
     {
         User tempUser;
         tempUser = searchUserID(loginID);
@@ -212,8 +210,8 @@ public class LoginList
             return null;
         }
 
-        int pin = tempUser.getPin();
-        if (loginPin == pin)
+        String pin = tempUser.getPin();
+        if (loginPin.equals(pin))
         {
             return tempUser;
         }
@@ -234,12 +232,12 @@ public class LoginList
     // Used to recover account password, compares
     // security questions, and if equal returns pin
     // ----------------------------------------------
-    public int recoverAccount(String attemptedAnswer, int userID, int questionNumber)
+    public String recoverAccount(String attemptedAnswer, String userID, int questionNumber)
     {
         User accountRecovering = searchUserID(userID);
         if(accountRecovering == null)
         {
-             return 1;
+             return "Error";
         }
 
         String answer2Question = "";
@@ -261,7 +259,7 @@ public class LoginList
         return accountRecovering.getPin();
         }
         else
-            return 0;
+            return "Error";
     }
 
     // ---------------------------------------------------------
@@ -273,12 +271,7 @@ public class LoginList
 
         private User userAccount;
 
-        public Node(User _newUser)
-        {
-            next = null;
-            userAccount = _newUser;
-        }
-
+     
         public Node(User _newUser, Node newNext)
         {
             next = newNext;
@@ -298,9 +291,6 @@ public class LoginList
             return next;
         }
 
-        public void setNext(Node newNext)
-        {
-            next = newNext;
-        }
+      
     }
 }

@@ -65,6 +65,25 @@ public class Visit
 		
 		
 	}
+	
+	public Visit(int mon, int today, int newYear, double pressureTop, double pressureBot, double sweet, double pounds,
+			double inches, double fever)
+	{
+		month = mon;
+		day = today;
+		year = newYear;
+		bloodPressureTop = pressureTop;
+        bloodPressureBot = pressureBot;
+		sugar = sweet;
+		weight = pounds;
+		height = inches;
+		temperature = fever;
+		symptoms = "";
+		prescriptions = "";
+		notes = "";	
+		
+		
+	}
 	public int getDay()
 	{
 		return day;
@@ -198,9 +217,9 @@ public class Visit
 	public String toString()
 	{
 		String print;
-		print = "Temperature : " + temperature + " (F)" + "\nWeight : " + weight + " (lbs)" + "\nHeight : " + height +
-		"(inches)" + "\nBloodPressure : " + bloodPressureTop + "/" + bloodPressureBot + "\nBlood Sugar : " + sugar +
-		"(mg/dL)" + "\n\nPrescriptions : " + prescriptions + "\n\nDoctor's Notes : " + notes + "\n\nSymptoms : " + symptoms;
+		print = "Temperature: \t" + temperature + " (F)" + "\n\nWeight: \t" + weight + " (lbs)" + "\n\nHeight: \t" + height +
+		"(inches)" + "\n\nBloodPressure: \t" + bloodPressureTop + "/" + bloodPressureBot + "\n\nBlood Sugar: \t" + sugar +
+		"(mg/dL)" + "\n\n\nPrescriptions: " + prescriptions + "\n\n\nDoctor's Notes: " + notes + "\n\n\nSymptoms: " + symptoms;
 		return print;
 	}
 }

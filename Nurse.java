@@ -1,7 +1,7 @@
 public class Nurse extends User
 {
 
-    public Nurse(String setName, int setPin)
+    public Nurse(String setName, String setPin)
     {
         super(setName, setPin, Globals.NURSE);
         userType = "Nurse";
@@ -16,7 +16,7 @@ public class Nurse extends User
 
     }
 
-    public User createNewAccount(String _userName, String userType, int setPin)
+    public User createNewAccount(String _userName, String userType, String setPin)
     {
         if (userType == "Nurse")
         {
