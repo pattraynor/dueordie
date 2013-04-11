@@ -15,11 +15,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.BorderFactory;
 import javax.swing.JTextPane;
 import javax.swing.border.Border;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
 
 
 public class NurseGUI {
 
-	
 	
 	public JFrame frame;
 	private JTextField temperatureBox;
@@ -37,8 +38,10 @@ public class NurseGUI {
 	private JLabel lblUserNotFound = new JLabel("User not Found");
 	private double temperature, weight, height, bloodPressureTop, bloodPressureBot, bloodSugar;
 	private String symptoms, name, ID; 
+	private JPanel createAccount;
+	private JPanel enterPatientInformation;
+	private JPanel mainMenu;
 	private JTextPane symptomsBox;
-
 	/**
 	 * Launch the application.
 	 */
@@ -56,22 +59,80 @@ public class NurseGUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.getContentPane().setForeground(UIManager.getColor("Menu.selectionForeground"));
-		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBounds(100, 100, 500, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frame.getContentPane().setLayout(new CardLayout(0, 0));
+		
+		mainMenu = new JPanel();
+		mainMenu.setBackground(Color.WHITE);
+		frame.getContentPane().add(mainMenu, "name_23546861032426");
+		mainMenu.setLayout(null);
+		
+		JButton btnNewButton = new JButton("Create Account");
+		btnNewButton.setBackground(Color.WHITE);
+		btnNewButton.setBounds(134, 139, 202, 51);
+		mainMenu.add(btnNewButton);
+		
+		JButton btnEnterPatientInfo = new JButton("Enter Patient Info");
+		btnEnterPatientInfo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				frame.getContentPane().removeAll();
+				frame.getContentPane().invalidate();
+
+				frame.getContentPane().add(enterPatientInformation);
+				frame.getContentPane().revalidate();
+				frame.repaint();
+			}
+		});
+		btnEnterPatientInfo.setForeground(Color.BLACK);
+		btnEnterPatientInfo.setBackground(Color.WHITE);
+		btnEnterPatientInfo.setBounds(134, 239, 202, 51);
+		mainMenu.add(btnEnterPatientInfo);
+		
+		JButton btnLogout = new JButton("LOGOUT");
+		btnLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				frame.dispose();
+				LoginGUI window = new LoginGUI();
+				window.frame.setVisible(true);
+			}
+		});
+		btnLogout.setForeground(Color.BLACK);
+		btnLogout.setBackground(Color.LIGHT_GRAY);
+		btnLogout.setFont(new Font("Monospaced", Font.BOLD, 13));
+		btnLogout.setBounds(360, 11, 114, 51);
+		mainMenu.add(btnLogout);
+		
+		enterPatientInformation = new JPanel();
+		frame.getContentPane().add(enterPatientInformation, "name_23551793417647");
+		enterPatientInformation.setLayout(null);
+		
+		createAccount = new JPanel();
+		frame.getContentPane().add(createAccount, "name_23592594807845");
+		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		
 		JButton btnGoBack = new JButton("<- Back");
+		btnGoBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frame.getContentPane().removeAll();
+				frame.getContentPane().invalidate();
+
+				frame.getContentPane().add(mainMenu);
+				frame.getContentPane().revalidate();
+				frame.repaint();
+			}
+		});
 		btnGoBack.setFont(new Font("Consolas", Font.PLAIN, 11));
 		btnGoBack.setBackground(Color.LIGHT_GRAY);
 		btnGoBack.setBounds(10, 11, 83, 23);
-		frame.getContentPane().add(btnGoBack);
+		enterPatientInformation.add(btnGoBack);
 		
 		JButton btnEnter = new JButton("ENTER");
 		btnEnter.setFont(new Font("Monospaced", Font.BOLD, 13));
-		btnEnter.setForeground(Color.BLACK);
-		btnEnter.setBackground(SystemColor.textHighlight);
+		btnEnter.setForeground(SystemColor.textHighlight);
+		btnEnter.setBackground(Color.LIGHT_GRAY);
 		btnEnter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -179,72 +240,72 @@ public class NurseGUI {
 				
 			}
 		});
-		btnEnter.setBounds(325, 388, 89, 23);
-		frame.getContentPane().add(btnEnter);
+		btnEnter.setBounds(325, 388, 97, 23);
+		enterPatientInformation.add(btnEnter);
 		
 		temperatureBox = new JTextField();
-		temperatureBox.setBounds(366, 170, 46, 20);
-		frame.getContentPane().add(temperatureBox);
+		temperatureBox.setBounds(376, 170, 46, 20);
+		enterPatientInformation.add(temperatureBox);
 		temperatureBox.setColumns(10);
 		
 		weightBox = new JTextField();
-		weightBox.setBounds(366, 201, 46, 20);
-		frame.getContentPane().add(weightBox);
+		weightBox.setBounds(376, 201, 46, 20);
+		enterPatientInformation.add(weightBox);
 		weightBox.setColumns(10);
 		
 		heightBox = new JTextField();
-		heightBox.setBounds(366, 232, 46, 20);
-		frame.getContentPane().add(heightBox);
+		heightBox.setBounds(376, 232, 46, 20);
+		enterPatientInformation.add(heightBox);
 		heightBox.setColumns(10);
 		
 		bloodPressureTopBox = new JTextField();
-		bloodPressureTopBox.setBounds(366, 263, 46, 20);
-		frame.getContentPane().add(bloodPressureTopBox);
+		bloodPressureTopBox.setBounds(376, 263, 46, 20);
+		enterPatientInformation.add(bloodPressureTopBox);
 		bloodPressureTopBox.setColumns(10);
 		
 		bloodPressureBotBox = new JTextField();
-		bloodPressureBotBox.setBounds(366, 294, 46, 20);
-		frame.getContentPane().add(bloodPressureBotBox);
+		bloodPressureBotBox.setBounds(376, 294, 46, 20);
+		enterPatientInformation.add(bloodPressureBotBox);
 		bloodPressureBotBox.setColumns(10);
 		
 		bloodSugarBox = new JTextField();
-		bloodSugarBox.setBounds(366, 325, 46, 20);
-		frame.getContentPane().add(bloodSugarBox);
+		bloodSugarBox.setBounds(376, 325, 46, 20);
+		enterPatientInformation.add(bloodSugarBox);
 		bloodSugarBox.setColumns(10);
 		
 		JLabel temperatureLabel = new JLabel("Temperature (F)");
 		temperatureLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		temperatureLabel.setBounds(262, 173, 94, 14);
-		frame.getContentPane().add(temperatureLabel);
+		enterPatientInformation.add(temperatureLabel);
 		
 		JLabel weightLabel = new JLabel("Weight (lbs)");
 		weightLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		weightLabel.setBounds(262, 204, 73, 14);
-		frame.getContentPane().add(weightLabel);
+		enterPatientInformation.add(weightLabel);
 		
 		JLabel heightLabel = new JLabel("Height (inches)");
 		heightLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		heightLabel.setBounds(262, 235, 94, 14);
-		frame.getContentPane().add(heightLabel);
+		enterPatientInformation.add(heightLabel);
 		
 		JLabel bloodPressureTopLabel = new JLabel("Blood Pressure Top");
 		bloodPressureTopLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		bloodPressureTopLabel.setBounds(262, 266, 116, 14);
-		frame.getContentPane().add(bloodPressureTopLabel);
+		enterPatientInformation.add(bloodPressureTopLabel);
 		
 		JLabel bloodSugarLabel = new JLabel("Blood Sugar (mg/dL)");
 		bloodSugarLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		bloodSugarLabel.setBounds(262, 328, 135, 14);
-		frame.getContentPane().add(bloodSugarLabel);
+		enterPatientInformation.add(bloodSugarLabel);
 		
 		JLabel bloodPressureBotLabel = new JLabel("Blood Pressure Bot");
 		bloodPressureBotLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		bloodPressureBotLabel.setBounds(262, 297, 116, 14);
-		frame.getContentPane().add(bloodPressureBotLabel);
+		enterPatientInformation.add(bloodPressureBotLabel);
 		
 		JLabel lblSymptoms = new JLabel("Symptoms");
 		lblSymptoms.setBounds(10, 311, 74, 14);
-		frame.getContentPane().add(lblSymptoms);
+		enterPatientInformation.add(lblSymptoms);
 		
 		
 		
@@ -254,14 +315,14 @@ public class NurseGUI {
 		monthComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
 		monthComboBox.setToolTipText("1, 2 ,3\r\n");
 		monthComboBox.setBounds(62, 215, 37, 20);
-		frame.getContentPane().add(monthComboBox);
+		enterPatientInformation.add(monthComboBox);
 
 		dayComboBox.setBackground(SystemColor.text);
 		dayComboBox.setFont(new Font("Consolas", Font.PLAIN, 11));
 		dayComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
 		dayComboBox.setToolTipText("1, 2 ,3\r\n");
 		dayComboBox.setBounds(109, 215, 37, 20);
-		frame.getContentPane().add(dayComboBox);
+		enterPatientInformation.add(dayComboBox);
 		
 
 		yearComboBox.setBackground(SystemColor.text);
@@ -269,66 +330,66 @@ public class NurseGUI {
 		yearComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"}));
 		yearComboBox.setToolTipText("1, 2 ,3\r\n");
 		yearComboBox.setBounds(156, 215, 58, 20);
-		frame.getContentPane().add(yearComboBox);
+		enterPatientInformation.add(yearComboBox);
 		
 		
 		JLabel lblDate = new JLabel("Date");
 		lblDate.setBounds(10, 217, 46, 14);
-		frame.getContentPane().add(lblDate);
+		enterPatientInformation.add(lblDate);
 		
 		JLabel lblMonth = new JLabel("Month");
 		lblMonth.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblMonth.setBounds(62, 204, 37, 14);
-		frame.getContentPane().add(lblMonth);
+		enterPatientInformation.add(lblMonth);
 		
 		JLabel lblDay = new JLabel("Day");
 		lblDay.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblDay.setBounds(109, 204, 29, 14);
-		frame.getContentPane().add(lblDay);
+		enterPatientInformation.add(lblDay);
 		
 		JLabel lblYear = new JLabel("Year");
 		lblYear.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblYear.setBounds(156, 204, 29, 14);
-		frame.getContentPane().add(lblYear);
+		enterPatientInformation.add(lblYear);
 		
 		nameBox = new JTextField();
 		nameBox.setBounds(208, 71, 94, 20);
-		frame.getContentPane().add(nameBox);
+		enterPatientInformation.add(nameBox);
 		nameBox.setColumns(10);
 		
 		JLabel lblPatientNameOr = new JLabel("Patient Name");
 		lblPatientNameOr.setForeground(SystemColor.textHighlight);
 		lblPatientNameOr.setFont(new Font("Consolas", Font.BOLD, 13));
-		lblPatientNameOr.setBounds(109, 74, 94, 14);
-		frame.getContentPane().add(lblPatientNameOr);
+		lblPatientNameOr.setBounds(100, 74, 103, 14);
+		enterPatientInformation.add(lblPatientNameOr);
 		
 		JLabel lblPatientId = new JLabel("Patient ID");
 		lblPatientId.setForeground(SystemColor.textHighlight);
 		lblPatientId.setFont(new Font("Consolas", Font.BOLD, 13));
-		lblPatientId.setBounds(109, 111, 89, 14);
-		frame.getContentPane().add(lblPatientId);
+		lblPatientId.setBounds(100, 111, 98, 14);
+		enterPatientInformation.add(lblPatientId);
 		
 		patientIDBox = new JTextField();
 		patientIDBox.setColumns(10);
 		patientIDBox.setBounds(208, 108, 94, 20);
-		frame.getContentPane().add(patientIDBox);
+		enterPatientInformation.add(patientIDBox);
 		
 		JLabel lblEnterPatientName = new JLabel("Enter Patient Name\r\n or Patient ID");
 		lblEnterPatientName.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		lblEnterPatientName.setBounds(169, 37, 201, 23);
-		frame.getContentPane().add(lblEnterPatientName);
+		enterPatientInformation.add(lblEnterPatientName);
 		lblUserExists.setForeground(Color.GREEN);
 		lblUserExists.setFont(new Font("Consolas", Font.ITALIC, 11));
 		
 		
 		lblUserExists.setBounds(325, 111, 89, 14);
-		frame.getContentPane().add(lblUserExists);
+		enterPatientInformation.add(lblUserExists);
 		lblUserExists.setVisible(false);
 		
 		lblUserNotFound.setForeground(new Color(220, 20, 60));
 		lblUserNotFound.setFont(new Font("Consolas", Font.ITALIC, 11));
 		lblUserNotFound.setBounds(332, 111, 103, 14);
-		frame.getContentPane().add(lblUserNotFound);
+		enterPatientInformation.add(lblUserNotFound);
 		lblUserNotFound.setVisible(false);
 		
 		JButton btnCheck = new JButton("Check");
@@ -336,16 +397,16 @@ public class NurseGUI {
 		btnCheck.setForeground(Color.BLACK);
 		btnCheck.setBackground(Color.LIGHT_GRAY);
 		btnCheck.setBounds(324, 70, 73, 23);
-		frame.getContentPane().add(btnCheck);
+		enterPatientInformation.add(btnCheck);
 		
 		symptomsBox = new JTextPane();
 		symptomsBox.setFont(new Font("Arial", Font.PLAIN, 12));
 		symptomsBox.setBackground(Color.WHITE);
 		symptomsBox.setBounds(10, 336, 204, 75);
-		Border border = BorderFactory.createLineBorder(Color.BLACK);
-		symptomsBox.setBorder(BorderFactory.createCompoundBorder(border, 
+		Border border1 = BorderFactory.createLineBorder(Color.BLACK);
+		symptomsBox.setBorder(BorderFactory.createCompoundBorder(border1, 
 		            BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-		frame.getContentPane().add(symptomsBox);
+		enterPatientInformation.add(symptomsBox);
 		
 		btnCheck.addActionListener(new ActionListener() 
 		{

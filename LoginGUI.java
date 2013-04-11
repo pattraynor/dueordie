@@ -71,7 +71,7 @@ public class LoginGUI {
 		JButton btnLogin = new JButton("LOGIN");
 		btnLogin.setBackground(SystemColor.textHighlight);
 		btnLogin.setForeground(SystemColor.desktop);
-		btnLogin.setFont(new Font("Monospaced", Font.PLAIN, 13));
+		btnLogin.setFont(new Font("Monospaced", Font.BOLD, 13));
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{	

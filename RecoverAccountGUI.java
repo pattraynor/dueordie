@@ -41,7 +41,6 @@ public class RecoverAccountGUI {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(700, 350, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
 		
 		recoverAccount = new JPanel();
@@ -50,25 +49,25 @@ public class RecoverAccountGUI {
 		recoverAccount.setLayout(null);
 		
 		answerField = new JTextField();
-		answerField.setBounds(157, 138, 176, 20);
+		answerField.setBounds(157, 138, 189, 20);
 		recoverAccount.add(answerField);
 		answerField.setColumns(10);
 		
 		userIDField = new JTextField();
-		userIDField.setBounds(157, 58, 176, 20);
+		userIDField.setBounds(157, 58, 189, 20);
 		recoverAccount.add(userIDField);
 		userIDField.setColumns(10);
 		
 		securityQuestionBox = new JComboBox<String>();
 		securityQuestionBox.setFont(new Font("Times New Roman", Font.PLAIN, 11));
 		securityQuestionBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Where did you attend HighSchool?", "What is your favorite animal?", "What is your mother's maiden name?"}));
-		securityQuestionBox.setBounds(157, 103, 176, 20);
+		securityQuestionBox.setBounds(157, 103, 189, 20);
 		recoverAccount.add(securityQuestionBox);
 		
 		JButton submitButton = new JButton("Submit");
 		submitButton.setFont(new Font("Monospaced", Font.BOLD, 13));
-		submitButton.setForeground(SystemColor.textHighlight);
-		submitButton.setBackground(Color.LIGHT_GRAY);
+		submitButton.setForeground(Color.BLACK);
+		submitButton.setBackground(SystemColor.textHighlight);
 		submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -110,50 +109,51 @@ public class RecoverAccountGUI {
 				
 			}
 		});
-		submitButton.setBounds(157, 199, 176, 34);
+		submitButton.setBounds(157, 190, 189, 42);
 		recoverAccount.add(submitButton);
 		
 		JLabel answerLabel = new JLabel("Answer");
-		answerLabel.setFont(new Font("Monospaced", Font.BOLD, 13));
+		answerLabel.setFont(new Font("Consolas", Font.PLAIN, 13));
 		answerLabel.setBounds(10, 140, 83, 14);
 		recoverAccount.add(answerLabel);
 		
 		JLabel userIDlabel = new JLabel("User ID or Name");
-		userIDlabel.setFont(new Font("Monospaced", Font.BOLD, 13));
+		userIDlabel.setFont(new Font("Consolas", Font.PLAIN, 13));
 		userIDlabel.setBounds(10, 60, 151, 14);
 		recoverAccount.add(userIDlabel);
 		
 		JLabel lblSelectSecuritQuestion = new JLabel("Security Question");
-		lblSelectSecuritQuestion.setFont(new Font("Monospaced", Font.BOLD, 13));
+		lblSelectSecuritQuestion.setFont(new Font("Consolas", Font.PLAIN, 13));
 		lblSelectSecuritQuestion.setBounds(10, 105, 153, 14);
 		recoverAccount.add(lblSelectSecuritQuestion);
 		
 		changePassword = new JPanel();
+		changePassword.setBackground(Color.WHITE);
 		frame.getContentPane().add(changePassword, "name_125098458476250");
 		changePassword.setLayout(null);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(163, 64, 135, 28);
+		passwordField.setBounds(163, 64, 150, 28);
 		changePassword.add(passwordField);
 		
 		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(163, 116, 135, 28);
+		passwordField_1.setBounds(163, 116, 150, 28);
 		changePassword.add(passwordField_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("New Password");
-		lblNewLabel_2.setFont(new Font("Monospaced", Font.BOLD, 13));
+		lblNewLabel_2.setFont(new Font("Consolas", Font.PLAIN, 13));
 		lblNewLabel_2.setBounds(23, 70, 117, 14);
 		changePassword.add(lblNewLabel_2);
 		
 		JLabel lblConfirmPassword = new JLabel("Confirm Password");
-		lblConfirmPassword.setFont(new Font("Monospaced", Font.BOLD, 13));
+		lblConfirmPassword.setFont(new Font("Consolas", Font.PLAIN, 13));
 		lblConfirmPassword.setBounds(23, 118, 128, 22);
 		changePassword.add(lblConfirmPassword);
 		
 		JButton btnNewButton_1 = new JButton("Change Password");
-		btnNewButton_1.setForeground(SystemColor.textHighlight);
-		btnNewButton_1.setBackground(Color.LIGHT_GRAY);
-		btnNewButton_1.setFont(new Font("Monospaced", Font.BOLD, 13));
+		btnNewButton_1.setForeground(Color.BLACK);
+		btnNewButton_1.setBackground(SystemColor.textHighlight);
+		btnNewButton_1.setFont(new Font("Monospaced", Font.BOLD, 12));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String newPassword, confirmPassword;
@@ -170,7 +170,7 @@ public class RecoverAccountGUI {
 					null, options, options[0]);
 					Globals.userDatabase.getCurrentUser().setPin(newPassword);
 					frame.dispose();
-					Globals.userDatabase.setCurrentUser(null);
+					
 				}
 				else 
 				{
@@ -183,7 +183,7 @@ public class RecoverAccountGUI {
 				
 			}
 		});
-		btnNewButton_1.setBounds(152, 190, 153, 42);
+		btnNewButton_1.setBounds(163, 190, 150, 42);
 		changePassword.add(btnNewButton_1);
 	}
 }
