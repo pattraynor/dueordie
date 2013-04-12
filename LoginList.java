@@ -4,28 +4,27 @@
  */
 
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class LoginList
 {
 
-    private Node head;
+    private ArrayList<User> userDatabase;
     
     private int listSize;
     private User currentUser;
-    private String question1, question2, question3;
+   
 
     //===========================================
     // empty constructor for class
     // ==========================================
     public LoginList()
     {
-        head = null;
+    	userDatabase = new ArrayList<User>();
         listSize = 0;
         currentUser = null;
-        question1 = Globals.QUESTION1;
-        question2 = Globals.QUESTION2;
-        question3 = Globals.QUESTION3;
+        
 
 
     }
@@ -41,7 +40,7 @@ public class LoginList
     {
         int tempCount = getListSize();
 
-        String stringID = "", string1, string2, string3;
+        String stringID, string1, string2, string3;
         int temp1, temp2, temp3;
 
         Random randomGenerator = new Random();
@@ -97,32 +96,36 @@ public class LoginList
     public String addUser(User newUser)
     {
         listSize++;
-
         String newUserID = generateUserID();
         newUser.setUserID(newUserID);
-        Node newHead = new Node(newUser, head);
-        head = newHead;
-
+        int insertLocation = findInsertionPoint(newUserID);
+        userDatabase.add(insertLocation, newUser);
+        		
         return newUserID;
     }
-
-    // ----------------------------------------
-    // stores updated user back into the list
-    // -----------------------------------------
-    public void saveUserChanges(User updatedUser)
+    
+    private int findInsertionPoint(String userID)
     {
-        Node iterationNode = head;
-        while(iterationNode != null)
-        {
-            if(iterationNode.getUserAccount().getUserID() == updatedUser.getUserID())
-            {
-                iterationNode.setUserAccount(updatedUser);
-                currentUser = updatedUser;
-            }
-            iterationNode = iterationNode.getNext();
-        }
-
+    	if(userDatabase.size() == 0)
+    	{
+    		return 0;
+    	}
+		int searchIndex = 0;
+		while(searchIndex < userDatabase.size())
+		{
+			
+			if(userID.compareTo(userDatabase.get(searchIndex).getUserID()) == 0)
+	            return searchIndex;
+			if(userID.compareTo(userDatabase.get(searchIndex).getUserID()) < 0)
+				return searchIndex;
+			searchIndex++;
+			
+		
+    	
+		}
+		return searchIndex;
     }
+
 
     //----------------------------------
     // used to get current user easily
@@ -142,60 +145,71 @@ public class LoginList
     //===============================================
     public User searchUserName(String userName)
     {
-        Node tempNode = head;
         	
-            while (tempNode != null)
-            {
-                String userNameCompare;
-                userNameCompare = tempNode.getUserAccount().getUserName();
-                if (userNameCompare.equals(userName))
-                {
-                    return tempNode.getUserAccount();
-                }
-                tempNode = tempNode.getNext();
-            }
-
-        return null;
+        
+    	int searchIndex = 0;
+    	
+        if(userDatabase.size() == 0)
+    	{
+    		return null;
+    	}
+		while(searchIndex < userDatabase.size())
+		{
+			
+			if(userName.compareTo(userDatabase.get(searchIndex).getUserName()) == 0)
+	            return userDatabase.get(searchIndex);
+			
+			searchIndex++;
+		
+    	
+		}
+		return null;
     }
+
 
     //===============================================
     // searches the linked list by userID
     //===============================================
     public User searchUserID(String userID)
     {
-        Node tempNode = head;
-
-        while (tempNode != null)
-        {
-
-            String userIDCompare;
-            userIDCompare = tempNode.getUserAccount().getUserID();
-            if (userIDCompare.equals(userID))
+        int lowerBound = 0, searchIndex;
+        int upperBound = userDatabase.size() -1;	
+        String userIDCompare;
+    	
+    	
+    		while (upperBound >= lowerBound)
             {
-               return tempNode.getUserAccount();
+    			
+            	searchIndex = lowerBound + ((upperBound - lowerBound)/2);
+            	userIDCompare = userDatabase.get(searchIndex).getUserID();
+            	int compareResult = userID.compareTo(userIDCompare); 
+           
+            	if (compareResult < 0)  
+            	{  
+            	    //userName is before, if it exists
+            		upperBound = searchIndex - 1;
+            		
+            	}  
+            	else   
+            	{  
+            	   if (compareResult > 0)
+            	   {
+            	    //userName comes after, if it exists
+            		lowerBound = searchIndex + 1;
+            	   }
+            	   else  
+            	   {  
+            	    //names are equal. match found
+            		return userDatabase.get(searchIndex);
+            	   } 
+            	}
+         
             }
-            tempNode = tempNode.getNext();
+    		
+    		return null;
 
-        }
-
-        return null;
     }
 
-    //================================================
-    // get security questions
-    //================================================
-    public String getQuestion1()
-    {
-        return question1;
-    }
-    public String getQuestion2()
-    {
-        return question2;
-    }
-    public String getQuestion3()
-    {
-        return question3;
-    }
 
 
     //-----------------------------------------------------------
@@ -223,74 +237,7 @@ public class LoginList
     // sets the currentUser to null
     // used when logout is pressed in GUI
     //-------------------------------------
-    public void logout()
-    {
-        currentUser = null;
-    }
 
-    //-----------------------------------------------
-    // Used to recover account password, compares
-    // security questions, and if equal returns pin
-    // ----------------------------------------------
-    public String recoverAccount(String attemptedAnswer, String userID, int questionNumber)
-    {
-        User accountRecovering = searchUserID(userID);
-        if(accountRecovering == null)
-        {
-             return "Error";
-        }
-
-        String answer2Question = "";
-        if(questionNumber == 1)
-        {
-            answer2Question = accountRecovering.getAnswer1();
-        }
-        if(questionNumber == 2)
-        {
-            answer2Question = accountRecovering.getAnswer2();
-        }
-        if(questionNumber == 3)
-        {
-            answer2Question = accountRecovering.getAnswer3();
-        }
-
-        if(answer2Question.equals(attemptedAnswer))
-        {
-        return accountRecovering.getPin();
-        }
-        else
-            return "Error";
-    }
-
-    // ---------------------------------------------------------
-    // Node class implements the structure of the linked list
-    // ---------------------------------------------------------
-    private class Node
-    {
-        private Node next;
-
-        private User userAccount;
-
-     
-        public Node(User _newUser, Node newNext)
-        {
-            next = newNext;
-            userAccount = _newUser;
-        }
-        public User getUserAccount()
-        {
-            return userAccount;
-        }
-        public void setUserAccount(User _newUser)
-        {
-            userAccount = _newUser;
-        }
-
-        public Node getNext()
-        {
-            return next;
-        }
-
-      
-    }
+   
+   
 }

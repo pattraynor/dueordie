@@ -39,6 +39,7 @@ public class NurseGUI {
 	private JComboBox<String> yearComboBox = new JComboBox<String>();
 	private JTextField nameBox;
 	private JTextField patientIDBox;
+	private JTextPane symptomsBox;
 	private JLabel lblUserExists = new JLabel("User Exists");
 	private JLabel lblUserNotFound = new JLabel("User not Found");
 	private double temperature, weight, height, bloodPressureTop, bloodPressureBot, bloodSugar;
@@ -46,7 +47,6 @@ public class NurseGUI {
 	private JPanel createAccount;
 	private JPanel enterPatientInformation;
 	private JPanel mainMenu;
-	private JTextPane symptomsBox;
 	private JTextField firstNameField;
 	private JTextField lastNameField;
 	private JTextField addressField;
@@ -68,13 +68,34 @@ public class NurseGUI {
 	public NurseGUI() {
 		initialize();
 	}
-
+	
+	private void clearTextFields()
+	{
+		nameBox.setText("");
+		patientIDBox.setText("");
+		firstNameField.setText("");
+		lastNameField.setText("");
+		addressField.setText("");
+		insuranceField.setText("");
+		numberField.setText("");
+		doctorField.setText("");
+		temperatureBox.setText("");
+		weightBox.setText("");
+		heightBox.setText("");
+		bloodPressureTopBox.setText("");
+		bloodPressureBotBox.setText("");
+		bloodSugarBox.setText("");
+		symptomsBox.setText("");
+		lblUserExists.setVisible(false);
+		lblUserNotFound.setVisible(false);
+		
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 500, 500);
+		frame.setBounds(700, 350, 500, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
 		
@@ -254,8 +275,8 @@ public class NurseGUI {
 					String doctorID = doctorField.getText();
 					
 					tempUser = Globals.userDatabase.searchUserID(doctorID);
-					if(tempUser!= null)
-					
+					System.out.println("dur");
+					if(tempUser != null)
 					{
 					Doctor patientDoctor = (Doctor) tempUser;
 					String newPin = Globals.userDatabase.generateUserID();
@@ -266,6 +287,12 @@ public class NurseGUI {
 					JOptionPane.showOptionDialog(null, "Account was created\nUser ID: " + patientID + "\nPassword: " + newPin, "Account Created",
 					JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
 					null, options, options[0]);
+					frame.getContentPane().removeAll();
+					frame.getContentPane().invalidate();
+					clearTextFields();
+					frame.getContentPane().add(mainMenu);
+					frame.getContentPane().revalidate();
+					frame.repaint();
 					}
 					else 
 					{
@@ -287,6 +314,12 @@ public class NurseGUI {
 					JOptionPane.showOptionDialog(null, "Account was created\nUser ID: " + nurseID + "\n Password: " + newPin, "Account Created",
 					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
 					null, options, options[0]);
+					frame.getContentPane().removeAll();
+					frame.getContentPane().invalidate();
+					clearTextFields();
+					frame.getContentPane().add(mainMenu);
+					frame.getContentPane().revalidate();
+					frame.repaint();
 					
 				}
 			}
@@ -313,7 +346,7 @@ public class NurseGUI {
 			public void actionPerformed(ActionEvent arg0) {
 				frame.getContentPane().removeAll();
 				frame.getContentPane().invalidate();
-
+				clearTextFields();
 				frame.getContentPane().add(mainMenu);
 				frame.getContentPane().revalidate();
 				frame.repaint();
@@ -404,6 +437,19 @@ public class NurseGUI {
 							bloodPressureBot, bloodSugar, weight, height, temperature, symptoms);
 							tempPatient = (Patient) tempUser;
 							tempPatient.getMedicalRecord().addVisit(newVisit);
+
+
+
+                            frame.getContentPane().removeAll();
+							frame.getContentPane().invalidate();
+
+							clearTextFields();
+							
+
+
+							frame.getContentPane().add(mainMenu);
+                            frame.getContentPane().revalidate();
+                            frame.repaint();
 							
 						}
 						
@@ -426,6 +472,12 @@ public class NurseGUI {
 								bloodPressureBot, bloodSugar, weight, height, temperature, symptoms);
 								tempPatient = (Patient) tempUser;
 								tempPatient.getMedicalRecord().addVisit(newVisit);
+								frame.getContentPane().removeAll();
+								frame.getContentPane().invalidate();
+								clearTextFields();
+								frame.getContentPane().add(mainMenu);
+								frame.getContentPane().revalidate();
+								frame.repaint();
 								
 							}
 						}

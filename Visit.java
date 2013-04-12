@@ -217,9 +217,36 @@ public class Visit
 	public String toString()
 	{
 		String print;
-		print = "Temperature: \t" + temperature + " (F)" + "\n\nWeight: \t" + weight + " (lbs)" + "\n\nHeight: \t" + height +
-		"(inches)" + "\n\nBloodPressure: \t" + bloodPressureTop + "/" + bloodPressureBot + "\n\nBlood Sugar: \t" + sugar +
-		"(mg/dL)" + "\n\n\nPrescriptions: " + prescriptions + "\n\n\nDoctor's Notes: " + notes + "\n\n\nSymptoms: " + symptoms;
+		String tempWeight, tempHeight, tempTemperature, tempBloodSugar, tempBloodPressure, tempDate;
+		tempDate = Integer.toString(month) + "/" + Integer.toString(day) + "/" + Integer.toString(year);
+		if(weight == 0)
+			tempWeight = "";
+		else 
+			tempWeight = Double.toString(weight);
+		if(height == 0)
+			tempHeight = "";
+		else 
+			tempHeight = Double.toString(weight);
+		if(temperature == 0)
+			tempTemperature = "";
+		else 
+			tempTemperature = Double.toString(weight);
+		if(sugar == 0)
+			tempBloodSugar = "";
+		else 
+			tempBloodSugar = Double.toString(weight);
+		if(bloodPressureTop == 0)
+			tempBloodPressure = "";
+		else
+			tempBloodPressure = Double.toString(bloodPressureTop) + "/" + Double.toString(bloodPressureBot);
+			
+
+		
+		print = "Date: \t\t\t" + tempDate + "\n\nTemperature(F): \t" + tempTemperature + "\n\nWeight(lbs): \t\t" + tempWeight + 
+		"\n\nHeight(inches): \t" + tempHeight+ "\n\nBloodPressure: \t\t" + tempBloodPressure + 
+		"\n\nBlood Sugar(mg/dL): \t" + tempBloodSugar + "\n\n\nPrescriptions: \n" + prescriptions + 
+		"\n\nDoctor's Notes: \n" + notes + "\n\nSymptoms: \n" + symptoms;
+		
 		return print;
 	}
 }

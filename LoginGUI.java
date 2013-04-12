@@ -169,8 +169,5 @@ public class LoginGUI {
 		nursePage.add(btnNewButton_1);
 	}
 
-	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
+
 }

@@ -59,7 +59,6 @@ public class Doctor extends User
         User tempPatient = userDatabase.searchUserID(userID);
         Patient newPatient = (Patient) tempPatient;
         newPatient.getMedicalRecord().addPrescription(prescription);
-		userDatabase.saveUserChanges(userDatabase.searchUserID(userID));
 		return 0;
 	}
 	
@@ -68,7 +67,6 @@ public class Doctor extends User
         User tempPatient = userDatabase.searchUserID(userID);
         Patient newPatient = (Patient) tempPatient;
         newPatient.getMedicalRecord().getLastVisit().setNotes(notes);
-		userDatabase.saveUserChanges(userDatabase.searchUserID(userID));
 		return 0;
 	}
 //	public void displayMedicalInformation(LoginList userDatabase, int userID){
