@@ -15,6 +15,13 @@ public class Nurse extends User
         return _newVisit;
 
     }
+    
+    public int enterMedicalInformation(int month,int day,int year,double bloodPressureTop,
+    		double bloodPressureBot,double bloodSugar,double weight,double height,double temperature, String symptoms)
+    {
+    	
+    	return 0;
+    }
 
  
 

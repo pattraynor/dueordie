@@ -25,8 +25,18 @@ public class RecoverAccountGUI {
 	private JTextField userIDField;
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
+	private JPasswordField passwordField2;
+	private JPasswordField passwordField3;
 	private JComboBox<String> securityQuestionBox;
 	public JPanel recoverAccount, changePassword;
+	private JPanel changePasswordLogedIn;
+	private JLabel label;
+	private JPanel answerQuestions;
+	private JTextField answer1Field;
+	private JTextField answer2Field;
+	private JTextField answer3Field;
+	private JLabel lblWhatIsYour;
+	private JLabel lblWhatIsYour_1;
 
 	/**
 	 * Create the application.
@@ -38,6 +48,22 @@ public class RecoverAccountGUI {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	public void setToPassword()
+	{
+		frame.getContentPane().removeAll();
+		frame.getContentPane().invalidate();
+		frame.getContentPane().add(changePasswordLogedIn);
+		frame.getContentPane().revalidate();
+		frame.repaint();
+	}
+	public void setToAnswerQuestions()
+	{
+		frame.getContentPane().removeAll();
+		frame.getContentPane().invalidate();
+		frame.getContentPane().add(answerQuestions);
+		frame.getContentPane().revalidate();
+		frame.repaint();
+	}
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(700, 350, 450, 300);
@@ -71,44 +97,35 @@ public class RecoverAccountGUI {
 		submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				String tempID = userIDField.getText();
-				String tempAnswer = answerField.getText();
-				String realAnswer = null;
-				String tempQuestion = (String) securityQuestionBox.getSelectedItem();
-				User tempUser = Globals.userDatabase.searchUserID(tempID);
-				if(tempUser != null)
+				int returnValue;
+				User currentUser = Globals.userDatabase.getCurrentUser();
+				returnValue = currentUser.recoverAccount(securityQuestionBox.getSelectedIndex(), answerField.getText());
+				if(returnValue == -1)
 				{
+					Object[] options = {"OK"};
+					JOptionPane.showOptionDialog(null, "You have not set up the security features for your account", "Error",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+					null, options, options[0]);
 					
-				
-						if(tempQuestion.equals(Globals.QUESTION1))
-						{
-							realAnswer = tempUser.getAnswer1();
-						}
-						if(tempQuestion.equals(Globals.QUESTION2))
-						{
-							realAnswer = tempUser.getAnswer2();
-						}
-						if(tempQuestion.equals(Globals.QUESTION3))
-						{
-							realAnswer = tempUser.getAnswer3();
-						}
-						
-						if(realAnswer.equals(tempAnswer))
-						{
-							Globals.userDatabase.setCurrentUser(tempUser);
-							frame.getContentPane().removeAll();
-							frame.getContentPane().invalidate();
-							frame.getContentPane().add(changePassword);
-							frame.getContentPane().revalidate();
-							frame.repaint();
-						}
 				}
-				
-				
-			
-				
-			}
-		});
+				if(returnValue == 1)
+				{
+					Object[] options = {"OK"};
+					JOptionPane.showOptionDialog(null, "Answers do not match.", "Incorrect Answer",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+					null, options, options[0]);
+				}
+				if(returnValue == 0)
+				{
+					Globals.userDatabase.setCurrentUser(currentUser);
+					frame.getContentPane().removeAll();
+					frame.getContentPane().invalidate();
+					frame.getContentPane().add(changePassword);
+					frame.getContentPane().revalidate();
+					frame.repaint();
+				}
+
+		}});
 		submitButton.setBounds(157, 190, 189, 42);
 		recoverAccount.add(submitButton);
 		
@@ -140,21 +157,21 @@ public class RecoverAccountGUI {
 		passwordField_1.setBounds(163, 116, 150, 28);
 		changePassword.add(passwordField_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("New Password");
-		lblNewLabel_2.setFont(new Font("Consolas", Font.PLAIN, 13));
-		lblNewLabel_2.setBounds(23, 70, 117, 14);
-		changePassword.add(lblNewLabel_2);
+		JLabel lblNewPassword = new JLabel("New Password");
+		lblNewPassword.setFont(new Font("Consolas", Font.PLAIN, 13));
+		lblNewPassword.setBounds(23, 70, 117, 14);
+		changePassword.add(lblNewPassword);
 		
 		JLabel lblConfirmPassword = new JLabel("Confirm Password");
 		lblConfirmPassword.setFont(new Font("Consolas", Font.PLAIN, 13));
 		lblConfirmPassword.setBounds(23, 118, 128, 22);
 		changePassword.add(lblConfirmPassword);
 		
-		JButton btnNewButton_1 = new JButton("Change Password");
-		btnNewButton_1.setForeground(Color.BLACK);
-		btnNewButton_1.setBackground(SystemColor.textHighlight);
-		btnNewButton_1.setFont(new Font("Monospaced", Font.BOLD, 12));
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton btnChangePassword = new JButton("Change Password");
+		btnChangePassword.setForeground(Color.BLACK);
+		btnChangePassword.setBackground(SystemColor.textHighlight);
+		btnChangePassword.setFont(new Font("Monospaced", Font.BOLD, 12));
+		btnChangePassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String newPassword, confirmPassword;
 				char[] passwordInput = passwordField.getPassword();
@@ -165,11 +182,14 @@ public class RecoverAccountGUI {
 				if(confirmPassword.equals(newPassword))
 				{
 					Object[] options = {"OK"};
-					JOptionPane.showOptionDialog(null, "Password Changed!", "Congrats!",
+					JOptionPane.showOptionDialog(null, "Password Changed!", "Password Changed",
 					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
 					null, options, options[0]);
 					Globals.userDatabase.getCurrentUser().setPin(newPassword);
 					frame.dispose();
+					System.out.println(newPassword);
+					System.out.println(Globals.userDatabase.getCurrentUser().getPin());
+					Globals.userDatabase.setCurrentUser(null);
 					
 				}
 				else 
@@ -183,7 +203,129 @@ public class RecoverAccountGUI {
 				
 			}
 		});
-		btnNewButton_1.setBounds(163, 190, 150, 42);
-		changePassword.add(btnNewButton_1);
+		btnChangePassword.setBounds(163, 190, 150, 42);
+		changePassword.add(btnChangePassword);
+		
+		changePasswordLogedIn = new JPanel();
+		frame.getContentPane().add(changePasswordLogedIn, "name_1412434526974");
+		
+
+		changePasswordLogedIn.setBackground(Color.WHITE);
+		frame.getContentPane().add(changePasswordLogedIn, "name_125098458476250");
+		changePasswordLogedIn.setLayout(null);
+		
+		passwordField2 = new JPasswordField();
+		passwordField2.setBounds(163, 64, 150, 28);
+		changePasswordLogedIn.add(passwordField2);
+		
+		passwordField3 = new JPasswordField();
+		passwordField3.setBounds(163, 116, 150, 28);
+		changePasswordLogedIn.add(passwordField3);
+		
+		JLabel lblNewPassword2 = new JLabel("New Password");
+		lblNewPassword2.setFont(new Font("Consolas", Font.PLAIN, 13));
+		lblNewPassword2.setBounds(23, 70, 117, 14);
+		changePasswordLogedIn.add(lblNewPassword2);
+		
+		JLabel lblConfirmPassword2 = new JLabel("Confirm Password");
+		lblConfirmPassword.setFont(new Font("Consolas", Font.PLAIN, 13));
+		lblConfirmPassword.setBounds(23, 118, 128, 22);
+		changePasswordLogedIn.add(lblConfirmPassword2);
+		
+		JButton btnChangePassword2 = new JButton("Change Password");
+		btnChangePassword2.setForeground(Color.BLACK);
+		btnChangePassword2.setBackground(SystemColor.textHighlight);
+		btnChangePassword2.setFont(new Font("Monospaced", Font.BOLD, 12));
+		btnChangePassword2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String newPassword, confirmPassword;
+				char[] passwordInput = passwordField.getPassword();
+				newPassword = new String(passwordInput);
+				char[] passwordInput2 = passwordField_1.getPassword();
+				confirmPassword = new String(passwordInput2);
+				
+				if(confirmPassword.equals(newPassword))
+				{
+					Object[] options = {"OK"};
+					JOptionPane.showOptionDialog(null, "Password Changed!", "Password Changed",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+					null, options, options[0]);
+					Globals.userDatabase.getCurrentUser().setPin(newPassword);
+					frame.dispose();
+					System.out.println(Globals.userDatabase.getCurrentUser().getPin());
+					
+					
+				}
+				else 
+				{
+					Object[] options = { "OK"};
+					JOptionPane.showOptionDialog(null, "Passwords Do Not Match!", "Warning",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+					null, options, options[0]);
+					
+				}
+				
+			}
+		});
+		btnChangePassword2.setBounds(163, 190, 150, 42);
+		changePasswordLogedIn.add(btnChangePassword2);
+		
+		label = new JLabel("Confirm Password");
+		label.setFont(new Font("Consolas", Font.PLAIN, 13));
+		label.setBounds(23, 120, 128, 22);
+		changePasswordLogedIn.add(label);
+		
+		answerQuestions = new JPanel();
+		answerQuestions.setBackground(Color.WHITE);
+		frame.getContentPane().add(answerQuestions, "name_5294565203151");
+		answerQuestions.setLayout(null);
+		
+		answer1Field = new JTextField();
+		answer1Field.setBackground(Color.WHITE);
+		answer1Field.setBounds(100, 60, 238, 20);
+		answerQuestions.add(answer1Field);
+		answer1Field.setColumns(10);
+		
+		answer2Field = new JTextField();
+		answer2Field.setBackground(Color.WHITE);
+		answer2Field.setColumns(10);
+		answer2Field.setBounds(100, 120, 238, 20);
+		answerQuestions.add(answer2Field);
+		
+		answer3Field = new JTextField();
+		answer3Field.setBackground(Color.WHITE);
+		answer3Field.setColumns(10);
+		answer3Field.setBounds(100, 190, 238, 20);
+		answerQuestions.add(answer3Field);
+		
+		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Globals.userDatabase.getCurrentUser().
+				setAnswers(answer1Field.getText(), answer2Field.getText(), answer3Field.getText());
+				frame.dispose();
+			}
+		});
+		btnSubmit.setFont(new Font("Monospaced", Font.BOLD, 13));
+		btnSubmit.setForeground(Color.BLACK);
+		btnSubmit.setBackground(Color.LIGHT_GRAY);
+		btnSubmit.setBounds(161, 227, 111, 23);
+		answerQuestions.add(btnSubmit);
+		
+		JLabel lblNewLabel = new JLabel("Where did you attend High School?");
+		lblNewLabel.setFont(new Font("Consolas", Font.PLAIN, 13));
+		lblNewLabel.setBounds(100, 35, 238, 14);
+		answerQuestions.add(lblNewLabel);
+		
+		lblWhatIsYour = new JLabel("What is your favorite animal?");
+		lblWhatIsYour.setFont(new Font("Consolas", Font.PLAIN, 13));
+		lblWhatIsYour.setBounds(100, 106, 238, 14);
+		answerQuestions.add(lblWhatIsYour);
+		
+		lblWhatIsYour_1 = new JLabel("What is your mother's maiden name?");
+		lblWhatIsYour_1.setFont(new Font("Consolas", Font.PLAIN, 13));
+		lblWhatIsYour_1.setBounds(100, 175, 238, 14);
+		answerQuestions.add(lblWhatIsYour_1);
 	}
 }

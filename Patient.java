@@ -103,7 +103,7 @@ public class Patient extends User{
     	
     		
     	
-    	String print = "\nInsurance: \t\t" + insurance + "\n\nAddress: \t\t" + address + "\n\nPhone Number: \t\t" + phoneNumber + "\n\nDoctor: \t\t" + doctorName;
+    	String print = "\nName: \t\t\t" + userName + "\n\nInsurance: \t\t" + insurance + "\n\nAddress: \t\t" + address + "\n\nPhone Number: \t\t" + phoneNumber + "\n\nDoctor: \t\t" + doctorName;
     	
     	return print;
     }

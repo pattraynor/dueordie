@@ -1,3 +1,5 @@
+
+
 public class User {
 	protected String userName;
 	protected String userType;
@@ -55,5 +57,42 @@ public String getUserName(){
 }
 public String getUserType(){
 	return userType;
+}
+public int recoverAccount(int questionIndex, String attemptedAnswer)
+{
+	String realAnswer = null;
+	if(questionIndex == 0)
+	{
+		realAnswer = getAnswer1();
+	}
+	if(questionIndex == 1)
+	{
+		realAnswer = getAnswer2();
+	}
+	if(questionIndex == 2)
+	{
+		realAnswer = getAnswer3();
+	}
+	
+	if(realAnswer == null)
+	{ 
+		//returns -1 to show that answers were not created
+		return -1;
+	}
+	else
+	{
+		if(realAnswer.equals(attemptedAnswer))
+		{
+			//returns 0 to show that answers matched
+			return 0;
+		}
+		else
+		{
+			//returns 1 to show that answers did not match
+			return 1;
+		}
+	}
+	
+	
 }
 }
