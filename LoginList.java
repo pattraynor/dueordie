@@ -37,7 +37,7 @@ public class LoginList
     // ------------------------------------------------------
     // generates a 7 digit integer for UserID based on listSize
     // ------------------------------------------------------
-    private String generateUserID()
+    public String generateUserID()
     {
         int tempCount = getListSize();
 

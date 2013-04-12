@@ -1,7 +1,9 @@
 
 
+import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Color;
@@ -17,6 +19,9 @@ import javax.swing.JTextPane;
 import javax.swing.border.Border;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+
+
 
 
 public class NurseGUI {
@@ -42,6 +47,16 @@ public class NurseGUI {
 	private JPanel enterPatientInformation;
 	private JPanel mainMenu;
 	private JTextPane symptomsBox;
+	private JTextField firstNameField;
+	private JTextField lastNameField;
+	private JTextField addressField;
+	private JTextField insuranceField;
+	private JTextField numberField;
+	private ButtonGroup radioGroup;
+	private JLabel lblInsurance, lblAddress, lblPhoneNumber;
+	private JRadioButton nurseButton, patientButton;
+	private JTextField doctorField;
+	private JLabel lblDoctor;
 	/**
 	 * Launch the application.
 	 */
@@ -69,6 +84,18 @@ public class NurseGUI {
 		mainMenu.setLayout(null);
 		
 		JButton btnNewButton = new JButton("Create Account");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				frame.getContentPane().removeAll();
+				frame.getContentPane().invalidate();
+
+				frame.getContentPane().add(createAccount);
+				frame.getContentPane().revalidate();
+				frame.repaint();
+				
+			}
+		});
 		btnNewButton.setBackground(Color.WHITE);
 		btnNewButton.setBounds(134, 139, 202, 51);
 		mainMenu.add(btnNewButton);
@@ -102,7 +129,7 @@ public class NurseGUI {
 		btnLogout.setForeground(Color.BLACK);
 		btnLogout.setBackground(Color.LIGHT_GRAY);
 		btnLogout.setFont(new Font("Monospaced", Font.BOLD, 13));
-		btnLogout.setBounds(360, 11, 114, 51);
+		btnLogout.setBounds(375, 11, 99, 27);
 		mainMenu.add(btnLogout);
 		
 		enterPatientInformation = new JPanel();
@@ -110,8 +137,176 @@ public class NurseGUI {
 		enterPatientInformation.setLayout(null);
 		
 		createAccount = new JPanel();
+		createAccount.setBackground(Color.WHITE);
 		frame.getContentPane().add(createAccount, "name_23592594807845");
-		Border border = BorderFactory.createLineBorder(Color.BLACK);
+		createAccount.setLayout(null);
+		
+		firstNameField = new JTextField();
+		firstNameField.setBounds(112, 154, 109, 25);
+		createAccount.add(firstNameField);
+		firstNameField.setColumns(10);
+		
+		radioGroup = new ButtonGroup();
+		patientButton = new JRadioButton("Patient");
+		patientButton.setBackground(Color.WHITE);
+		patientButton.setFont(new Font("Monospaced", Font.PLAIN, 12));
+		patientButton.setBounds(172, 55, 137, 23);
+		radioGroup.add(patientButton);
+		createAccount.add(patientButton);
+		patientButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg1) 
+			{
+				lblDoctor.setVisible(true);
+				doctorField.setVisible(true);
+				insuranceField.setVisible(true);
+				numberField.setVisible(true);
+				addressField.setVisible(true);
+				lblInsurance.setVisible(true);
+				lblPhoneNumber.setVisible(true);
+				lblAddress.setVisible(true);
+			}
+			});
+		nurseButton = new JRadioButton("Nurse");
+		nurseButton.setBackground(Color.WHITE);
+		nurseButton.setFont(new Font("Monospaced", Font.PLAIN, 12));
+		nurseButton.setBounds(172, 96, 137, 23);
+		radioGroup.add(nurseButton);
+		createAccount.add(nurseButton);
+		nurseButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg1) 
+			{
+				lblDoctor.setVisible(false);
+				doctorField.setVisible(false);
+				insuranceField.setVisible(false);
+				numberField.setVisible(false);
+				addressField.setVisible(false);
+				lblInsurance.setVisible(false);
+				lblPhoneNumber.setVisible(false);
+				lblAddress.setVisible(false);
+			}
+			});
+		
+		lastNameField = new JTextField();
+		lastNameField.setBounds(266, 154, 109, 25);
+		createAccount.add(lastNameField);
+		lastNameField.setColumns(10);
+		
+		addressField = new JTextField();
+		addressField.setColumns(10);
+		addressField.setBounds(112, 289, 263, 25);
+		createAccount.add(addressField);
+		
+		insuranceField = new JTextField();
+		insuranceField.setColumns(10);
+		insuranceField.setBounds(266, 227, 109, 25);
+		createAccount.add(insuranceField);
+		
+		numberField = new JTextField();
+		numberField.setColumns(10);
+		numberField.setBounds(112, 227, 109, 25);
+		createAccount.add(numberField);
+		
+		JLabel lblAccountType = new JLabel("Account Type");
+		lblAccountType.setFont(new Font("Consolas", Font.PLAIN, 13));
+		lblAccountType.setBounds(54, 78, 109, 14);
+		createAccount.add(lblAccountType);
+		
+		JLabel lblFirstName = new JLabel("First Name");
+		lblFirstName.setFont(new Font("Consolas", Font.PLAIN, 13));
+		lblFirstName.setBounds(112, 140, 109, 14);
+		createAccount.add(lblFirstName);
+		
+		JLabel lblLastName = new JLabel("Last Name");
+		lblLastName.setFont(new Font("Consolas", Font.PLAIN, 13));
+		lblLastName.setBounds(266, 140, 109, 14);
+		createAccount.add(lblLastName);
+		
+		lblPhoneNumber = new JLabel("Phone Number");
+		lblPhoneNumber.setFont(new Font("Consolas", Font.PLAIN, 13));
+		lblPhoneNumber.setBounds(112, 214, 109, 14);
+		createAccount.add(lblPhoneNumber);
+		
+		lblInsurance = new JLabel("Insurance");
+		lblInsurance.setFont(new Font("Consolas", Font.PLAIN, 13));
+		lblInsurance.setBounds(266, 214, 109, 14);
+		createAccount.add(lblInsurance);
+		
+		lblAddress = new JLabel("Address");
+		lblAddress.setFont(new Font("Consolas", Font.PLAIN, 13));
+		lblAddress.setBounds(112, 275, 109, 14);
+		createAccount.add(lblAddress);
+		
+		JLabel lblAccountCreation = new JLabel("Create Account");
+		lblAccountCreation.setForeground(SystemColor.textHighlight);
+		lblAccountCreation.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblAccountCreation.setBackground(Color.WHITE);
+		lblAccountCreation.setBounds(180, 0, 143, 48);
+		createAccount.add(lblAccountCreation);
+		
+		JButton btnCreate = new JButton("Create");
+		btnCreate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(patientButton.isSelected())
+				{
+					User tempUser;
+					String doctorID = doctorField.getText();
+					
+					tempUser = Globals.userDatabase.searchUserID(doctorID);
+					if(tempUser!= null)
+					
+					{
+					Doctor patientDoctor = (Doctor) tempUser;
+					String newPin = Globals.userDatabase.generateUserID();
+					String newName = firstNameField.toString() + lastNameField.getText();
+					Patient newPatient = new Patient(newName, newPin, patientDoctor, insuranceField.getText(), numberField.getText(), addressField.getText());
+					String patientID = Globals.userDatabase.addUser(newPatient);
+					Object[] options = {"OK"};
+					JOptionPane.showOptionDialog(null, "Account was created\nUser ID: " + patientID + "\nPassword: " + newPin, "Account Created",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
+					null, options, options[0]);
+					}
+					else 
+					{
+						Object[] options = {"OK"};
+						JOptionPane.showOptionDialog(null, "Please enter the correct Doctor ID", "Wrong Doctor ID",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+						null, options, options[0]);
+					}
+					
+					
+				}
+				if(nurseButton.isSelected())
+				{
+					String newPin = Globals.userDatabase.generateUserID();
+					String newName =  firstNameField.getText() + lastNameField.getText();
+					Nurse newNurse = new Nurse(newName, newPin);
+					String nurseID = Globals.userDatabase.addUser(newNurse);
+					Object[] options = {"OK"};
+					JOptionPane.showOptionDialog(null, "Account was created\nUser ID: " + nurseID + "\n Password: " + newPin, "Account Created",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+					null, options, options[0]);
+					
+				}
+			}
+		});
+		btnCreate.setForeground(Color.BLACK);
+		btnCreate.setFont(new Font("Monospaced", Font.BOLD, 13));
+		btnCreate.setBackground(SystemColor.textHighlight);
+		btnCreate.setBounds(179, 412, 130, 23);
+		createAccount.add(btnCreate);
+		
+		doctorField = new JTextField();
+		doctorField.setColumns(10);
+		doctorField.setBounds(112, 352, 109, 25);
+		createAccount.add(doctorField);
+		
+		lblDoctor = new JLabel("Doctor ID");
+		lblDoctor.setFont(new Font("Consolas", Font.PLAIN, 13));
+		lblDoctor.setBounds(112, 338, 109, 14);
+		createAccount.add(lblDoctor);
+		
 		
 		JButton btnGoBack = new JButton("<- Back");
 		btnGoBack.addActionListener(new ActionListener() {

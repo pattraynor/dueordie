@@ -1,16 +1,16 @@
 public class Patient extends User{
 
-    private String doctor;
+    private Doctor doctor;
     private String insurance, address, phoneNumber;
     private MedicalRecord patientRecord;
 
-    public Patient(String _userName, String _newPin)
+    public Patient(String _userName, String _newPin, Doctor myDoctor, String myInsurance, String myNumber, String myAddress)
     {
         super(_userName, _newPin, Globals.PATIENT);
-        doctor = "";
-        insurance = "";
-        address = "";
-        phoneNumber = "";
+        doctor = myDoctor;
+        insurance = myInsurance;
+        address = myAddress;
+        phoneNumber = myNumber;
         patientRecord = new MedicalRecord();
 
     }
@@ -18,7 +18,7 @@ public class Patient extends User{
     {
         userType = Globals.PATIENT;
         userName = "";
-        doctor = "";
+        doctor = null;
         insurance = "";
         address = "";
         phoneNumber = "";
@@ -36,10 +36,10 @@ public class Patient extends User{
 
     }
 
-    public void setDoctor(String userID)
+    public void setDoctor(Doctor setDoctor)
     {
 
-        doctor = userID;
+        doctor = setDoctor;
 
     }
 
@@ -65,7 +65,7 @@ public class Patient extends User{
 
     }
 
-    public String getDoctor(){
+    public Doctor getDoctor(){
 
         return doctor;
 
@@ -98,17 +98,12 @@ public class Patient extends User{
     
     public String toString()
     {
-    	String doctorName;
-    	User tempUser = Globals.userDatabase.searchUserID(doctor);
-    	if(tempUser != null)
-    	{
-    		doctorName = tempUser.getUserName();
-    	}
-    	else
-    		doctorName = "N/A";
+    	
+    	String doctorName = doctor.getUserName();
+    	
     		
     	
-    	String print = "\nInsurance: \t\t" + insurance + "\n\nAddress: \t\t" + address + "\n\nPhone Number: \t" + phoneNumber + "\n\nDoctor: \t\t" + doctorName;
+    	String print = "\nInsurance: \t\t" + insurance + "\n\nAddress: \t\t" + address + "\n\nPhone Number: \t\t" + phoneNumber + "\n\nDoctor: \t\t" + doctorName;
     	
     	return print;
     }

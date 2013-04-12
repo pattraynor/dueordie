@@ -6,15 +6,16 @@ import java.awt.EventQueue;
 public class main {
 	public static void main(String[] args) {
 		
-		
-	 	Patient patient1 = new Patient("Matt Potts", "1");
-	 	Doctor doctor1 = new Doctor("Dr Oz", "2");
+		Doctor doctor1 = new Doctor("Dr Oz", "2");
+		String doctorID = Globals.userDatabase.addUser(doctor1);
+	 	Patient patient1 = new Patient("Matt Potts", "1", doctor1, "1234", "23333", "23232");
+	 	
 	 	String address = "1231 north road";
 	 	patient1.setAddress(address);
 	 
 	   
 
-	    Patient patient2 = new Patient("Tanner Narramore", "2");
+	    Patient patient2 = new Patient("Tanner Narramore", "2", doctor1, "north elm", "1233", "12222");
 	    patient2.setAddress("1232 north road");
 	    
 	    Nurse nurse1 = new Nurse("James Potts", "3");
@@ -25,11 +26,7 @@ public class main {
 
 
 
-            String doctorID = Globals.userDatabase.addUser(doctor1);
-	    	patient1.setDoctor(doctorID);
-	    	patient1.setInsurance("MetLife 1232113");
-	    	patient1.setAnswers("dog", "ca", "mouse");
-	    	patient2.setDoctor(doctorID);
+          
 	    	
         String userID1 = Globals.userDatabase.addUser(patient1);
 	        System.out.println("Patient 1 : " + userID1 + "\tPassword: 1");
