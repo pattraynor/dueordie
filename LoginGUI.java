@@ -1,6 +1,6 @@
 
 
-import javax.swing.JFrame;
+import javax.swing.JFrame; 
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -17,7 +17,7 @@ import java.awt.SystemColor;
 
 import javax.swing.UIManager;
 import javax.swing.JPasswordField;
-import javax.swing.JTextArea;
+
 
 
 public class LoginGUI {
@@ -25,7 +25,7 @@ public class LoginGUI {
 	JFrame frame;
 	private JTextField userID;
 	private JPasswordField password;
-	private JTextArea txtWrongUser = new JTextArea();
+	private JLabel lblWrongPasswordUser;
 	
 	/**
 	 * Launch the application.
@@ -46,8 +46,6 @@ public class LoginGUI {
 	private void initialize() {
 		
 		JPanel login = new JPanel();
-		
-		JPanel nursePage = new JPanel();
 		
 
 		frame = new JFrame();
@@ -101,9 +99,13 @@ public class LoginGUI {
 							
 						}
 						Globals.userDatabase.setCurrentUser(tempUser);
+						
 					}
 					else
-						txtWrongUser.setVisible(true);
+					{
+						lblWrongPasswordUser.setVisible(true);
+					}
+				
 					
 						
 				}
@@ -152,21 +154,12 @@ public class LoginGUI {
 		login.add(password);
 		
 		
-	
-		frame.getContentPane().add(nursePage, "name_26039116238459");
-		nursePage.setLayout(null);
-		
-		JButton btnCreateAccount = new JButton("Create Account");
-		btnCreateAccount.setBounds(10, 80, 155, 23);
-		nursePage.add(btnCreateAccount);
-		
-		JButton btnNewButton_1 = new JButton("Enter Patient Information");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton_1.setBounds(10, 143, 155, 23);
-		nursePage.add(btnNewButton_1);
+		lblWrongPasswordUser = new JLabel("Wrong UserID/Password");
+		lblWrongPasswordUser.setForeground(Color.RED);
+		lblWrongPasswordUser.setFont(new Font("Consolas", Font.PLAIN, 13));
+		lblWrongPasswordUser.setBounds(136, 185, 183, 14);
+		login.add(lblWrongPasswordUser);
+		lblWrongPasswordUser.setVisible(false);
 	}
 
 

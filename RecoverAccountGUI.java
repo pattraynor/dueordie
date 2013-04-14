@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.SystemColor;
+import java.io.IOException;
 
 
 
@@ -97,9 +98,20 @@ public class RecoverAccountGUI {
 		submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				int returnValue;
-				User currentUser = Globals.userDatabase.getCurrentUser();
-				returnValue = currentUser.recoverAccount(securityQuestionBox.getSelectedIndex(), answerField.getText());
+				int returnValue, index = securityQuestionBox.getSelectedIndex();
+				String attemptedAnswer = answerField.getText();
+				
+				User searchUser = Globals.userDatabase.searchUserID(userIDField.getText());
+				if(searchUser == null)
+				{
+					Object[] options = {"OK"};
+					JOptionPane.showOptionDialog(null, "Wrong User ID or Answer", "Wrong ID/Answer",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+					null, options, options[0]);
+				}
+				else
+				{
+				returnValue = searchUser.recoverAccount(index, attemptedAnswer);
 				if(returnValue == -1)
 				{
 					Object[] options = {"OK"};
@@ -117,12 +129,13 @@ public class RecoverAccountGUI {
 				}
 				if(returnValue == 0)
 				{
-					Globals.userDatabase.setCurrentUser(currentUser);
+					Globals.userDatabase.setCurrentUser(searchUser);
 					frame.getContentPane().removeAll();
 					frame.getContentPane().invalidate();
 					frame.getContentPane().add(changePassword);
 					frame.getContentPane().revalidate();
 					frame.repaint();
+				}
 				}
 
 		}});
@@ -179,28 +192,50 @@ public class RecoverAccountGUI {
 				char[] passwordInput2 = passwordField_1.getPassword();
 				confirmPassword = new String(passwordInput2);
 				
-				if(confirmPassword.equals(newPassword))
+				if(newPassword.length() < 4)
 				{
 					Object[] options = {"OK"};
-					JOptionPane.showOptionDialog(null, "Password Changed!", "Password Changed",
+					JOptionPane.showOptionDialog(null, "Password is not long Enough.", "Password too Short",
 					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
 					null, options, options[0]);
-					Globals.userDatabase.getCurrentUser().setPin(newPassword);
-					frame.dispose();
-					System.out.println(newPassword);
-					System.out.println(Globals.userDatabase.getCurrentUser().getPin());
-					Globals.userDatabase.setCurrentUser(null);
+					passwordField.setText("");
+					passwordField_1.setText("");
 					
 				}
-				else 
+				else
 				{
-					Object[] options = { "OK"};
-					JOptionPane.showOptionDialog(null, "Passwords Do Not Match!", "Warning",
-					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-					null, options, options[0]);
+					if(confirmPassword.equals(newPassword))
+					{
 					
-				}
+					
+						Object[] options = {"OK"};
+						JOptionPane.showOptionDialog(null, "Password Changed!", "Password Changed",
+								JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+								null, options, options[0]);
+						Globals.userDatabase.getCurrentUser().setPin(newPassword);
+						try {
+							Globals.userDatabase.saveDatabase();
+						} catch (IOException e1) {
+							JOptionPane.showOptionDialog(null, "There was a problem saving changes", "Error during Save",
+									JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+									null, options, options[0]);
+							e1.printStackTrace();
+						}
+						Globals.userDatabase.setCurrentUser(null);
+						frame.dispose();
+					
+					
+					}
+					else 
+					{
+						Object[] options = { "OK"};
+						JOptionPane.showOptionDialog(null, "Passwords Do Not Match!", "Warning",
+								JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+						null, options, options[0]);
+					
+					}
 				
+				}
 			}
 		});
 		btnChangePassword.setBounds(163, 190, 150, 42);
@@ -239,32 +274,51 @@ public class RecoverAccountGUI {
 		btnChangePassword2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String newPassword, confirmPassword;
-				char[] passwordInput = passwordField.getPassword();
+				char[] passwordInput = passwordField2.getPassword();
 				newPassword = new String(passwordInput);
-				char[] passwordInput2 = passwordField_1.getPassword();
+				char[] passwordInput2 = passwordField3.getPassword();
 				confirmPassword = new String(passwordInput2);
 				
-				if(confirmPassword.equals(newPassword))
+				if(newPassword.length() < 4)
 				{
 					Object[] options = {"OK"};
-					JOptionPane.showOptionDialog(null, "Password Changed!", "Password Changed",
+					JOptionPane.showOptionDialog(null, "Password is not long Enough.", "Password too Short",
 					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
 					null, options, options[0]);
-					Globals.userDatabase.getCurrentUser().setPin(newPassword);
-					frame.dispose();
-					System.out.println(Globals.userDatabase.getCurrentUser().getPin());
-					
+					passwordField2.setText("");
+					passwordField3.setText("");
 					
 				}
 				else 
 				{
-					Object[] options = { "OK"};
-					JOptionPane.showOptionDialog(null, "Passwords Do Not Match!", "Warning",
-					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-					null, options, options[0]);
-					
-				}
+					if(confirmPassword.equals(newPassword))
+					{
+						Object[] options = {"OK"};
+						JOptionPane.showOptionDialog(null, "Password Changed!", "Password Changed",
+								JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+								null, options, options[0]);
+						Globals.userDatabase.getCurrentUser().setPin(newPassword);
 				
+						try {
+							Globals.userDatabase.saveDatabase();
+						} catch (IOException e1) {
+							JOptionPane.showOptionDialog(null, "There was a problem saving", "Error during Save",
+								JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+								null, options, options[0]);
+							e1.printStackTrace();
+						}
+						frame.dispose();
+					}
+					else 
+					{
+						Object[] options = { "OK"};
+						JOptionPane.showOptionDialog(null, "Passwords Do Not Match!", "Warning",
+								JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+								null, options, options[0]);
+					
+					}
+				
+				}
 			}
 		});
 		btnChangePassword2.setBounds(163, 190, 150, 42);
@@ -305,6 +359,7 @@ public class RecoverAccountGUI {
 				Globals.userDatabase.getCurrentUser().
 				setAnswers(answer1Field.getText(), answer2Field.getText(), answer3Field.getText());
 				frame.dispose();
+			
 			}
 		});
 		btnSubmit.setFont(new Font("Monospaced", Font.BOLD, 13));

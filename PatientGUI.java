@@ -11,6 +11,8 @@ import javax.swing.JButton;
 import javax.swing.UIManager;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
@@ -19,9 +21,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Component;
+import java.io.IOException;
+
 import javax.swing.JTabbedPane;
 import javax.swing.border.Border;
-
+import javax.swing.JList;
 
 public class PatientGUI {
 	public JFrame frame;
@@ -74,6 +78,7 @@ public class PatientGUI {
 	private JLabel lbllbs;
 	private JLabel lblGoToMenuedit;
 	private JLabel lblsystolicdiastolic;
+	private JList list;
 
 	/**
 	 * Launch the application.
@@ -89,6 +94,7 @@ public class PatientGUI {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	@SuppressWarnings("unchecked")
 	private void initialize() {
 		frame = new JFrame();
 		frame.setResizable(false);
@@ -114,26 +120,30 @@ public class PatientGUI {
 		textArea = new JTextArea();
 		textArea.setBounds(126, 62, 509, 297);
 		AccountInformation.add(textArea);
-		textArea.setText(Globals.userDatabase.getCurrentUser().toString());
+		textArea.setText(Globals.userDatabase.getCurrentUser().print());
 		textArea.setFont(new Font("Monospaced", Font.PLAIN, 13));
 
 		textArea.setEditable(false);
-		
+
 		lblAccountInformation = new JLabel("Account Information");
 		lblAccountInformation.setForeground(SystemColor.textHighlight);
 		lblAccountInformation.setFont(new Font("Consolas", Font.BOLD, 17));
 		lblAccountInformation.setBounds(248, 11, 190, 27);
 		AccountInformation.add(lblAccountInformation);
-		
+
 		lblToEditThis = new JLabel("To edit this information");
 		lblToEditThis.setFont(new Font("Consolas", Font.PLAIN, 13));
 		lblToEditThis.setBounds(248, 444, 353, 14);
 		AccountInformation.add(lblToEditThis);
-		
+
 		lblGoToMenuedit = new JLabel("Go to Menu->Edit Account");
 		lblGoToMenuedit.setFont(new Font("Consolas", Font.PLAIN, 13));
 		lblGoToMenuedit.setBounds(248, 458, 353, 14);
 		AccountInformation.add(lblGoToMenuedit);
+		Border borderInfoWindow = BorderFactory.createLineBorder(Color.BLACK);
+
+		Patient currentPatient = (Patient) Globals.userDatabase
+				.getCurrentUser();
 
 		searchMedicalHistory = new JPanel();
 		tabbedPane.addTab("Medical History", null, searchMedicalHistory, null);
@@ -151,7 +161,7 @@ public class PatientGUI {
 						"2", "3", "4", "5", "6", "7", "8", "9", "10", "11",
 						"12" }));
 		monthComboBox2.setToolTipText("1, 2 ,3\r\n");
-		monthComboBox2.setBounds(73, 159, 52, 20);
+		monthComboBox2.setBounds(73, 314, 52, 20);
 		searchMedicalHistory.add(monthComboBox2);
 
 		dayComboBox2.setBackground(Color.WHITE);
@@ -161,7 +171,7 @@ public class PatientGUI {
 				"13", "14", "15", "16", "17", "18", "19", "20", "21", "22",
 				"23", "24", "25", "26", "27", "28", "29", "30", "31" }));
 		dayComboBox2.setToolTipText("1, 2 ,3\r\n");
-		dayComboBox2.setBounds(123, 159, 50, 20);
+		dayComboBox2.setBounds(123, 314, 50, 20);
 		searchMedicalHistory.add(dayComboBox2);
 
 		yearComboBox2.setBackground(Color.WHITE);
@@ -170,7 +180,7 @@ public class PatientGUI {
 				"2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020",
 				"2021", "2022" }));
 		yearComboBox2.setToolTipText("1, 2 ,3\r\n");
-		yearComboBox2.setBounds(172, 159, 58, 20);
+		yearComboBox2.setBounds(172, 314, 58, 20);
 		searchMedicalHistory.add(yearComboBox2);
 
 		btnGetMostRecent = new JButton("Get Most Recent ");
@@ -184,12 +194,12 @@ public class PatientGUI {
 						.getCurrentUser();
 				Visit tempVisit = tempPatient.getMedicalRecord().getLastVisit();
 				if (tempVisit != null) {
-					informationWindow.setText(tempVisit.toString());
+					informationWindow.setText(tempVisit.print());
 				}
 
 			}
 		});
-		btnGetMostRecent.setBounds(73, 342, 157, 50);
+		btnGetMostRecent.setBounds(73, 422, 157, 50);
 		lblViewMedicalInformation = new JLabel("Search By Date");
 
 		btnSearchVisit = new JButton("Search");
@@ -199,20 +209,20 @@ public class PatientGUI {
 
 		searchMedicalHistory.add(btnGetMostRecent);
 		lblMonth.setFont(new Font("Consolas", Font.PLAIN, 10));
-		lblMonth.setBounds(84, 145, 46, 14);
+		lblMonth.setBounds(79, 299, 46, 14);
 
 		searchMedicalHistory.add(lblMonth);
 		lblDay.setFont(new Font("Consolas", Font.PLAIN, 10));
-		lblDay.setBounds(138, 145, 44, 14);
+		lblDay.setBounds(129, 299, 44, 14);
 
 		searchMedicalHistory.add(lblDay);
 		lblYear.setFont(new Font("Consolas", Font.PLAIN, 10));
-		lblYear.setBounds(184, 145, 46, 14);
+		lblYear.setBounds(184, 299, 46, 14);
 
 		searchMedicalHistory.add(lblYear);
 		lblViewMedicalInformation
 				.setFont(new Font("Monospaced", Font.BOLD, 13));
-		lblViewMedicalInformation.setBounds(95, 104, 135, 44);
+		lblViewMedicalInformation.setBounds(95, 244, 135, 44);
 
 		searchMedicalHistory.add(lblViewMedicalInformation);
 		btnSearchVisit.setForeground(Color.BLACK);
@@ -232,36 +242,67 @@ public class PatientGUI {
 				Visit tempVisit = tempPatient.getMedicalRecord().getVisit(
 						month, day, year);
 				if (tempVisit != null) {
-					informationWindow.setText(tempVisit.toString());
+					informationWindow.setText(tempVisit.print());
 				}
-				if (tempVisit != null && tempVisit.getDay() <= 0) {
+				if (tempVisit == null) {
 					informationWindow.setText("No Information to Display.");
 				}
 			}
 		});
-		btnSearchVisit.setBounds(73, 196, 157, 50);
+		btnSearchVisit.setBounds(73, 337, 157, 50);
 
 		searchMedicalHistory.add(btnSearchVisit);
 
 		informationWindow = new JTextArea();
 		informationWindow.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		informationWindow.setBounds(332, 56, 337, 416);
-		Border borderInfoWindow = BorderFactory.createLineBorder(Color.BLACK);
-		informationWindow.setBorder(BorderFactory.createCompoundBorder(borderInfoWindow, 
-	            BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+		informationWindow.setBorder(BorderFactory.createCompoundBorder(
+				borderInfoWindow,
+				BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 		searchMedicalHistory.add(informationWindow);
 		informationWindow.setEditable(false);
-		
+
 		JLabel lblMedicalRecord = new JLabel("Medical Record");
 		lblMedicalRecord.setForeground(SystemColor.textHighlight);
 		lblMedicalRecord.setFont(new Font("Consolas", Font.BOLD, 17));
 		lblMedicalRecord.setBounds(430, 11, 190, 27);
 		searchMedicalHistory.add(lblMedicalRecord);
-		
+
 		lblOr = new JLabel("OR");
 		lblOr.setFont(new Font("Monospaced", Font.BOLD, 13));
-		lblOr.setBounds(138, 272, 46, 44);
+		lblOr.setBounds(142, 380, 46, 44);
 		searchMedicalHistory.add(lblOr);
+
+		list = new JList(currentPatient.getMedicalRecord().toArray());
+		list.setFont(new Font("Monospaced", Font.BOLD, 13));
+		list.setBorder(UIManager.getBorder("List.focusCellHighlightBorder"));
+		list.setBounds(73, 29, 157, 101);
+		searchMedicalHistory.add(list);
+
+		JButton btnGetSelected = new JButton("Get Selected");
+		btnGetSelected.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int index = list.getSelectedIndex();
+				Patient tempPatient = (Patient) Globals.userDatabase
+						.getCurrentUser();
+				Visit tempVisit = tempPatient.getMedicalRecord()
+						.getVisit(index);
+				if(tempVisit != null)
+				{
+				informationWindow.setText(tempVisit.print());
+				}
+			}
+		});
+		btnGetSelected.setForeground(Color.BLACK);
+		btnGetSelected.setFont(new Font("Consolas", Font.PLAIN, 11));
+		btnGetSelected.setBackground(Color.WHITE);
+		btnGetSelected.setBounds(73, 141, 157, 50);
+		searchMedicalHistory.add(btnGetSelected);
+
+		JLabel label_1 = new JLabel("OR");
+		label_1.setFont(new Font("Monospaced", Font.BOLD, 13));
+		label_1.setBounds(142, 202, 31, 44);
+		searchMedicalHistory.add(label_1);
 
 		viewProgress = new JPanel();
 		tabbedPane.addTab("Charts and Analysis", null, viewProgress, null);
@@ -354,14 +395,14 @@ public class PatientGUI {
 
 		informationDisplay2 = new JTextArea();
 		informationDisplay2.setText((String) null);
-		
+
 		informationDisplay2.setEditable(false);
 		informationDisplay2.setBackground(Color.WHITE);
 		informationDisplay2.setBounds(10, 34, 664, 182);
-		informationDisplay2.setText(Globals.userDatabase.getCurrentUser().toString());
+		informationDisplay2.setText(Globals.userDatabase.getCurrentUser()
+				.print());
 		informationDisplay2.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		editAccount.add(informationDisplay2);
-	
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setForeground(Color.LIGHT_GRAY);
@@ -377,7 +418,7 @@ public class PatientGUI {
 			public void actionPerformed(ActionEvent e) {
 
 				informationDisplay2.setText(Globals.userDatabase
-						.getCurrentUser().toString());
+						.getCurrentUser().print());
 			}
 		});
 		btnRefresh.setBounds(560, 11, 114, 23);
@@ -403,24 +444,23 @@ public class PatientGUI {
 		btnBack.setBackground(Color.LIGHT_GRAY);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				frame.getContentPane().removeAll();
 				frame.getContentPane().invalidate();
 
 				frame.getContentPane().add(mainWindow);
 				frame.getContentPane().revalidate();
 				frame.repaint();
-				textArea.setText(Globals.userDatabase
-						.getCurrentUser().toString());
+				textArea.setText(Globals.userDatabase.getCurrentUser().print());
 			}
 		});
 		btnBack.setBounds(10, 11, 114, 23);
 		editAccount.add(btnBack);
-		
+
 		JButton btnSetUpSecurity = new JButton("Add Security Features");
 		btnSetUpSecurity.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				RecoverAccountGUI window = new RecoverAccountGUI();
 				window.frame.setVisible(true);
 				window.setToAnswerQuestions();
@@ -492,7 +532,6 @@ public class PatientGUI {
 							weight, height, temperature);
 					Patient tempPatient = (Patient) tempUser;
 					tempPatient.getMedicalRecord().addVisit(newVisit);
-					
 
 				}
 				bloodPressureTopBox.setText("");
@@ -616,24 +655,25 @@ public class PatientGUI {
 		});
 		btnCancel.setBounds(10, 11, 89, 23);
 		enterDailyInformation.add(btnCancel);
-		
+
 		lblmgdl = new JLabel("(mg/dL)");
 		lblmgdl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 12));
 		lblmgdl.setBounds(413, 204, 58, 14);
 		enterDailyInformation.add(lblmgdl);
-		
+
 		lbllbs = new JLabel("(lbs)");
 		lbllbs.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 12));
 		lbllbs.setBounds(413, 104, 73, 14);
 		enterDailyInformation.add(lbllbs);
-		
+
 		JLabel label = new JLabel("/");
 		label.setFont(new Font("Consolas", Font.PLAIN, 12));
 		label.setBounds(347, 310, 29, 14);
 		enterDailyInformation.add(label);
-		
+
 		lblsystolicdiastolic = new JLabel("(Systolic/Diastolic)");
-		lblsystolicdiastolic.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 12));
+		lblsystolicdiastolic.setFont(new Font("Segoe UI Semibold", Font.PLAIN,
+				12));
 		lblsystolicdiastolic.setBounds(413, 309, 109, 14);
 		enterDailyInformation.add(lblsystolicdiastolic);
 
@@ -651,6 +691,21 @@ public class PatientGUI {
 
 		menuSave = new JMenuItem("Save ");
 		mnNewMenu.add(menuSave);
+		menuSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Globals.userDatabase.saveDatabase();
+				} catch (IOException e1) {
+					Object[] options = { "OK" };
+					JOptionPane.showOptionDialog(null,
+							"There was a problem with saving to the file",
+							"Error", JOptionPane.DEFAULT_OPTION,
+							JOptionPane.WARNING_MESSAGE, null, options,
+							options[0]);
+					e1.printStackTrace();
+				}
+			}
+		});
 
 		JMenuItem menuNewEntry = new JMenuItem("New Entry");
 		mnNewMenu.add(menuNewEntry);

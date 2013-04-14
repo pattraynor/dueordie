@@ -26,9 +26,9 @@ public class Visit
 		weight = 0;
 		height = 0;
 		temperature = 0;
-		prescriptions = "";
-		symptoms = "";
-		notes = "";	
+		prescriptions = null;
+		symptoms = null;
+		notes = null;	
 	}
 	
 	public Visit(int mon, int today, int newYear)
@@ -42,12 +42,13 @@ public class Visit
 		weight = 0;
 		height = 0;
 		temperature = 0;
-		prescriptions = "";
-		symptoms = "";
-		notes = "";	
+		prescriptions = null;
+		symptoms = null;
+		notes = null;	
 	}
 	
-	public Visit(int mon, int today, int newYear, double pressureTop, double pressureBot, double sweet, double pounds,
+	public Visit(int mon, int today, int newYear, double pressureTop, 
+			double pressureBot, double sweet, double pounds,
 			double inches, double fever, String problems)
 	{
 		month = mon;
@@ -60,8 +61,29 @@ public class Visit
 		height = inches;
 		temperature = fever;
 		symptoms = problems;
-		prescriptions = "";
-		notes = "";	
+		prescriptions = null;
+		notes = null;	
+		
+		
+	}
+	public Visit(int _month, int _day, int _year, double pressureTop, 
+			double pressureBot, double _sugar, double _weight,
+			double _height, double _temperature, String _symptoms,
+			String _notes, String _prescriptions)
+	{
+		month = _month;
+		day = _day;
+		year = _year;
+		bloodPressureTop = pressureTop;
+        bloodPressureBot = pressureBot;
+		sugar = _sugar;
+		weight = _weight;
+		height = _height;
+		temperature = _temperature;
+		notes = _notes;
+		symptoms = _symptoms;
+		prescriptions = _prescriptions;
+		notes = _notes;	
 		
 		
 	}
@@ -214,39 +236,99 @@ public class Visit
 		return height;
 	}
 	
-	public String toString()
+	public String print()
 	{
 		String print;
 		String tempWeight, tempHeight, tempTemperature, tempBloodSugar, tempBloodPressure, tempDate;
 		tempDate = Integer.toString(month) + "/" + Integer.toString(day) + "/" + Integer.toString(year);
+		String prescriptionsCopy;
+		String symptomsCopy;
+		String notesCopy;
+		
+		if(symptoms == null)
+		{
+			symptomsCopy = "";
+		}
+		else
+		{
+			symptomsCopy = symptoms;
+			
+		}
+		
+		if(notes == null)
+		{
+			notesCopy = "";
+		}
+		else 
+		{
+			notesCopy = notes;
+		}
+		
+		if(prescriptions == null)
+		{
+			prescriptionsCopy = "";
+		}
+		else 
+		{
+			prescriptionsCopy = prescriptions;
+		}
+		
 		if(weight == 0)
 			tempWeight = "";
-		else 
+		else	
 			tempWeight = Double.toString(weight);
 		if(height == 0)
 			tempHeight = "";
-		else 
-			tempHeight = Double.toString(weight);
+		else
+			tempHeight = Double.toString(height);
+		
 		if(temperature == 0)
 			tempTemperature = "";
 		else 
-			tempTemperature = Double.toString(weight);
+			tempTemperature = Double.toString(temperature);
 		if(sugar == 0)
 			tempBloodSugar = "";
 		else 
-			tempBloodSugar = Double.toString(weight);
+			tempBloodSugar = Double.toString(sugar);
 		if(bloodPressureTop == 0)
 			tempBloodPressure = "";
 		else
 			tempBloodPressure = Double.toString(bloodPressureTop) + "/" + Double.toString(bloodPressureBot);
-			
+		
+
 
 		
 		print = "Date: \t\t\t" + tempDate + "\n\nTemperature(F): \t" + tempTemperature + "\n\nWeight(lbs): \t\t" + tempWeight + 
 		"\n\nHeight(inches): \t" + tempHeight+ "\n\nBloodPressure: \t\t" + tempBloodPressure + 
-		"\n\nBlood Sugar(mg/dL): \t" + tempBloodSugar + "\n\n\nPrescriptions: \n" + prescriptions + 
-		"\n\nDoctor's Notes: \n" + notes + "\n\nSymptoms: \n" + symptoms;
+		"\n\nBlood Sugar(mg/dL): \t" + tempBloodSugar + "\n\n\nPrescriptions: \n" + prescriptionsCopy + 
+		"\n\nDoctor's Notes: \n" + notesCopy + "\n\nSymptoms: \n" + symptomsCopy;
 		
 		return print;
+	}
+	
+	public String toString()
+	{
+		String print;
+		String tempWeight, tempHeight, tempTemperature, tempBloodSugar, tempBloodPressureTop, tempBloodPressureBot, 
+		tempDay, tempYear, tempMonth;
+		
+	
+	
+			tempWeight = Double.toString(weight);
+			tempHeight = Double.toString(height);
+			tempTemperature = Double.toString(temperature);
+			tempBloodSugar = Double.toString(sugar);
+			tempBloodPressureTop = Double.toString(bloodPressureTop); 
+			tempBloodPressureBot = Double.toString(bloodPressureBot);
+			tempDay = Integer.toString(day);
+			tempMonth = Integer.toString(month);
+			tempYear = Integer.toString(year);
+
+		
+		print = "\r\n" + tempWeight + "\r\n" + tempHeight +  "\r\n" + tempTemperature +  "\r\n" + tempBloodSugar +  "\r\n" + tempBloodPressureTop +
+				 "\r\n" + tempBloodPressureBot +  "\r\n" + tempMonth +  "\r\n" + tempDay + "\r\n" + tempYear + "\r\n" + symptoms + "\r\n" + notes + "\r\n" + prescriptions;
+		
+		return print;
+		
 	}
 }
