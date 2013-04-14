@@ -1,296 +1,252 @@
 /**
- * Author : Matthew Potts
- * Original 3/29 Updated 4/3/2013
+ * Author : Matthew Potts 
+ * Original 3/29 Updated 4/13/2013
  */
 
 
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
-public class LoginList
-{
+public class LoginList {
 
-    private Node head;
-    
-    private int listSize;
-    private User currentUser;
-    private String question1, question2, question3;
+	private ArrayList<User> userDatabase;
 
-    //===========================================
-    // empty constructor for class
-    // ==========================================
-    public LoginList()
-    {
-        head = null;
-        listSize = 0;
-        currentUser = null;
-        question1 = Globals.QUESTION1;
-        question2 = Globals.QUESTION2;
-        question3 = Globals.QUESTION3;
+	private User currentUser;
 
+	// ===========================================
+	// empty constructor for class
+	// ==========================================
+	public LoginList() {
+		userDatabase = new ArrayList<User>();
+		currentUser = null;
 
-    }
-    public int getListSize()
-    {
-        return listSize;
-    }
+	}
 
-    // ------------------------------------------------------
-    // generates a 7 digit integer for UserID based on listSize
-    // ------------------------------------------------------
-    public String generateUserID()
-    {
-        int tempCount = getListSize();
+	public int getListSize() {
+		return userDatabase.size();
+	}
 
-        String stringID = "", string1, string2, string3;
-        int temp1, temp2, temp3;
+	// ------------------------------------------------------
+	// generates a 7 digit integer for UserID based on listSize
+	// ------------------------------------------------------
+	private String generateUserID(User newUser) {
+		int tempCount = getListSize();
 
-        Random randomGenerator = new Random();
-        //creates 3 random numbers that are less than 10
-        temp1 = randomGenerator.nextInt(10);
-        temp2 = randomGenerator.nextInt(10);
-        temp3 = randomGenerator.nextInt(10);
-        //turns those random integers into strings then combines them into one string
-        string1 = Integer.toString(temp1);
-        string2 = Integer.toString(temp2);
-        string3 = Integer.toString(temp3);
-        stringID = string1 + string2 + string3;
+		String stringID, string1, string2, type;
+		if (newUser.getUserType() == Globals.PATIENT)
+			type = "P";
+		else if (newUser.getUserType() == Globals.NURSE)
+			type = "N";
+		else
+			type = "D";
 
-        //adds two zeros if userCount is less than 10
-        if (listSize < 10)
-        {
-            stringID = stringID + "00";
-        }
-        //adds one zero if userCount is less than 100
-        else if(listSize < 100)
-        {
-            stringID = stringID + "0";
-        }
+		int temp1, temp2;
 
-        //creates the final string by adding the random with zeros to the userCount
-        stringID = stringID + Integer.toString(tempCount);
+		Random randomGenerator = new Random();
+		// creates 2 random numbers that are less than 10
+		temp1 = randomGenerator.nextInt(10);
+		temp2 = randomGenerator.nextInt(10);
+		// turns those random integers into strings then combines them into one
+		// string
+		string1 = Integer.toString(temp1);
+		string2 = Integer.toString(temp2);
+		stringID = type + string1 + string2;
 
+		// adds two zeros if userCount is less than 10
+		if (getListSize() < 10) {
+			stringID = stringID + "00";
+		}
+		// adds one zero if userCount is less than 100
+		else if (getListSize() < 100) {
+			stringID = stringID + "0";
+		}
 
-        return stringID;
-    }
+		// creates the final string by adding the random with zeros to the
+		// userCount
+		stringID = stringID + Integer.toString(tempCount);
+		newUser.setUserID(stringID);
 
-    //-------------------------------------------------
-    // Saves LoginList and all user information to file
-    // -------------------------------------------------
-    public int saveList()
-    {
-         return 0;
-    }
+		return stringID;
+	}
 
-    //-------------------------------------------------
-    // loads LoginList and all user information from file
-    // -------------------------------------------------
-    public int loadList()
-    {
-         return 0;
-    }
+	public String generatePassword() {
 
+		final String ALPHABET = "0123456789ABCDE";
+		final int N = ALPHABET.length() - 1;
 
+		Random r = new Random();
 
-    // ==========================================
-    // adds a newUser to the linked list
-    // ==========================================
-    public String addUser(User newUser)
-    {
-        listSize++;
+		for (int i = 0; i < 50; i++) {
+			System.out.print(ALPHABET.charAt(r.nextInt(N)));
+		}
 
-        String newUserID = generateUserID();
-        newUser.setUserID(newUserID);
-        Node newHead = new Node(newUser, head);
-        head = newHead;
+		String rand1, rand2, rand3, randChar, stringID;
+		int randInt1, randInt2, randInt3;
+		randChar = Character.toString(ALPHABET.charAt(N));
+		Random randomGenerator = new Random();
+		// creates 3 random numbers that are less than 10
+		randInt1 = randomGenerator.nextInt(10);
+		randInt2 = randomGenerator.nextInt(10);
+		randInt3 = randomGenerator.nextInt(10);
+		// turns those random integers into strings then combines them into one
+		// string
+		rand1 = Integer.toString(randInt1);
+		rand2 = Integer.toString(randInt2);
+		rand3 = Integer.toString(randInt3);
+		stringID = randChar + rand1 + rand2 + rand3;
 
-        return newUserID;
-    }
+		return stringID;
+	}
 
-    // ----------------------------------------
-    // stores updated user back into the list
-    // -----------------------------------------
-    public void saveUserChanges(User updatedUser)
-    {
-        Node iterationNode = head;
-        while(iterationNode != null)
-        {
-            if(iterationNode.getUserAccount().getUserID() == updatedUser.getUserID())
-            {
-                iterationNode.setUserAccount(updatedUser);
-                currentUser = updatedUser;
-            }
-            iterationNode = iterationNode.getNext();
-        }
-
-    }
-
-    //----------------------------------
-    // used to get current user easily
-    //-----------------------------------
-    public void setCurrentUser(User newCurrentUser)
-    {
-        currentUser = newCurrentUser;
-    }
-    public User getCurrentUser()
-    {
-        return currentUser;
-    }
+	// -------------------------------------------------
+	// Saves LoginList and all user information to file
+	// -------------------------------------------------
+	public void saveDatabase() throws IOException {
 
 
-    //===============================================
-    // searches the linked list by userName
-    //===============================================
-    public User searchUserName(String userName)
-    {
-        Node tempNode = head;
-        	
-            while (tempNode != null)
-            {
-                String userNameCompare;
-                userNameCompare = tempNode.getUserAccount().getUserName();
-                if (userNameCompare.equals(userName))
-                {
-                    return tempNode.getUserAccount();
-                }
-                tempNode = tempNode.getNext();
-            }
+	}
 
-        return null;
-    }
+	// -------------------------------------------------
+	// loads LoginList and all user information from file
+	// -------------------------------------------------
+	public void loadList() throws IOException {
 
-    //===============================================
-    // searches the linked list by userID
-    //===============================================
-    public User searchUserID(String userID)
-    {
-        Node tempNode = head;
+		
 
-        while (tempNode != null)
-        {
+	}
 
-            String userIDCompare;
-            userIDCompare = tempNode.getUserAccount().getUserID();
-            if (userIDCompare.equals(userID))
-            {
-               return tempNode.getUserAccount();
-            }
-            tempNode = tempNode.getNext();
+	// ==========================================
+	// adds a newUser to the linked list
+	// ==========================================
 
-        }
+	public void insert(User newUser) {
+		String userID = newUser.getUserID();
+		int insertLocation = findInsertionPoint(userID);
+		userDatabase.add(insertLocation, newUser);
 
-        return null;
-    }
+	}
 
-    //================================================
-    // get security questions
-    //================================================
-    public String getQuestion1()
-    {
-        return question1;
-    }
-    public String getQuestion2()
-    {
-        return question2;
-    }
-    public String getQuestion3()
-    {
-        return question3;
-    }
+	public String addUser(User newUser) {
 
+		String newUserID = generateUserID(newUser);
 
-    //-----------------------------------------------------------
-    // checks if user exists then checks the pin to enable login
-    //-----------------------------------------------------------
-    public User login(String loginID, String loginPin)
-    {
-        User tempUser;
-        tempUser = searchUserID(loginID);
-        if(tempUser == null)
-        {
-            return null;
-        }
+		int insertLocation = findInsertionPoint(newUserID);
+		userDatabase.add(insertLocation, newUser);
 
-        String pin = tempUser.getPin();
-        if (loginPin.equals(pin))
-        {
-            return tempUser;
-        }
-        else
-            return null;
-    }
+		return newUserID;
+	}
 
-    //-------------------------------------
-    // sets the currentUser to null
-    // used when logout is pressed in GUI
-    //-------------------------------------
-    public void logout()
-    {
-        currentUser = null;
-    }
+	private int findInsertionPoint(String userID) {
+		if (userDatabase.size() == 0) {
+			return 0;
+		}
+		int searchIndex = 0;
+		while (searchIndex < userDatabase.size()) {
 
-    //-----------------------------------------------
-    // Used to recover account password, compares
-    // security questions, and if equal returns pin
-    // ----------------------------------------------
-    public String recoverAccount(String attemptedAnswer, String userID, int questionNumber)
-    {
-        User accountRecovering = searchUserID(userID);
-        if(accountRecovering == null)
-        {
-             return "Error";
-        }
+			if (userID.compareTo(userDatabase.get(searchIndex).getUserID()) == 0)
+				return searchIndex;
+			if (userID.compareTo(userDatabase.get(searchIndex).getUserID()) > 0)
+				return searchIndex;
+			searchIndex++;
 
-        String answer2Question = "";
-        if(questionNumber == 1)
-        {
-            answer2Question = accountRecovering.getAnswer1();
-        }
-        if(questionNumber == 2)
-        {
-            answer2Question = accountRecovering.getAnswer2();
-        }
-        if(questionNumber == 3)
-        {
-            answer2Question = accountRecovering.getAnswer3();
-        }
+		}
+		return searchIndex;
+	}
 
-        if(answer2Question.equals(attemptedAnswer))
-        {
-        return accountRecovering.getPin();
-        }
-        else
-            return "Error";
-    }
+	// ----------------------------------
+	// used to get current user easily
+	// -----------------------------------
+	public void setCurrentUser(User newCurrentUser) {
+		currentUser = newCurrentUser;
+	}
 
-    // ---------------------------------------------------------
-    // Node class implements the structure of the linked list
-    // ---------------------------------------------------------
-    private class Node
-    {
-        private Node next;
+	public User getCurrentUser() {
+		return currentUser;
+	}
 
-        private User userAccount;
+	
+	public User getUser(int index)
+	{
+		return userDatabase.get(index);
+	}
+	
+	// ===============================================
+	// searches the linked list by userName
+	// ===============================================
+	public User searchUserName(String userName) {
 
-     
-        public Node(User _newUser, Node newNext)
-        {
-            next = newNext;
-            userAccount = _newUser;
-        }
-        public User getUserAccount()
-        {
-            return userAccount;
-        }
-        public void setUserAccount(User _newUser)
-        {
-            userAccount = _newUser;
-        }
+		int searchIndex = 0;
 
-        public Node getNext()
-        {
-            return next;
-        }
+		if (userDatabase.size() == 0) {
+			return null;
+		}
+		while (searchIndex < userDatabase.size()) {
 
-      
-    }
+			if (userName.compareTo(userDatabase.get(searchIndex).getUserName()) == 0)
+				return userDatabase.get(searchIndex);
+
+			searchIndex++;
+
+		}
+		return null;
+	}
+
+	// ===============================================
+	// searches the linked list by userID
+	// ===============================================
+	public User searchUserID(String userID) {
+		int lowerBound = 0, searchIndex;
+		int upperBound = userDatabase.size() - 1;
+		String userIDCompare;
+
+		while (upperBound >= lowerBound) {
+
+			searchIndex = lowerBound + ((upperBound - lowerBound) / 2);
+			userIDCompare = userDatabase.get(searchIndex).getUserID();
+			int compareResult = userID.compareTo(userIDCompare);
+
+			if (compareResult > 0) {
+				// userName is before, if it exists
+				upperBound = searchIndex - 1;
+
+			} else {
+				if (compareResult < 0) {
+					// userName comes after, if it exists
+					lowerBound = searchIndex + 1;
+				} else {
+					// names are equal. match found
+					return userDatabase.get(searchIndex);
+				}
+			}
+
+		}
+
+		return null;
+
+	}
+
+	// -----------------------------------------------------------
+	// checks if user exists then checks the pin to enable login
+	// -----------------------------------------------------------
+	public User login(String loginID, String loginPin) {
+		User tempUser;
+		tempUser = searchUserID(loginID);
+		if (tempUser == null) {
+			return null;
+		}
+
+		String pin = tempUser.getPin();
+		if (loginPin.equals(pin)) {
+			return tempUser;
+		} else
+			return null;
+	}
+
+	// -------------------------------------
+	// sets the currentUser to null
+	// used when logout is pressed in GUI
+	// -------------------------------------
+
 }

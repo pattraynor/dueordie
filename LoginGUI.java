@@ -1,6 +1,6 @@
 
 
-import javax.swing.JFrame;
+import javax.swing.JFrame; 
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -17,7 +17,10 @@ import java.awt.SystemColor;
 
 import javax.swing.UIManager;
 import javax.swing.JPasswordField;
-import javax.swing.JTextArea;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.EtchedBorder;
+
 
 
 public class LoginGUI {
@@ -25,7 +28,7 @@ public class LoginGUI {
 	JFrame frame;
 	private JTextField userID;
 	private JPasswordField password;
-	private JTextArea txtWrongUser = new JTextArea();
+	private JLabel lblWrongPasswordUser;
 	
 	/**
 	 * Launch the application.
@@ -47,8 +50,6 @@ public class LoginGUI {
 		
 		JPanel login = new JPanel();
 		
-		JPanel nursePage = new JPanel();
-		
 
 		frame = new JFrame();
 		frame.setBounds(700, 350, 450, 300);
@@ -62,6 +63,7 @@ public class LoginGUI {
 		login.setLayout(null);
 		
 		userID = new JTextField();
+		userID.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, null, null, null));
 		userID.setBounds(148, 69, 130, 20);
 		login.add(userID);
 		userID.setColumns(10);
@@ -69,9 +71,10 @@ public class LoginGUI {
 		
 		
 		JButton btnLogin = new JButton("LOGIN");
+		btnLogin.setBorder(null);
 		btnLogin.setBackground(SystemColor.textHighlight);
 		btnLogin.setForeground(SystemColor.desktop);
-		btnLogin.setFont(new Font("Monospaced", Font.BOLD, 13));
+		btnLogin.setFont(new Font("Monospaced", Font.PLAIN, 14));
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{	
@@ -101,9 +104,13 @@ public class LoginGUI {
 							
 						}
 						Globals.userDatabase.setCurrentUser(tempUser);
+						
 					}
 					else
-						txtWrongUser.setVisible(true);
+					{
+						lblWrongPasswordUser.setVisible(true);
+					}
+				
 					
 						
 				}
@@ -115,6 +122,7 @@ public class LoginGUI {
 		login.add(btnLogin);
 		
 		JButton btnForgotPassword = new JButton("Forgot Password");
+		btnForgotPassword.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, null, null, null));
 		btnForgotPassword.setFont(new Font("Consolas", Font.PLAIN, 11));
 		btnForgotPassword.setForeground(SystemColor.textInactiveText);
 		btnForgotPassword.addActionListener(new ActionListener() {
@@ -131,42 +139,34 @@ public class LoginGUI {
 		login.add(btnForgotPassword);
 		
 		JLabel lblUserName = new JLabel("User ID");
-		lblUserName.setFont(new Font("Consolas", Font.PLAIN, 13));
+		lblUserName.setFont(new Font("Consolas", Font.BOLD, 13));
 		lblUserName.setBounds(74, 73, 64, 14);
 		login.add(lblUserName);
 		
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setFont(new Font("Consolas", Font.PLAIN, 13));
+		lblPassword.setFont(new Font("Consolas", Font.BOLD, 13));
 		lblPassword.setBounds(74, 113, 64, 14);
 		login.add(lblPassword);
 		
 		JLabel lblMedrecSoftware = new JLabel("MedRec Software");
-		lblMedrecSoftware.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblMedrecSoftware.setFont(new Font("Consolas", Font.BOLD, 17));
 		lblMedrecSoftware.setForeground(SystemColor.textHighlight);
 		lblMedrecSoftware.setBackground(Color.WHITE);
-		lblMedrecSoftware.setBounds(148, 11, 130, 48);
+		lblMedrecSoftware.setBounds(143, 10, 160, 48);
 		login.add(lblMedrecSoftware);
 		
 		password = new JPasswordField();
+		password.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(192, 192, 192), null, null, null));
 		password.setBounds(148, 109, 130, 20);
 		login.add(password);
 		
 		
-	
-		frame.getContentPane().add(nursePage, "name_26039116238459");
-		nursePage.setLayout(null);
-		
-		JButton btnCreateAccount = new JButton("Create Account");
-		btnCreateAccount.setBounds(10, 80, 155, 23);
-		nursePage.add(btnCreateAccount);
-		
-		JButton btnNewButton_1 = new JButton("Enter Patient Information");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton_1.setBounds(10, 143, 155, 23);
-		nursePage.add(btnNewButton_1);
+		lblWrongPasswordUser = new JLabel("Wrong UserID/Password");
+		lblWrongPasswordUser.setForeground(Color.RED);
+		lblWrongPasswordUser.setFont(new Font("Consolas", Font.PLAIN, 13));
+		lblWrongPasswordUser.setBounds(136, 185, 183, 14);
+		login.add(lblWrongPasswordUser);
+		lblWrongPasswordUser.setVisible(false);
 	}
 
 

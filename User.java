@@ -60,7 +60,8 @@ public String getUserType(){
 }
 public int recoverAccount(int questionIndex, String attemptedAnswer)
 {
-	String realAnswer = null;
+	
+	String realAnswer = "null";
 	if(questionIndex == 0)
 	{
 		realAnswer = getAnswer1();
@@ -74,7 +75,7 @@ public int recoverAccount(int questionIndex, String attemptedAnswer)
 		realAnswer = getAnswer3();
 	}
 	
-	if(realAnswer == null)
+	if(realAnswer.equals("null"))
 	{ 
 		//returns -1 to show that answers were not created
 		return -1;
@@ -92,7 +93,16 @@ public int recoverAccount(int questionIndex, String attemptedAnswer)
 			return 1;
 		}
 	}
+
 	
 	
 }
+
+public String print()
+{
+	String print = "";
+	return print;
+}
+
+
 }

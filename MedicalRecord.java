@@ -11,8 +11,9 @@ import java.util.ArrayList;
 
 public class MedicalRecord 
 {
-    private Node head;
-    private int visitCount;
+    
+    
+    private ArrayList<Visit> medicalRecordList;
     
     //ArrayLists to Implement for charts:_____________________________________
     protected ArrayList<Double> sugarChart = new ArrayList<Double>();
@@ -27,8 +28,7 @@ public class MedicalRecord
     //___________________________________________________________________
     public MedicalRecord()
     {
-        head = null;
-        visitCount = 0;
+    	medicalRecordList = new ArrayList<Visit>();
     }
 
     // takes in Double ArrayList and returns double[]
@@ -57,10 +57,21 @@ public class MedicalRecord
 
     public Visit getLastVisit()
     {
-    	if(head != null)
+    	if(getVisitCount() > 0)
     	{
-        Visit lastVisit = head.getVisit();
+        Visit lastVisit = medicalRecordList.get(0);;
         return lastVisit;
+    	}
+    	else 
+    		return null;
+    }
+    
+    public Visit getVisit(int index)
+    {
+    	if(getVisitCount() > 0)
+    	{
+        Visit _visit = medicalRecordList.get(index);;
+        return _visit;
     	}
     	else 
     		return null;
@@ -68,32 +79,35 @@ public class MedicalRecord
     
     public Visit getVisit(int month, int day, int year)
     {
-        Node tempNode = head;
-        while(tempNode != null)
+    	
+        int searchIndex = 0;
+        int searchUpperBound = getVisitCount() -1;
+        while(searchIndex <= searchUpperBound)
         {
-
-            if(tempNode.getVisit().getYear() == year)
+        	
+            if(medicalRecordList.get(searchIndex).getYear() == year)
             {
-
-                if(tempNode.getVisit().getMonth() == month)
+        
+                if(medicalRecordList.get(searchIndex).getMonth() == month)
                 {
-                    if(tempNode.getVisit().getDay() == day)
+              
+                    if(medicalRecordList.get(searchIndex).getDay() == day)
                     {
-
-                        return tempNode.getVisit();
+                    	
+                        return medicalRecordList.get(searchIndex);
                     }
                 }
             }
-            tempNode = tempNode.getNext();
+            searchIndex++;
         }
-        Visit visitFound = new Visit();
-        return visitFound;
+        Visit visitNotFound = null;
+        return visitNotFound;
 
     }
-    
+
     public int getVisitCount()
     {  
-        return visitCount;
+        return medicalRecordList.size();
         
     }
 
@@ -184,11 +198,10 @@ public class MedicalRecord
     //----------------------------------------
     public void addVisit(Visit newVisit)
     {
-        visitCount++;
+        
 
         this.addToCharts(newVisit);
-        Node newHead = new Node(newVisit, head);
-        head = newHead;
+        medicalRecordList.add(0, newVisit);
         
     }
     // -------------------------------------------------------------
@@ -209,36 +222,48 @@ public class MedicalRecord
     }
 
  
-    private class Node
+   
+    public String toString()
     {
-
-        private Visit visit;
-        private Node next;
-
-        public Node(Visit setVisit, Node setNext)
-        {
-            next = setNext;
-            visit = setVisit;
-        }
-        /*public Node()
-        {
-            next = null;
-            visit = null;
-        }
-        */
-
-        public Visit getVisit()
-        {
-            return visit;
-        }
-
-        public Node getNext()
-        {
-            return next;
-        }
-    }
+    	
+    	String medicalRecordString = "";
+    	int printIndex = 0;
+    	int indexBound = getVisitCount() - 1;
+    	if(getVisitCount() < 0)
+    	{
+    		return "\r\nEND RECORD";
+    	}
+    	while(printIndex <= indexBound)
+    	{
+    		medicalRecordString = medicalRecordString + 
+    				medicalRecordList.get(printIndex).toString();
+    		printIndex++;
+    	}
+    	
+    	medicalRecordString = medicalRecordString + "\r\nEND RECORD" + "\r\n";
+    	return medicalRecordString;
         
-    
+    }
+
+	public String[] toArray() {
+		int index = 0;
+		int indexBound = getVisitCount() - 1;
+		if(indexBound >= 0)
+		{
+		String[] visitDates = new String[indexBound + 1];
+	
+			while(index <= indexBound)
+			{
+				visitDates[index] = medicalRecordList.get(index).getDate();
+				index++;
+		
+			}
+			return visitDates;
+		}
+		String[] visitDates = new String[1];
+		visitDates[0] = "No Entries";
+		return visitDates;
+	}
         
     
         

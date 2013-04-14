@@ -1,16 +1,18 @@
+import java.util.ArrayList;
+
 
 
 
 public class Doctor extends User
 {
-	private int[] patients = new int[20];
+	private ArrayList<Patient> patients = new ArrayList<Patient>();
 	
     //------------------------------
     // Empty Constructor
     // -----------------------------
 	public Doctor()
     {
-		userType = "doctor";
+		userType = Globals.DOCTOR;
 	}
 
     //------------------------------------------------
@@ -18,41 +20,28 @@ public class Doctor extends User
     // -----------------------------------------------
     public Doctor(String setName,String setPin)
     {
-        super(setName, setPin, Globals.NURSE);
-        userType = "doctor";
+        super(setName, setPin, Globals.DOCTOR);
+       
     }
 
-	public int addPatient(int userID){
-		int i = 0;
-		while(i<patients.length){
-		if(i<patients.length && patients[i] == 0){
-		patients[i] = userID;
-		i = patients.length;
-		return 1;
-		}else{
-			i++;
-		}
-		}
-		return 0;
+	public void addPatient(Patient newPatient){
+		patients.add(newPatient);
 		
 	}
-	public int patientCheck(int userID){
-		int i = 0;
-		while(i<patients.length){
-			if(patients[i] == userID){
-				return 1;
-			}else i++;
-			}
-		return 0;
+	public int patientCheck(Patient _patient){
+		int searchResult = patients.indexOf(_patient);
+		return searchResult;
 	}
-	public int deletePatient(int userID){
-		int i = 0;
-		while(i<patients.length){
-			if(patients[i] == userID){
-				patients[i] = 0;
-				return 1;
-			}else i++;
-		} return 0;
+	public int deletePatient(Patient _patient){
+		int searchResult = patientCheck(_patient);
+		if(searchResult == -1)
+			return searchResult;
+		else
+		{
+		patients.remove(searchResult);
+		return 0;
+		}
+		
 	}
 	public int enterprescription(LoginList userDatabase, String userID, String prescription)
     {
@@ -92,5 +81,24 @@ public class Doctor extends User
 		return currentPatient.getInsurance();
 	}
 	
+	public String toString()
+	{
+		String patientString = "";
+		int bound = patients.size() -1;
+		if(bound >= 0)
+		{
+			while(bound >= 0)
+			{
+					patientString = patientString + "\r\n" + patients.get(bound).getUserID();
+					bound--;
+			}
+			patientString = patientString + "\r\n";
+		}
+		
+		String print = userType + "\r\n" + userName + "\r\n" + pin + "\r\n" + userID + "\r\n" + 
+		answer1 + "\r\n" + answer2 + "\r\n" + answer3 + "\r\n" + patientString + "\r\n";
+		
+		return print;
+	}
 	
 }

@@ -279,8 +279,8 @@ public class NurseGUI {
 					if(tempUser != null)
 					{
 					Doctor patientDoctor = (Doctor) tempUser;
-					String newPin = Globals.userDatabase.generateUserID();
-					String newName = firstNameField.toString() + lastNameField.getText();
+					String newPin = Globals.userDatabase.generatePassword();
+					String newName = firstNameField.getText() + lastNameField.getText();
 					Patient newPatient = new Patient(newName, newPin, patientDoctor, insuranceField.getText(), numberField.getText(), addressField.getText());
 					String patientID = Globals.userDatabase.addUser(newPatient);
 					Object[] options = {"OK"};
@@ -306,7 +306,7 @@ public class NurseGUI {
 				}
 				if(nurseButton.isSelected())
 				{
-					String newPin = Globals.userDatabase.generateUserID();
+					String newPin = Globals.userDatabase.generatePassword();
 					String newName =  firstNameField.getText() + lastNameField.getText();
 					Nurse newNurse = new Nurse(newName, newPin);
 					String nurseID = Globals.userDatabase.addUser(newNurse);
