@@ -3,8 +3,9 @@
  * Original 3/29 Updated 4/13/2013
  */
 
-
-
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -35,9 +36,9 @@ public class LoginList {
 		int tempCount = getListSize();
 
 		String stringID, string1, string2, type;
-		if (newUser.getUserType() == Globals.PATIENT)
+		if (newUser.getUserType().equals(Globals.PATIENT))
 			type = "P";
-		else if (newUser.getUserType() == Globals.NURSE)
+		else if (newUser.getUserType().equals(Globals.NURSE))
 			type = "N";
 		else
 			type = "D";
@@ -105,6 +106,8 @@ public class LoginList {
 	// -------------------------------------------------
 	public void saveDatabase() throws IOException {
 
+		
+		
 
 	}
 
@@ -113,7 +116,7 @@ public class LoginList {
 	// -------------------------------------------------
 	public void loadList() throws IOException {
 
-		
+	
 
 	}
 
@@ -122,9 +125,9 @@ public class LoginList {
 	// ==========================================
 
 	public void insert(User newUser) {
-		String userID = newUser.getUserID();
-		int insertLocation = findInsertionPoint(userID);
-		userDatabase.add(insertLocation, newUser);
+		
+		
+		userDatabase.add(newUser);
 
 	}
 
@@ -145,9 +148,8 @@ public class LoginList {
 		int searchIndex = 0;
 		while (searchIndex < userDatabase.size()) {
 
-			if (userID.compareTo(userDatabase.get(searchIndex).getUserID()) == 0)
-				return searchIndex;
-			if (userID.compareTo(userDatabase.get(searchIndex).getUserID()) > 0)
+			
+			if (userID.compareTo(userDatabase.get(searchIndex).getUserID()) < 0)
 				return searchIndex;
 			searchIndex++;
 
@@ -207,12 +209,12 @@ public class LoginList {
 			userIDCompare = userDatabase.get(searchIndex).getUserID();
 			int compareResult = userID.compareTo(userIDCompare);
 
-			if (compareResult > 0) {
+			if (compareResult < 0) {
 				// userName is before, if it exists
 				upperBound = searchIndex - 1;
 
 			} else {
-				if (compareResult < 0) {
+				if (compareResult > 0) {
 					// userName comes after, if it exists
 					lowerBound = searchIndex + 1;
 				} else {
@@ -244,9 +246,40 @@ public class LoginList {
 			return null;
 	}
 
-	// -------------------------------------
-	// sets the currentUser to null
-	// used when logout is pressed in GUI
-	// -------------------------------------
+	public String[] getDoctorNames()
+	{	
+		int index = 0, doctorCount = 0;
+		int indexBound = getListSize();
+		while(index < indexBound)
+		{
+		
+			if(userDatabase.get(index).getUserType().equals(Globals.DOCTOR))
+			{
+				doctorCount++;
+				
+			}
+			index++;
+			
+		}
+	
+		index = 0;
+		if(doctorCount > 0)
+		{
+			
+			String[] doctorNames = new String[doctorCount];
+			
+			while(index < doctorCount)
+			{
+				doctorNames[index] = userDatabase.get(index).getUserName();
+			
+				index++;
+			}
+			
+			return doctorNames;
+		}
+		return null;
+		
+		
+	}
 
 }

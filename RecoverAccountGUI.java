@@ -30,14 +30,12 @@ public class RecoverAccountGUI {
 	private JPasswordField passwordField3;
 	private JComboBox<String> securityQuestionBox;
 	public JPanel recoverAccount, changePassword;
-	private JPanel changePasswordLogedIn;
-	private JLabel label;
+	private JPanel changePasswordLoggedIn;
 	private JPanel answerQuestions;
 	private JTextField answer1Field;
 	private JTextField answer2Field;
 	private JTextField answer3Field;
-	private JLabel lblWhatIsYour;
-	private JLabel lblWhatIsYour_1;
+
 
 	/**
 	 * Create the application.
@@ -53,7 +51,7 @@ public class RecoverAccountGUI {
 	{
 		frame.getContentPane().removeAll();
 		frame.getContentPane().invalidate();
-		frame.getContentPane().add(changePasswordLogedIn);
+		frame.getContentPane().add(changePasswordLoggedIn);
 		frame.getContentPane().revalidate();
 		frame.repaint();
 	}
@@ -67,6 +65,7 @@ public class RecoverAccountGUI {
 	}
 	private void initialize() {
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.setBounds(700, 350, 450, 300);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
 		
@@ -195,7 +194,7 @@ public class RecoverAccountGUI {
 				if(newPassword.length() < 4)
 				{
 					Object[] options = {"OK"};
-					JOptionPane.showOptionDialog(null, "Password is not long Enough.", "Password too Short",
+					JOptionPane.showOptionDialog(null, "Password is not long Enough. \nPassword must be 4 charcters long.", "Password too Short",
 					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
 					null, options, options[0]);
 					passwordField.setText("");
@@ -241,31 +240,31 @@ public class RecoverAccountGUI {
 		btnChangePassword.setBounds(163, 190, 150, 42);
 		changePassword.add(btnChangePassword);
 		
-		changePasswordLogedIn = new JPanel();
-		frame.getContentPane().add(changePasswordLogedIn, "name_1412434526974");
+		changePasswordLoggedIn = new JPanel();
+		frame.getContentPane().add(changePasswordLoggedIn, "name_1412434526974");
 		
 
-		changePasswordLogedIn.setBackground(Color.WHITE);
-		frame.getContentPane().add(changePasswordLogedIn, "name_125098458476250");
-		changePasswordLogedIn.setLayout(null);
+		changePasswordLoggedIn.setBackground(Color.WHITE);
+		frame.getContentPane().add(changePasswordLoggedIn, "name_125098458476250");
+		changePasswordLoggedIn.setLayout(null);
 		
 		passwordField2 = new JPasswordField();
 		passwordField2.setBounds(163, 64, 150, 28);
-		changePasswordLogedIn.add(passwordField2);
+		changePasswordLoggedIn.add(passwordField2);
 		
 		passwordField3 = new JPasswordField();
 		passwordField3.setBounds(163, 116, 150, 28);
-		changePasswordLogedIn.add(passwordField3);
+		changePasswordLoggedIn.add(passwordField3);
 		
 		JLabel lblNewPassword2 = new JLabel("New Password");
 		lblNewPassword2.setFont(new Font("Consolas", Font.PLAIN, 13));
 		lblNewPassword2.setBounds(23, 70, 117, 14);
-		changePasswordLogedIn.add(lblNewPassword2);
+		changePasswordLoggedIn.add(lblNewPassword2);
 		
 		JLabel lblConfirmPassword2 = new JLabel("Confirm Password");
 		lblConfirmPassword.setFont(new Font("Consolas", Font.PLAIN, 13));
 		lblConfirmPassword.setBounds(23, 118, 128, 22);
-		changePasswordLogedIn.add(lblConfirmPassword2);
+		changePasswordLoggedIn.add(lblConfirmPassword2);
 		
 		JButton btnChangePassword2 = new JButton("Change Password");
 		btnChangePassword2.setForeground(Color.BLACK);
@@ -282,7 +281,7 @@ public class RecoverAccountGUI {
 				if(newPassword.length() < 4)
 				{
 					Object[] options = {"OK"};
-					JOptionPane.showOptionDialog(null, "Password is not long Enough.", "Password too Short",
+					JOptionPane.showOptionDialog(null, "Password is not long Enough. \nPassword must be 4 characters long", "Password too Short",
 					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
 					null, options, options[0]);
 					passwordField2.setText("");
@@ -322,12 +321,12 @@ public class RecoverAccountGUI {
 			}
 		});
 		btnChangePassword2.setBounds(163, 190, 150, 42);
-		changePasswordLogedIn.add(btnChangePassword2);
-		
-		label = new JLabel("Confirm Password");
+		changePasswordLoggedIn.add(btnChangePassword2);
+
+		JLabel label = new JLabel("Confirm Password");
 		label.setFont(new Font("Consolas", Font.PLAIN, 13));
 		label.setBounds(23, 120, 128, 22);
-		changePasswordLogedIn.add(label);
+		changePasswordLoggedIn.add(label);
 		
 		answerQuestions = new JPanel();
 		answerQuestions.setBackground(Color.WHITE);
@@ -356,9 +355,22 @@ public class RecoverAccountGUI {
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				if((answer1Field.getText().toString().length()) <= 0 || 
+						(answer2Field.getText().toString().length()) <= 0 || 
+						(answer3Field.getText().toString().length() <= 0))
+				{
+					Object[] options = {"OK"};
+					JOptionPane.showOptionDialog(null, "Please Answer all Questions", "Empty Field",
+							JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+							null, options, options[0]);
+					
+				}
+				else
+				{
 				Globals.userDatabase.getCurrentUser().
 				setAnswers(answer1Field.getText(), answer2Field.getText(), answer3Field.getText());
 				frame.dispose();
+				}
 			
 			}
 		});
@@ -373,12 +385,12 @@ public class RecoverAccountGUI {
 		lblNewLabel.setBounds(100, 35, 238, 14);
 		answerQuestions.add(lblNewLabel);
 		
-		lblWhatIsYour = new JLabel("What is your favorite animal?");
+		JLabel lblWhatIsYour = new JLabel("What is your favorite animal?");
 		lblWhatIsYour.setFont(new Font("Consolas", Font.PLAIN, 13));
 		lblWhatIsYour.setBounds(100, 106, 238, 14);
 		answerQuestions.add(lblWhatIsYour);
 		
-		lblWhatIsYour_1 = new JLabel("What is your mother's maiden name?");
+		JLabel lblWhatIsYour_1 = new JLabel("What is your mother's maiden name?");
 		lblWhatIsYour_1.setFont(new Font("Consolas", Font.PLAIN, 13));
 		lblWhatIsYour_1.setBounds(100, 175, 238, 14);
 		answerQuestions.add(lblWhatIsYour_1);

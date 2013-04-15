@@ -29,8 +29,8 @@ public class Doctor extends User
 		
 	}
 	public int patientCheck(Patient _patient){
-		int searchResult = patients.indexOf(_patient);
-		return searchResult;
+
+		return patients.indexOf(_patient);
 	}
 	public int deletePatient(Patient _patient){
 		int searchResult = patientCheck(_patient);
@@ -58,6 +58,31 @@ public class Doctor extends User
         newPatient.getMedicalRecord().getLastVisit().setNotes(notes);
 		return 0;
 	}
+	
+	public String[] getPatientNames()
+	{
+		int index = 0, patientCount = patients.size();
+	
+		if(patientCount > 0)
+		{
+			String[] patientNames = new String[patientCount];
+			
+			while(index < patientCount)
+			{
+				patientNames[index] = patients.get(index).getUserName();
+				index++;
+			}
+			return patientNames;
+		}
+		
+		return null;
+	}
+	
+	public Patient getPatient(int patientIndex)
+	{
+		Patient patientSelected = patients.get(patientIndex);
+		return patientSelected;
+	}
 //	public void displayMedicalInformation(LoginList userDatabase, int userID){
 //		User tempUser = userDatabase.searchUserID(userID);
 //
@@ -83,20 +108,10 @@ public class Doctor extends User
 	
 	public String toString()
 	{
-		String patientString = "";
-		int bound = patients.size() -1;
-		if(bound >= 0)
-		{
-			while(bound >= 0)
-			{
-					patientString = patientString + "\r\n" + patients.get(bound).getUserID();
-					bound--;
-			}
-			patientString = patientString + "\r\n";
-		}
+	
 		
 		String print = userType + "\r\n" + userName + "\r\n" + pin + "\r\n" + userID + "\r\n" + 
-		answer1 + "\r\n" + answer2 + "\r\n" + answer3 + "\r\n" + patientString + "\r\n";
+		answer1 + "\r\n" + answer2 + "\r\n" + answer3 + "\r\n" + "\r\n";
 		
 		return print;
 	}

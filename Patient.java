@@ -48,10 +48,6 @@ public class Patient extends User{
         phoneNumber = setNumber;
 
     }
-    public void setMedicalRecord(MedicalRecord newMedicalRecord)
-    {
-        patientRecord = newMedicalRecord;
-    }
 
     public String getAddress(){
 
@@ -71,13 +67,6 @@ public class Patient extends User{
 
     }
 
-
-    public void addDailyInformation()
-    {
-
-    }
-
-
     public String[] getPrescriptions(){
 
         return patientRecord.getAllPrescriptions();
@@ -94,29 +83,26 @@ public class Patient extends User{
     public String getPhoneNumber()
     {
            return phoneNumber;
-    };
+    }
     
     public String toString()
     {
     	
     	String doctorID = doctor.getUserID();
     	String medicalRecordString = patientRecord.toString();
-    		
+
     	
-    	String print = userType + "\r\n" + userName + "\r\n" + pin + "\r\n" + userID + "\r\n" + insurance + "\r\n" + address + "\r\n" +
-    	phoneNumber + "\r\n" + doctorID + "\r\n"  + answer1 + "\r\n" + answer2 + "\r\n" + answer3 + medicalRecordString + "\r\n";
-    	
-    	return print;
+    	return userType + "\r\n" + userName + "\r\n" + pin + "\r\n" + userID + "\r\n" + insurance + "\r\n" + address + "\r\n" +
+                phoneNumber + "\r\n" + doctorID + "\r\n"  + answer1 + "\r\n" + answer2 + "\r\n" + answer3 + medicalRecordString + "\r\n";
     }
     public String print()
     {
     	
-    	String doctorName = doctor.getUserName();	
+    	String doctorName = doctor.getUserName();
     	
-    	String print = "\nName: \t\t\t" + userName + "\n\nInsurance: \t\t" + insurance + "\n\nAddress: \t\t" + address +
-    			"\n\nPhone Number: \t\t" + phoneNumber + "\n\nDoctor: \t\t" + doctorName;
-    	
-    	return print;
-    }
-}
+    	return "\nName: \t\t\t" + userName + "\n\nInsurance: \t\t" + insurance + "\n\nAddress: \t\t" + address +
+                "\n\nPhone Number: \t\t" + phoneNumber + "\n\nDoctor: \t\t" + doctorName;
 
+    }
+
+}

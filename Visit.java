@@ -31,22 +31,6 @@ public class Visit
 		notes = null;	
 	}
 	
-	public Visit(int mon, int today, int newYear)
-	{
-		month = mon;
-		day = today;
-		year = newYear;
-		bloodPressureTop = 0;
-        bloodPressureBot = 0;
-		sugar = 0;
-		weight = 0;
-		height = 0;
-		temperature = 0;
-		prescriptions = null;
-		symptoms = null;
-		notes = null;	
-	}
-	
 	public Visit(int mon, int today, int newYear, double pressureTop, 
 			double pressureBot, double sweet, double pounds,
 			double inches, double fever, String problems)
@@ -88,8 +72,7 @@ public class Visit
 		
 	}
 	
-	public Visit(int mon, int today, int newYear, double pressureTop, double pressureBot, double sweet, double pounds,
-			double inches, double fever)
+	public Visit(int mon, int today, int newYear, double pressureTop, double pressureBot, double sweet, double pounds)
 	{
 		month = mon;
 		day = today;
@@ -98,11 +81,11 @@ public class Visit
         bloodPressureBot = pressureBot;
 		sugar = sweet;
 		weight = pounds;
-		height = inches;
-		temperature = fever;
-		symptoms = "";
-		prescriptions = "";
-		notes = "";	
+		height = 0;
+		temperature = 0;
+		symptoms = null;
+		prescriptions = null;
+		notes = null;
 		
 		
 	}

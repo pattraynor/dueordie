@@ -59,8 +59,7 @@ public class MedicalRecord
     {
     	if(getVisitCount() > 0)
     	{
-        Visit lastVisit = medicalRecordList.get(0);;
-        return lastVisit;
+            return medicalRecordList.get(0);
     	}
     	else 
     		return null;
@@ -70,8 +69,7 @@ public class MedicalRecord
     {
     	if(getVisitCount() > 0)
     	{
-        Visit _visit = medicalRecordList.get(index);;
-        return _visit;
+            return medicalRecordList.get(index);
     	}
     	else 
     		return null;
@@ -100,8 +98,8 @@ public class MedicalRecord
             }
             searchIndex++;
         }
-        Visit visitNotFound = null;
-        return visitNotFound;
+
+        return null;
 
     }
 
@@ -113,49 +111,42 @@ public class MedicalRecord
 
     public double[] getBloodPressureTopChart()
     {
-        double tempChart[] = (createDoubleArray(bloodPressureTopChart));
-        return tempChart;
+        return createDoubleArray(bloodPressureTopChart);
     }
+
     public double[] getBloodPressureBotChart()
     {
-        double tempChart[] = (createDoubleArray(bloodPressureBotChart));
-        return tempChart;
+        return createDoubleArray(bloodPressureBotChart);
     }
     
     public double[] getSugarChart()
     {
-        double tempChart[] = (createDoubleArray(sugarChart));
-        return tempChart;
+        return createDoubleArray(sugarChart);
     }
     
     public double[] getWeightChart()
     {
-        double tempChart[] = (createDoubleArray(weightChart));
-        return tempChart;
-        
+        return createDoubleArray(weightChart);
     }
+
     public double[] getHeightChart()
     {
-        double tempChart[] = (createDoubleArray(heightChart));
-        return tempChart;
-        
+        return createDoubleArray(heightChart);
     }
     
     public double[] getTemperatureChart()
     {
-        double tempChart[] = createDoubleArray(temperatureChart);
-        return tempChart;
-        
+        return  createDoubleArray(temperatureChart);
     }
+
     public String[] getAllPrescriptions()
     {
-        String tempChart[] = createStringArray(prescriptions);
-        return tempChart;
+        return createStringArray(prescriptions);
     }
+
     public String[] getDates()
     {
-        String tempChart[] = createStringArray(dates);
-        return tempChart;
+        return createStringArray(dates);
     }
     public void addSugar(double newSugar)
     {

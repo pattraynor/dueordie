@@ -11,16 +11,9 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
-
-
-
-
 import javax.swing.UIManager;
 import javax.swing.JPasswordField;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.EtchedBorder;
-
 
 
 public class LoginGUI {
@@ -52,6 +45,7 @@ public class LoginGUI {
 		
 
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.setBounds(700, 350, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
@@ -71,10 +65,9 @@ public class LoginGUI {
 		
 		
 		JButton btnLogin = new JButton("LOGIN");
-		btnLogin.setBorder(null);
-		btnLogin.setBackground(SystemColor.textHighlight);
+		btnLogin.setBackground(new Color(0, 153, 204));
 		btnLogin.setForeground(SystemColor.desktop);
-		btnLogin.setFont(new Font("Monospaced", Font.PLAIN, 14));
+		btnLogin.setFont(new Font("Monospaced", Font.BOLD, 15));
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{	
@@ -139,24 +132,24 @@ public class LoginGUI {
 		login.add(btnForgotPassword);
 		
 		JLabel lblUserName = new JLabel("User ID");
-		lblUserName.setFont(new Font("Consolas", Font.BOLD, 13));
+		lblUserName.setFont(new Font("Consolas", Font.PLAIN, 13));
 		lblUserName.setBounds(74, 73, 64, 14);
 		login.add(lblUserName);
 		
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setFont(new Font("Consolas", Font.BOLD, 13));
+		lblPassword.setFont(new Font("Consolas", Font.PLAIN, 13));
 		lblPassword.setBounds(74, 113, 64, 14);
 		login.add(lblPassword);
 		
 		JLabel lblMedrecSoftware = new JLabel("MedRec Software");
-		lblMedrecSoftware.setFont(new Font("Consolas", Font.BOLD, 17));
+		lblMedrecSoftware.setFont(new Font("Consolas", Font.BOLD, 15));
 		lblMedrecSoftware.setForeground(SystemColor.textHighlight);
 		lblMedrecSoftware.setBackground(Color.WHITE);
-		lblMedrecSoftware.setBounds(143, 10, 160, 48);
+		lblMedrecSoftware.setBounds(148, 11, 130, 48);
 		login.add(lblMedrecSoftware);
 		
 		password = new JPasswordField();
-		password.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(192, 192, 192), null, null, null));
+		password.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, null, null, null));
 		password.setBounds(148, 109, 130, 20);
 		login.add(password);
 		

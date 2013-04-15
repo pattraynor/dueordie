@@ -1,4 +1,4 @@
-import java.awt.Color; 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
 import javax.swing.JFrame;
@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.UIManager;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -22,7 +21,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Component;
 import java.io.IOException;
-
 import javax.swing.JTabbedPane;
 import javax.swing.border.Border;
 import javax.swing.JList;
@@ -44,8 +42,7 @@ public class PatientGUI {
 	private JComboBox<String> dayComboBox2;
 	private JComboBox<String> monthComboBox2;
 	private JComboBox<String> yearComboBox2;
-	private double temperature, weight, height, bloodPressureTop,
-			bloodPressureBot, bloodSugar;
+	private double weight, bloodPressureTop, bloodPressureBot, bloodSugar;
 	private JPanel mainWindow;
 	private JPanel editAccount;
 	private JTextField addressField;
@@ -53,8 +50,8 @@ public class PatientGUI {
 	private JTextField phoneNumberField;
 	private JTextArea informationDisplay2;
 	private JTextArea textArea;
+	@SuppressWarnings("rawtypes")
 	private JList list;
-
 
 	/**
 	 * Launch the application.
@@ -70,12 +67,12 @@ public class PatientGUI {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initialize() {
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setBounds(700, 350, 694, 565);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
 
 		mainWindow = new JPanel();
@@ -112,7 +109,7 @@ public class PatientGUI {
 		lblToEditThis.setBounds(248, 444, 353, 14);
 		AccountInformation.add(lblToEditThis);
 
-        JLabel lblGoToMenuedit = new JLabel("Go to Menu->Edit Account");
+		JLabel lblGoToMenuedit = new JLabel("Go to Menu->Edit Account");
 		lblGoToMenuedit.setFont(new Font("Consolas", Font.PLAIN, 13));
 		lblGoToMenuedit.setBounds(248, 458, 353, 14);
 		AccountInformation.add(lblGoToMenuedit);
@@ -160,6 +157,8 @@ public class PatientGUI {
 		searchMedicalHistory.add(yearComboBox2);
 
 		JButton btnGetMostRecent = new JButton("Get Most Recent ");
+		btnGetMostRecent.setBorder(new BevelBorder(BevelBorder.RAISED,
+				Color.LIGHT_GRAY, null, null, null));
 		btnGetMostRecent.setForeground(Color.BLACK);
 		btnGetMostRecent.setBackground(Color.WHITE);
 		btnGetMostRecent.setFont(new Font("Consolas", Font.PLAIN, 11));
@@ -175,13 +174,15 @@ public class PatientGUI {
 
 			}
 		});
-		btnGetMostRecent.setBounds(73, 422, 157, 50);
-        JLabel lblViewMedicalInformation = new JLabel("Search By Date");
+		btnGetMostRecent.setBounds(73, 430, 157, 42);
+		JLabel lblViewMedicalInformation = new JLabel("Search By Date");
 
 		JButton btnSearchVisit = new JButton("Search");
-        JLabel lblMonth = new JLabel("Month");
-        JLabel lblDay = new JLabel("Day");
-        JLabel lblYear = new JLabel("Year");
+		btnSearchVisit.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(
+				192, 192, 192), null, null, null));
+		JLabel lblMonth = new JLabel("Month");
+		JLabel lblDay = new JLabel("Day");
+		JLabel lblYear = new JLabel("Year");
 
 		searchMedicalHistory.add(btnGetMostRecent);
 		lblMonth.setFont(new Font("Consolas", Font.PLAIN, 10));
@@ -225,13 +226,13 @@ public class PatientGUI {
 				}
 			}
 		});
-		btnSearchVisit.setBounds(73, 337, 157, 50);
+		btnSearchVisit.setBounds(73, 345, 157, 42);
 
 		searchMedicalHistory.add(btnSearchVisit);
 
 		informationWindow = new JTextArea();
 		informationWindow.setFont(new Font("Monospaced", Font.PLAIN, 13));
-		informationWindow.setBounds(332, 56, 337, 416);
+		informationWindow.setBounds(332, 42, 337, 430);
 		informationWindow.setBorder(BorderFactory.createCompoundBorder(
 				borderInfoWindow,
 				BorderFactory.createEmptyBorder(10, 10, 10, 10)));
@@ -241,49 +242,52 @@ public class PatientGUI {
 		JLabel lblMedicalRecord = new JLabel("Medical Record");
 		lblMedicalRecord.setForeground(SystemColor.textHighlight);
 		lblMedicalRecord.setFont(new Font("Consolas", Font.BOLD, 17));
-		lblMedicalRecord.setBounds(430, 11, 190, 27);
+		lblMedicalRecord.setBounds(424, 11, 190, 27);
 		searchMedicalHistory.add(lblMedicalRecord);
 
-        JLabel lblOr = new JLabel("OR");
+		JLabel lblOr = new JLabel("OR");
 		lblOr.setFont(new Font("Monospaced", Font.BOLD, 13));
 		lblOr.setBounds(142, 380, 46, 44);
 		searchMedicalHistory.add(lblOr);
 
 		JButton btnGetSelected = new JButton("Get Selected");
+		btnGetSelected.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(
+				192, 192, 192), null, null, null));
 		btnGetSelected.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int index = list.getSelectedIndex();
-				Patient tempPatient = (Patient) Globals.userDatabase
-						.getCurrentUser();
-				Visit tempVisit = tempPatient.getMedicalRecord()
-						.getVisit(index);
-				if(tempVisit != null)
-				{
-				informationWindow.setText(tempVisit.print());
+				if (index >= 0) {
+					Patient tempPatient = (Patient) Globals.userDatabase
+							.getCurrentUser();
+					Visit tempVisit = tempPatient.getMedicalRecord().getVisit(
+							index);
+					if (tempVisit != null) {
+						informationWindow.setText(tempVisit.print());
+					}
 				}
 			}
 		});
 		btnGetSelected.setForeground(Color.BLACK);
 		btnGetSelected.setFont(new Font("Consolas", Font.PLAIN, 11));
 		btnGetSelected.setBackground(Color.WHITE);
-		btnGetSelected.setBounds(73, 141, 157, 50);
+		btnGetSelected.setBounds(73, 149, 157, 42);
 		searchMedicalHistory.add(btnGetSelected);
 
 		JLabel label_1 = new JLabel("OR");
 		label_1.setFont(new Font("Monospaced", Font.BOLD, 13));
 		label_1.setBounds(142, 202, 31, 44);
 		searchMedicalHistory.add(label_1);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(61, 29, 181, 101);
 		searchMedicalHistory.add(scrollPane);
-		
-				list = new JList(currentPatient.getMedicalRecord().toArray());
-				scrollPane.setViewportView(list);
-				list.setFont(new Font("Monospaced", Font.BOLD, 13));
-				list.setBorder(UIManager.getBorder("List.focusCellHighlightBorder"));
 
-        JPanel viewProgress = new JPanel();
+		list = new JList(currentPatient.getMedicalRecord().toArray());
+		scrollPane.setViewportView(list);
+		list.setFont(new Font("Monospaced", Font.BOLD, 13));
+		list.setBorder(UIManager.getBorder("List.focusCellHighlightBorder"));
+
+		JPanel viewProgress = new JPanel();
 		tabbedPane.addTab("Charts and Analysis", null, viewProgress, null);
 		viewProgress.setLayout(null);
 
@@ -293,35 +297,41 @@ public class PatientGUI {
 		editAccount.setLayout(null);
 
 		addressField = new JTextField();
-		addressField.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, null, null, null));
+		addressField.setBorder(new BevelBorder(BevelBorder.LOWERED,
+				Color.LIGHT_GRAY, null, null, null));
 		addressField.setBounds(35, 426, 355, 23);
 		editAccount.add(addressField);
 		addressField.setColumns(10);
 
 		insuranceField = new JTextField();
-		insuranceField.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, null, null, null));
+		insuranceField.setBorder(new BevelBorder(BevelBorder.LOWERED,
+				Color.LIGHT_GRAY, null, null, null));
 		insuranceField.setBounds(220, 258, 170, 20);
 		editAccount.add(insuranceField);
 		insuranceField.setColumns(10);
 
 		phoneNumberField = new JTextField();
-		phoneNumberField.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, null, null, null));
+		phoneNumberField.setBorder(new BevelBorder(BevelBorder.LOWERED,
+				Color.LIGHT_GRAY, null, null, null));
 		phoneNumberField.setColumns(10);
 		phoneNumberField.setBounds(35, 258, 170, 20);
 		editAccount.add(phoneNumberField);
 
 		JButton btnUpdateInsurance = new JButton("Update Insurance");
-		btnUpdateInsurance.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(51, 153, 255), SystemColor.inactiveCaption, new Color(51, 153, 255), new Color(51, 153, 255)));
+		btnUpdateInsurance.setBorder(new BevelBorder(BevelBorder.RAISED,
+				Color.LIGHT_GRAY, null, null, null));
 		btnUpdateInsurance.setForeground(Color.BLACK);
 		btnUpdateInsurance.setBackground(Color.WHITE);
 		btnUpdateInsurance.setFont(new Font("Monospaced", Font.BOLD, 13));
 		btnUpdateInsurance.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String insurance = insuranceField.getText();
-				Patient tempPatient = (Patient) Globals.userDatabase
-						.getCurrentUser();
-				tempPatient.setInsurance(insurance);
-				insuranceField.setText("");
+				if (insurance.length() > 0) {
+					Patient tempPatient = (Patient) Globals.userDatabase
+							.getCurrentUser();
+					tempPatient.setInsurance(insurance);
+					insuranceField.setText("");
+				}
 
 			}
 		});
@@ -329,16 +339,21 @@ public class PatientGUI {
 		editAccount.add(btnUpdateInsurance);
 
 		JButton btnUpdateNumber = new JButton("Update Number");
-		btnUpdateNumber.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(51, 153, 255), new Color(191, 205, 219), SystemColor.textHighlight, SystemColor.textHighlight));
+		btnUpdateNumber.setBorder(new BevelBorder(BevelBorder.RAISED,
+				Color.LIGHT_GRAY, null, null, null));
 		btnUpdateNumber.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String phoneNumber = phoneNumberField.getText();
-				Patient tempPatient = (Patient) Globals.userDatabase
-						.getCurrentUser();
-				tempPatient.setPhoneNumber(phoneNumber);
-				phoneNumberField.setText("");
 
+				String phoneNumber = phoneNumberField.getText();
+				if (phoneNumber.length() > 0) {
+
+					Patient tempPatient = (Patient) Globals.userDatabase
+							.getCurrentUser();
+					tempPatient.setPhoneNumber(phoneNumber);
+					phoneNumberField.setText("");
+				}
 			}
+
 		});
 		btnUpdateNumber.setForeground(Color.BLACK);
 		btnUpdateNumber.setBackground(Color.WHITE);
@@ -347,25 +362,28 @@ public class PatientGUI {
 		editAccount.add(btnUpdateNumber);
 
 		JButton btnUpdateAddress = new JButton("Update Address");
-		btnUpdateAddress.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(51, 153, 255), SystemColor.inactiveCaption, new Color(51, 153, 255), new Color(51, 153, 255)));
+		btnUpdateAddress.setBorder(new BevelBorder(BevelBorder.RAISED,
+				Color.LIGHT_GRAY, null, null, null));
 		btnUpdateAddress.setForeground(Color.BLACK);
 		btnUpdateAddress.setBackground(Color.WHITE);
 		btnUpdateAddress.setFont(new Font("Monospaced", Font.BOLD, 13));
 		btnUpdateAddress.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String address = addressField.getText();
-				Patient tempPatient = (Patient) Globals.userDatabase
-						.getCurrentUser();
-				tempPatient.setAddress(address);
-				addressField.setText("");
-
+				if (address.length() > 0) {
+					Patient tempPatient = (Patient) Globals.userDatabase
+							.getCurrentUser();
+					tempPatient.setAddress(address);
+					addressField.setText("");
+				}
 			}
 		});
 		btnUpdateAddress.setBounds(221, 460, 169, 33);
 		editAccount.add(btnUpdateAddress);
 
 		JButton btnChangePassword = new JButton("Change Password");
-		btnChangePassword.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(128, 128, 128), Color.LIGHT_GRAY, Color.GRAY, Color.LIGHT_GRAY));
+		btnChangePassword.setBorder(new BevelBorder(BevelBorder.RAISED,
+				new Color(128, 128, 128), null, null, null));
 		btnChangePassword.setForeground(Color.BLACK);
 		btnChangePassword.setFont(new Font("Monospaced", Font.BOLD, 13));
 		btnChangePassword.setBackground(Color.WHITE);
@@ -381,8 +399,6 @@ public class PatientGUI {
 
 		informationDisplay2 = new JTextArea();
 		informationDisplay2.setBorder(UIManager.getBorder("TextArea.border"));
-		informationDisplay2.setText((String) null);
-
 		informationDisplay2.setEditable(false);
 		informationDisplay2.setBackground(Color.WHITE);
 		informationDisplay2.setBounds(10, 34, 664, 182);
@@ -398,9 +414,10 @@ public class PatientGUI {
 		editAccount.add(separator_1);
 
 		JButton btnRefresh = new JButton("REFRESH");
-		btnRefresh.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.inactiveCaption, null, null, null));
-		btnRefresh.setForeground(SystemColor.textHighlight);
-		btnRefresh.setBackground(Color.WHITE);
+		btnRefresh.setBorder(new BevelBorder(BevelBorder.RAISED,
+				Color.LIGHT_GRAY, null, null, null));
+		btnRefresh.setForeground(Color.BLACK);
+		btnRefresh.setBackground(Color.LIGHT_GRAY);
 		btnRefresh.setFont(new Font("Monospaced", Font.BOLD, 13));
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -417,18 +434,19 @@ public class PatientGUI {
 		lblNewLabel.setBounds(35, 243, 89, 14);
 		editAccount.add(lblNewLabel);
 
-        JLabel lblInsurance = new JLabel("Insurance");
+		JLabel lblInsurance = new JLabel("Insurance");
 		lblInsurance.setFont(new Font("Courier New", Font.PLAIN, 13));
 		lblInsurance.setBounds(220, 242, 89, 14);
 		editAccount.add(lblInsurance);
 
-        JLabel lblAddress = new JLabel("Address");
+		JLabel lblAddress = new JLabel("Address");
 		lblAddress.setFont(new Font("Consolas", Font.PLAIN, 13));
 		lblAddress.setBounds(35, 411, 89, 14);
 		editAccount.add(lblAddress);
 
 		JButton btnBack = new JButton("BACK");
-		btnBack.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.controlShadow, null, null, null));
+		btnBack.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(160,
+				160, 160), null, null, null));
 		btnBack.setFont(new Font("Monospaced", Font.BOLD, 13));
 		btnBack.setBackground(Color.LIGHT_GRAY);
 		btnBack.addActionListener(new ActionListener() {
@@ -447,7 +465,8 @@ public class PatientGUI {
 		editAccount.add(btnBack);
 
 		JButton btnSetUpSecurity = new JButton("Add Security Features");
-		btnSetUpSecurity.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(128, 128, 128), Color.LIGHT_GRAY, Color.GRAY, Color.LIGHT_GRAY));
+		btnSetUpSecurity.setBorder(new BevelBorder(BevelBorder.RAISED,
+				new Color(128, 128, 128), null, null, null));
 		btnSetUpSecurity.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -478,7 +497,8 @@ public class PatientGUI {
 		enterDailyInformation.setLayout(null);
 
 		JButton btnEnter = new JButton("SUBMIT");
-		btnEnter.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, null, null, null));
+		btnEnter.setBorder(new BevelBorder(BevelBorder.RAISED,
+				Color.LIGHT_GRAY, null, null, null));
 		btnEnter.setFont(new Font("Monospaced", Font.BOLD, 17));
 		btnEnter.setForeground(SystemColor.textHighlight);
 		btnEnter.setBackground(Color.WHITE);
@@ -520,7 +540,7 @@ public class PatientGUI {
 
 					Visit newVisit = new Visit(month, day, year,
 							bloodPressureTop, bloodPressureBot, bloodSugar,
-							weight, height, temperature);
+							weight);
 					Patient tempPatient = (Patient) tempUser;
 					tempPatient.getMedicalRecord().addVisit(newVisit);
 
@@ -543,28 +563,32 @@ public class PatientGUI {
 		enterDailyInformation.add(btnEnter);
 
 		WeightBox = new JTextField();
-		WeightBox.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, null, null, null));
+		WeightBox.setBorder(new BevelBorder(BevelBorder.LOWERED,
+				Color.LIGHT_GRAY, null, null, null));
 		WeightBox.setBackground(Color.WHITE);
 		WeightBox.setBounds(300, 100, 103, 20);
 		enterDailyInformation.add(WeightBox);
 		WeightBox.setColumns(10);
 
 		bloodPressureTopBox = new JTextField();
-		bloodPressureTopBox.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, null, null, null));
+		bloodPressureTopBox.setBorder(new BevelBorder(BevelBorder.LOWERED,
+				Color.LIGHT_GRAY, null, null, null));
 		bloodPressureTopBox.setBackground(Color.WHITE);
 		bloodPressureTopBox.setBounds(366, 306, 37, 20);
 		enterDailyInformation.add(bloodPressureTopBox);
 		bloodPressureTopBox.setColumns(10);
 
 		bloodPressureBotBox = new JTextField();
-		bloodPressureBotBox.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, null, null, null));
+		bloodPressureBotBox.setBorder(new BevelBorder(BevelBorder.LOWERED,
+				Color.LIGHT_GRAY, null, null, null));
 		bloodPressureBotBox.setBackground(Color.WHITE);
 		bloodPressureBotBox.setBounds(300, 306, 37, 20);
 		enterDailyInformation.add(bloodPressureBotBox);
 		bloodPressureBotBox.setColumns(10);
 
 		bloodSugarBox = new JTextField();
-		bloodSugarBox.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, null, null, null));
+		bloodSugarBox.setBorder(new BevelBorder(BevelBorder.LOWERED,
+				Color.LIGHT_GRAY, null, null, null));
 		bloodSugarBox.setBackground(Color.WHITE);
 		bloodSugarBox.setBounds(300, 200, 103, 20);
 		enterDailyInformation.add(bloodSugarBox);
@@ -636,7 +660,8 @@ public class PatientGUI {
 		enterDailyInformation.add(lblYear2);
 
 		JButton btnCancel = new JButton("CANCEL");
-		btnCancel.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.controlShadow, null, null, null));
+		btnCancel.setBorder(new BevelBorder(BevelBorder.RAISED,
+				SystemColor.controlShadow, null, null, null));
 		btnCancel.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		btnCancel.setForeground(Color.BLACK);
 		btnCancel.setBackground(Color.LIGHT_GRAY);
@@ -653,12 +678,12 @@ public class PatientGUI {
 		btnCancel.setBounds(10, 11, 89, 23);
 		enterDailyInformation.add(btnCancel);
 
-        JLabel lblmgdl = new JLabel("(mg/dL)");
+		JLabel lblmgdl = new JLabel("(mg/dL)");
 		lblmgdl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 12));
 		lblmgdl.setBounds(413, 204, 58, 14);
 		enterDailyInformation.add(lblmgdl);
 
-        JLabel lbllbs = new JLabel("(lbs)");
+		JLabel lbllbs = new JLabel("(lbs)");
 		lbllbs.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 12));
 		lbllbs.setBounds(413, 104, 73, 14);
 		enterDailyInformation.add(lbllbs);
@@ -668,12 +693,12 @@ public class PatientGUI {
 		label.setBounds(347, 310, 29, 14);
 		enterDailyInformation.add(label);
 
-        JLabel lblsystolicdiastolic = new JLabel("(Systolic/Diastolic)");
+		JLabel lblsystolicdiastolic = new JLabel("(Systolic/Diastolic)");
 		lblsystolicdiastolic.setFont(new Font("Segoe UI Semibold", Font.PLAIN,
 				12));
 		lblsystolicdiastolic.setBounds(413, 309, 109, 14);
 		enterDailyInformation.add(lblsystolicdiastolic);
-		
+
 		JLabel lblNewEntry = new JLabel("Medical Entry Form");
 		lblNewEntry.setForeground(SystemColor.textHighlight);
 		lblNewEntry.setFont(new Font("Consolas", Font.BOLD, 28));
@@ -698,6 +723,7 @@ public class PatientGUI {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Globals.userDatabase.saveDatabase();
+					System.out.println("saved");
 				} catch (IOException e1) {
 					Object[] options = { "OK" };
 					JOptionPane.showOptionDialog(null,

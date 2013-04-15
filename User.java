@@ -100,8 +100,8 @@ public int recoverAccount(int questionIndex, String attemptedAnswer)
 
 public String print()
 {
-	String print = "";
-	return print;
+
+	return "";
 }
 
 
