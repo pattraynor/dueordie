@@ -344,11 +344,11 @@ public class NurseGUI {
 			}
 		});
 		JMenuItem menuEditAccount = new JMenuItem("Edit Account");
-		menuEditAccount.setIcon(new ImageIcon(NurseGUI.class.getResource("/images/doc_edit_icon&16.png")));
+		
 		mnNewMenu.add(menuEditAccount);
 		
 				JMenuItem menuLogout = new JMenuItem("Logout");
-				menuLogout.setIcon(new ImageIcon(NurseGUI.class.getResource("/images/1366296517_logout.png")));
+			
 				mnNewMenu.add(menuLogout);
 				menuLogout.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {

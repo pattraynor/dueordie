@@ -71,7 +71,7 @@ public class PatientGUI {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initialize() {
 		frame = new JFrame();
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(PatientGUI.class.getResource("/images/app_window_black_icon&32.png")));
+		
 		frame.setResizable(false);
 		frame.setBounds(700, 350, 694, 565);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -614,7 +614,7 @@ public class PatientGUI {
 		editAccount.add(separator_1);
 
 		JButton btnRefresh = new JButton("");
-		btnRefresh.setIcon(new ImageIcon(PatientGUI.class.getResource("/images/refresh_icon&32.png")));
+		
 		btnRefresh.setBorder(null);
 		btnRefresh.setForeground(Color.BLACK);
 		btnRefresh.setBackground(Color.WHITE);
@@ -645,7 +645,7 @@ public class PatientGUI {
 		editAccount.add(lblAddress);
 
 		JButton btnBack = new JButton("");
-		btnBack.setIcon(new ImageIcon(PatientGUI.class.getResource("/images/round_arrow_left_icon&32.png")));
+		
 		btnBack.setBorder(null);
 		btnBack.setFont(new Font("Monospaced", Font.BOLD, 13));
 		btnBack.setBackground(Color.WHITE);
@@ -897,7 +897,7 @@ public class PatientGUI {
 		menuBar.add(mnNewMenu);
 
 		JMenuItem menuSave = new JMenuItem("Save");
-		menuSave.setIcon(new ImageIcon(PatientGUI.class.getResource("/images/save_icon&16.png")));
+		
 		mnNewMenu.add(menuSave);
 		menuSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -917,7 +917,7 @@ public class PatientGUI {
 		});
 
 		JMenuItem menuNewEntry = new JMenuItem("New Entry");
-		menuNewEntry.setIcon(new ImageIcon(PatientGUI.class.getResource("/images/doc_plus_icon&16.png")));
+	
 		mnNewMenu.add(menuNewEntry);
 		menuNewEntry.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -931,7 +931,7 @@ public class PatientGUI {
 		});
 
 		JMenuItem menuEditAccount = new JMenuItem("Edit Account");
-		menuEditAccount.setIcon(new ImageIcon(PatientGUI.class.getResource("/images/doc_edit_icon&16.png")));
+		
 		mnNewMenu.add(menuEditAccount);
 		menuEditAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -945,7 +945,7 @@ public class PatientGUI {
 		});
 
 		JMenuItem menuLogout = new JMenuItem("Logout");
-		menuLogout.setIcon(new ImageIcon(PatientGUI.class.getResource("/images/1366296517_logout.png")));
+	
 		mnNewMenu.add(menuLogout);
 		menuLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
