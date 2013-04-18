@@ -1,12 +1,15 @@
 
-import java.awt.EventQueue;
+import java.awt.EventQueue;   
 import java.io.IOException;
+import javax.swing.JOptionPane;
+
+
 
 
 
 public class Main {
 	public static void main(String[] args) throws IOException {
-		 
+		  
 		Doctor doctor1 = new Doctor("Dr Oz", "2");
 		String doctorID = Globals.userDatabase.addUser(doctor1);
 	 	Patient patient1 = new Patient("Matt Potts", "1", doctor1, "Unitedhealth Group", "234-343-9221", "101 north elm street Tempe AZ");
@@ -56,14 +59,10 @@ public class Main {
 		
 
          
-
+	
 		
-	
-	
-	     
-
-	
-	
+		
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

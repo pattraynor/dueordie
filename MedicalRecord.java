@@ -189,11 +189,57 @@ public class MedicalRecord
     //----------------------------------------
     public void addVisit(Visit newVisit)
     {
+    	this.addToCharts(newVisit);
+        if(getVisitCount() <= 0)
+        {
+        	medicalRecordList.add(newVisit);
+        }
+        else
+        {
+        	int insertionPoint = findInsertionPoint(newVisit);
+            if(insertionPoint == -1)
+            {
+            	medicalRecordList.add(newVisit);
+            }
+            else
+            {
+            	medicalRecordList.add(insertionPoint, newVisit);
+            }
+            	
+          
+        }
+    	
         
+    }
+    
+    private int findInsertionPoint(Visit newVisit)
+    {
+    	
+    	int year = newVisit.getYear();
+    	int day = newVisit.getDay();
+    	int month = newVisit.getMonth();
+    	int searchIndex = 0;
+        int searchUpperBound = getVisitCount() -1;
+        while(searchIndex <= searchUpperBound)
+        {
+        	
+            if(medicalRecordList.get(searchIndex).getYear() <= year)
+            {
+        
+                if(medicalRecordList.get(searchIndex).getMonth() <= month)
+                {
+              
+                    if(medicalRecordList.get(searchIndex).getDay() <= day)
+                    {
+                    	
+                        return searchIndex;
+                    }
+                }
+            }
+            searchIndex++;
+        }
 
-        this.addToCharts(newVisit);
-        medicalRecordList.add(0, newVisit);
-        
+        return -1;
     }
     // -------------------------------------------------------------
     // used by addVisit, when a new visit is added to the list-
@@ -206,14 +252,14 @@ public class MedicalRecord
         this.addBloodPressureBot(newVisit.getBloodPressureBot());
         this.addBloodPressureTop(newVisit.getBloodPressureTop());
         this.addHeight(newVisit.getHeight());
-        this.addWeight(newVisit.getHeight());
+        this.addWeight(newVisit.getWeight());
         this.addSugar(newVisit.getSugar());
         this.addDate(newVisit.getDate());
         this.addPrescription(newVisit.getPrescription());
     }
 
  
-   
+   //method used by save 
     public String toString()
     {
     	
@@ -236,6 +282,7 @@ public class MedicalRecord
         
     }
 
+    // returns the dates of all visits in a String array
 	public String[] toArray() {
 		int index = 0;
 		int indexBound = getVisitCount() - 1;

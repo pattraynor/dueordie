@@ -1,12 +1,8 @@
 /**
- * Author : Matthew Potts 
- * Original 3/29 Updated 4/13/2013
+ * Author : Matthew Potts   
+ * Original 3/29 Updated 4/16/2013
  */
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -14,6 +10,8 @@ public class LoginList {
 
 	private ArrayList<User> userDatabase;
 
+	// used for easy access of the user that is
+	// is currently logged in.
 	private User currentUser;
 
 	// ===========================================
@@ -30,7 +28,7 @@ public class LoginList {
 	}
 
 	// ------------------------------------------------------
-	// generates a 7 digit integer for UserID based on listSize
+	// generates a 7 digit String for UserID based on listSize
 	// ------------------------------------------------------
 	private String generateUserID(User newUser) {
 		int tempCount = getListSize();
@@ -72,21 +70,23 @@ public class LoginList {
 		return stringID;
 	}
 
+	// -----------------------------------------------------
+	// generates a password for new users
+	// one random char and 3 random integers put in a string
+	// -----------------------------------------------------
 	public String generatePassword() {
 
-		final String ALPHABET = "0123456789ABCDE";
-		final int N = ALPHABET.length() - 1;
+		final String ALPHABET = "ABCDEFGHIJK";
 
-		Random r = new Random();
-
-		for (int i = 0; i < 50; i++) {
-			System.out.print(ALPHABET.charAt(r.nextInt(N)));
-		}
+		Random randomGenerator = new Random();
 
 		String rand1, rand2, rand3, randChar, stringID;
-		int randInt1, randInt2, randInt3;
-		randChar = Character.toString(ALPHABET.charAt(N));
-		Random randomGenerator = new Random();
+		int randInt1, randInt2, randInt3, randCharInt;
+
+		randCharInt = randomGenerator.nextInt(10);
+
+		randChar = Character.toString(ALPHABET.charAt(randCharInt));
+
 		// creates 3 random numbers that are less than 10
 		randInt1 = randomGenerator.nextInt(10);
 		randInt2 = randomGenerator.nextInt(10);
@@ -101,32 +101,12 @@ public class LoginList {
 		return stringID;
 	}
 
-	// -------------------------------------------------
-	// Saves LoginList and all user information to file
-	// -------------------------------------------------
-	public void saveDatabase() throws IOException {
-
-		
-		
-
-	}
-
-	// -------------------------------------------------
-	// loads LoginList and all user information from file
-	// -------------------------------------------------
-	public void loadList() throws IOException {
-
-	
-
-	}
-
 	// ==========================================
 	// adds a newUser to the linked list
 	// ==========================================
 
 	public void insert(User newUser) {
-		
-		
+
 		userDatabase.add(newUser);
 
 	}
@@ -141,6 +121,10 @@ public class LoginList {
 		return newUserID;
 	}
 
+	// --------------------------------------------------
+	// finds the location of where the user should
+	// be inserted into the array.
+	// --------------------------------------------------
 	private int findInsertionPoint(String userID) {
 		if (userDatabase.size() == 0) {
 			return 0;
@@ -148,7 +132,6 @@ public class LoginList {
 		int searchIndex = 0;
 		while (searchIndex < userDatabase.size()) {
 
-			
 			if (userID.compareTo(userDatabase.get(searchIndex).getUserID()) < 0)
 				return searchIndex;
 			searchIndex++;
@@ -168,12 +151,11 @@ public class LoginList {
 		return currentUser;
 	}
 
-	
-	public User getUser(int index)
-	{
+	// returns the user by index
+	public User getUser(int index) {
 		return userDatabase.get(index);
 	}
-	
+
 	// ===============================================
 	// searches the linked list by userName
 	// ===============================================
@@ -246,40 +228,37 @@ public class LoginList {
 			return null;
 	}
 
-	public String[] getDoctorNames()
-	{	
+	// --------------------------------------------------
+	// returns all of the Doctor Names in an String array.
+	// --------------------------------------------------
+	public String[] getDoctorNames() {
 		int index = 0, doctorCount = 0;
 		int indexBound = getListSize();
-		while(index < indexBound)
-		{
-		
-			if(userDatabase.get(index).getUserType().equals(Globals.DOCTOR))
-			{
+		while (index < indexBound) {
+
+			if (userDatabase.get(index).getUserType().equals(Globals.DOCTOR)) {
 				doctorCount++;
-				
+				System.out.println(userDatabase.get(index).getUserName());
 			}
 			index++;
-			
+
 		}
-	
+
 		index = 0;
-		if(doctorCount > 0)
-		{
-			
+		if (doctorCount > 0) {
+
 			String[] doctorNames = new String[doctorCount];
-			
-			while(index < doctorCount)
-			{
+
+			while (index < doctorCount) {
 				doctorNames[index] = userDatabase.get(index).getUserName();
-			
+
 				index++;
 			}
-			
+
 			return doctorNames;
 		}
 		return null;
-		
-		
+
 	}
 
 }

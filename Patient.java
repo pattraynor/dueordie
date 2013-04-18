@@ -1,9 +1,11 @@
+
 public class Patient extends User{
 
     private Doctor doctor;
     private String insurance, address, phoneNumber;
     private MedicalRecord patientRecord;
 
+    //creates a new Patient and sets all info 
     public Patient(String _userName, String _newPin, Doctor myDoctor, String myInsurance, String myNumber, String myAddress)
     {
         super(_userName, _newPin, Globals.PATIENT);
@@ -85,6 +87,8 @@ public class Patient extends User{
            return phoneNumber;
     }
     
+    
+    //used by save to file
     public String toString()
     {
     	
@@ -95,6 +99,8 @@ public class Patient extends User{
     	return userType + "\r\n" + userName + "\r\n" + pin + "\r\n" + userID + "\r\n" + insurance + "\r\n" + address + "\r\n" +
                 phoneNumber + "\r\n" + doctorID + "\r\n"  + answer1 + "\r\n" + answer2 + "\r\n" + answer3 + medicalRecordString + "\r\n";
     }
+    
+    //method used to display info on GUI
     public String print()
     {
     	

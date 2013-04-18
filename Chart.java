@@ -22,19 +22,26 @@ import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.TextAnchor;
 public class Chart extends JFrame{
 
-  /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	public Chart(String type, String ChartType, Patient tempPatient) {
 
-		
+		String Yaxis = "";
+		if(type.equals(Globals.HEIGHT))
+			Yaxis = "inches";
+		else if(type.equals(Globals.WEIGHT))
+			Yaxis = "lbs";
+		else if(type.equals(Globals.BLOODSUGAR))
+			Yaxis = "mg/dL";
+	
 		JFreeChart chart = null;
 		CategoryDataset chartData;
 		if (ChartType.equals(Globals.BARCHART)) {
 			chartData = createChartData(type, tempPatient);
-			chart = createBarChart(chartData, type);
+			chart = createBarChart(chartData, type, Yaxis);
 		}
 		if (ChartType.equals(Globals.BARCHART3D)) {
 			chartData = create3DChartData(type, tempPatient);
@@ -42,11 +49,11 @@ public class Chart extends JFrame{
 		}
 		if (ChartType.equals(Globals.LINECHART)) {
 			chartData = createChartData(type, tempPatient);
-			chart = createLineChart(chartData, type);
+			chart = createLineChart(chartData, type, Yaxis);
 		}
 
 		ChartPanel chartPanel = new ChartPanel(chart, false);
-		chartPanel.setPreferredSize(new Dimension(500, 270));
+		chartPanel.setPreferredSize(new Dimension(600, 320));
 		setContentPane(chartPanel);
 
 	}
@@ -54,7 +61,7 @@ public class Chart extends JFrame{
 	private JFreeChart create3DBarChart(CategoryDataset chartData, String type) {
 
 		final JFreeChart chart = ChartFactory.createBarChart3D(type,
-				"Category", "Value", chartData, PlotOrientation.HORIZONTAL,
+				"Date", "", chartData, PlotOrientation.HORIZONTAL,
 				true, true, false);
 
 		final CategoryPlot plot = chart.getCategoryPlot();
@@ -75,11 +82,11 @@ public class Chart extends JFrame{
 
 	}
 
-	private JFreeChart createLineChart(CategoryDataset chartData, String type) {
+	private JFreeChart createLineChart(CategoryDataset chartData, String type, String Yaxis) {
 
 		
 		final JFreeChart chart = ChartFactory
-				.createLineChart(type, "Type", "Value", chartData,
+				.createLineChart(type, "Date", Yaxis, chartData,
 						PlotOrientation.VERTICAL, true, true, false);
 
 		chart.setBackgroundPaint(Color.white);
@@ -98,16 +105,20 @@ public class Chart extends JFrame{
 		renderer.setSeriesStroke(0, new BasicStroke(2.0f,
 				BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 1.0f,
 				new float[] { 10.0f, 6.0f }, 0.0f));
+		
+		CategoryAxis domainAxis = categoryPlot.getDomainAxis();
+		domainAxis.setCategoryLabelPositions(CategoryLabelPositions
+				.createUpRotationLabelPositions(Math.PI / 6.0));
 
 		return chart;
 	}
 
 	private static JFreeChart createBarChart(CategoryDataset chartData,
-			String type) {
-
+			String type, String Yaxis) {
+		
 		//creates chart
-		JFreeChart chart = ChartFactory.createBarChart("Weight Chart", "Date",
-				"lbs", chartData, PlotOrientation.VERTICAL, true, true, false);
+		JFreeChart chart = ChartFactory.createBarChart(type, "Date",
+				Yaxis, chartData, PlotOrientation.VERTICAL, true, true, false);
 
 		// sets the background color for the chart
 		chart.setBackgroundPaint(Color.white);
@@ -128,9 +139,9 @@ public class Chart extends JFrame{
 		barRenderer.setDrawBarOutline(false);
 
 		//sets the color of the series
-		GradientPaint gp0 = new GradientPaint(0.0f, 0.0f, Color.red, 0.0f,
-				0.0f, new Color(100, 0, 0));
-		barRenderer.setSeriesPaint(0, gp0);
+		GradientPaint newColor = new GradientPaint(0.0f, 0.0f, Color.red, 0.0f,
+				0.0f, new Color(20, 0, 0));
+		barRenderer.setSeriesPaint(0, newColor);
 
 		CategoryAxis domainAxis = categoryPlot.getDomainAxis();
 		domainAxis.setCategoryLabelPositions(CategoryLabelPositions
@@ -144,7 +155,7 @@ public class Chart extends JFrame{
 			Patient currentPatient) {
 		double[] data1 = null, data2 = null;
 		String series1 = null, series2 = null;
-
+		
 		DefaultCategoryDataset chartData = new DefaultCategoryDataset();
 
 		if (type.equals(Globals.BLOODPRESSURE)) {
@@ -164,8 +175,8 @@ public class Chart extends JFrame{
 
 		String[] dates = currentPatient.getMedicalRecord().getDates();
 		int datesCount = dates.length;
-		if (datesCount > 20) {
-			datesCount = 20;
+		if (datesCount > 15) {
+			datesCount = 15;
 		}
 		int index = 0;
 		while (index < datesCount) {
@@ -182,8 +193,10 @@ public class Chart extends JFrame{
 
 	private CategoryDataset createChartData(String type, Patient currentPatient) {
 		DefaultCategoryDataset chartData = new DefaultCategoryDataset();
-		double[] data = null;
-		String series = null;
+		
+		double[] data = null, data2 = null;
+		String series = null, series2 = null;
+		
 		if (type.equals(Globals.WEIGHT)) {
 			data = currentPatient.getMedicalRecord().getWeightChart();
 			series = "Weight";
@@ -198,18 +211,46 @@ public class Chart extends JFrame{
 			series = "Blood Sugar";
 			System.out.println("!");
 		}
+		if (type.equals(Globals.BLOODPRESSURE)) {
+			data = currentPatient.getMedicalRecord()
+					.getBloodPressureTopChart();
+			data2 = currentPatient.getMedicalRecord()
+					.getBloodPressureBotChart();
+			series = "Systolic";
+			series2 = "Diastolic";
+		}
+		if (type.equals(Globals.HEIGHTWEIGHT)) {
+			data = currentPatient.getMedicalRecord().getHeightChart();
+			data2 = currentPatient.getMedicalRecord().getWeightChart();
+			series = "Height";
+			series2 = "Weight";
+		}
 
 		String[] dates = currentPatient.getMedicalRecord().getDates();
 		int datesCount = dates.length;
-		if (datesCount > 20) {
-			datesCount = 20;
+		if (datesCount > 15) {
+			datesCount = 15;
 		}
 		int index = 0;
 		while (index < datesCount) {
-			if (data[index] > 0) {
+			
+			if(type.equals(Globals.HEIGHTWEIGHT) || type.equals(Globals.BLOODPRESSURE))
+			{
+				if (data2[index] > 0) 
+				{
+					
+					chartData.addValue(data2[index], series2, dates[index]);
+
+				}
+			}
+			
+			if (data[index] > 0) 
+			{
+				
 				chartData.addValue(data[index], series, dates[index]);
 
 			}
+			
 			index++;
 		}
 

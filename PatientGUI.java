@@ -1,4 +1,4 @@
-import java.awt.Color;
+import java.awt.Color;    
 import java.awt.Font;
 import java.awt.SystemColor;
 import javax.swing.JFrame;
@@ -26,6 +26,11 @@ import javax.swing.border.Border;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
+import org.jfree.ui.RefineryUtilities;
+import javax.swing.SwingConstants;
+
 
 public class PatientGUI {
 	public JFrame frame;
@@ -42,7 +47,6 @@ public class PatientGUI {
 	private JComboBox<String> dayComboBox2;
 	private JComboBox<String> monthComboBox2;
 	private JComboBox<String> yearComboBox2;
-	private double weight, bloodPressureTop, bloodPressureBot, bloodSugar;
 	private JPanel mainWindow;
 	private JPanel editAccount;
 	private JTextField addressField;
@@ -52,10 +56,7 @@ public class PatientGUI {
 	private JTextArea textArea;
 	@SuppressWarnings("rawtypes")
 	private JList list;
-
-	/**
-	 * Launch the application.
-	 */
+	
 
 	/**
 	 * Create the application.
@@ -70,9 +71,10 @@ public class PatientGUI {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initialize() {
 		frame = new JFrame();
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(PatientGUI.class.getResource("/images/app_window_black_icon&32.png")));
 		frame.setResizable(false);
 		frame.setBounds(700, 350, 694, 565);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
 
 		mainWindow = new JPanel();
@@ -288,9 +290,207 @@ public class PatientGUI {
 		list.setBorder(UIManager.getBorder("List.focusCellHighlightBorder"));
 
 		JPanel viewProgress = new JPanel();
+		viewProgress.setBackground(Color.WHITE);
 		tabbedPane.addTab("Charts and Analysis", null, viewProgress, null);
 		viewProgress.setLayout(null);
+		
+		JButton btnBloodPressure = new JButton("Blood Pressure");
+		btnBloodPressure.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, null, null, null));
+		btnBloodPressure.setFont(new Font("Consolas", Font.PLAIN, 12));
+		btnBloodPressure.setBackground(Color.WHITE);
+		btnBloodPressure.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				 	Chart bloodPressureChart = new Chart(Globals.BLOODPRESSURE, Globals.BARCHART3D, (Patient) Globals.userDatabase.getCurrentUser());
+				 	bloodPressureChart.pack();
+		            RefineryUtilities.centerFrameOnScreen(bloodPressureChart);
+		            bloodPressureChart.setVisible(true);
+			}
+		});
+		btnBloodPressure.setBounds(28, 178, 157, 48);
+		viewProgress.add(btnBloodPressure);
+		
+		JButton btnHeightWeightChart = new JButton("Weight vs Height");
+		btnHeightWeightChart.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(192, 192, 192), null, null, null));
+		btnHeightWeightChart.setFont(new Font("Consolas", Font.PLAIN, 12));
+		btnHeightWeightChart.setBackground(Color.WHITE);
+		btnHeightWeightChart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Chart heightWeightChart = new Chart(Globals.HEIGHTWEIGHT,Globals.BARCHART3D, (Patient) Globals.userDatabase.getCurrentUser());
+				heightWeightChart.pack();
+	            RefineryUtilities.centerFrameOnScreen(heightWeightChart);
+	            heightWeightChart.setVisible(true);
+			}
+		});
+		btnHeightWeightChart.setBounds(28, 115, 157, 48);
+		viewProgress.add(btnHeightWeightChart);
+		
+		JButton btnWeightLineChart = new JButton("Weight");
+		btnWeightLineChart.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, null, null, null));
+		btnWeightLineChart.setBackground(Color.WHITE);
+		btnWeightLineChart.setFont(new Font("Consolas", Font.PLAIN, 12));
+		btnWeightLineChart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				  	Chart weightLineChart = new Chart(Globals.WEIGHT, Globals.LINECHART, (Patient) Globals.userDatabase.getCurrentUser());
+		            weightLineChart.pack();
+		            RefineryUtilities.centerFrameOnScreen(weightLineChart);
+		            weightLineChart.setVisible(true);
+			}
+		});
+		btnWeightLineChart.setBounds(260, 178, 157, 48);
+		viewProgress.add(btnWeightLineChart);
+		
+		JButton btnHeightLineChart = new JButton("Height");
+		btnHeightLineChart.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, null, null, null));
+		btnHeightLineChart.setBackground(Color.WHITE);
+		btnHeightLineChart.setFont(new Font("Consolas", Font.PLAIN, 12));
+		btnHeightLineChart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+					Chart heightLineChart = new Chart(Globals.HEIGHT, Globals.LINECHART, (Patient) Globals.userDatabase.getCurrentUser());
+		            heightLineChart.pack();
+		            RefineryUtilities.centerFrameOnScreen(heightLineChart);
+		            heightLineChart.setVisible(true);
+			}
+		});
+		btnHeightLineChart.setBounds(260, 237, 157, 48);
+		viewProgress.add(btnHeightLineChart);
+		
+	
+		
+		JButton btnSugarLineChart = new JButton("Blood Sugar");
+		btnSugarLineChart.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, null, null, null));
+		btnSugarLineChart.setFont(new Font("Consolas", Font.PLAIN, 12));
+		btnSugarLineChart.setBackground(Color.WHITE);
+		btnSugarLineChart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				  Chart sugarLineChart = new Chart(Globals.BLOODSUGAR, Globals.LINECHART, (Patient) Globals.userDatabase.getCurrentUser());
+		            sugarLineChart.pack();
+		            RefineryUtilities.centerFrameOnScreen(sugarLineChart);
+		            sugarLineChart.setVisible(true);
+			}
+		});
+		btnSugarLineChart.setBounds(260, 115, 157, 48);
+		viewProgress.add(btnSugarLineChart);
+		
+		JButton btnWeightBarChart = new JButton("Weight");
+		btnWeightBarChart.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, null, null, null));
+		btnWeightBarChart.setBackground(Color.WHITE);
+		btnWeightBarChart.setFont(new Font("Consolas", Font.PLAIN, 12));
+		btnWeightBarChart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				   Chart weightBarChart = new Chart(Globals.WEIGHT, Globals.BARCHART, (Patient) Globals.userDatabase.getCurrentUser());
+		            weightBarChart.pack();
+		            RefineryUtilities.centerFrameOnScreen(weightBarChart);
+		            weightBarChart.setVisible(true);
+			}
+		});
+		btnWeightBarChart.setBounds(498, 178, 157, 48);
+		viewProgress.add(btnWeightBarChart);
+		
+		JButton btnHeightBarChart = new JButton("Height");
+		btnHeightBarChart.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, null, null, null));
+		btnHeightBarChart.setBackground(Color.WHITE);
+		btnHeightBarChart.setFont(new Font("Consolas", Font.PLAIN, 12));
+		btnHeightBarChart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			    Chart heightBarChart = new Chart(Globals.HEIGHT, Globals.BARCHART, (Patient) Globals.userDatabase.getCurrentUser());
+	            heightBarChart.pack();
+	            RefineryUtilities.centerFrameOnScreen(heightBarChart);
+	            heightBarChart.setVisible(true);
+	            
+			}
+		});
+		btnHeightBarChart.setBounds(498, 237, 157, 48);
+		viewProgress.add(btnHeightBarChart);
+		
+		JButton btnSugarBarChart = new JButton("Blood Sugar");
+		btnSugarBarChart.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, null, null, null));
+		btnSugarBarChart.setBackground(Color.WHITE);
+		btnSugarBarChart.setFont(new Font("Consolas", Font.PLAIN, 12));
+		btnSugarBarChart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			      	Chart sugarBarChart = new Chart(Globals.BLOODSUGAR, Globals.BARCHART, (Patient) Globals.userDatabase.getCurrentUser());
+		            sugarBarChart.pack();
+		            RefineryUtilities.centerFrameOnScreen(sugarBarChart);
+		            sugarBarChart.setVisible(true);
+			}
+		});
+		btnSugarBarChart.setBounds(498, 115, 157, 48);
+		viewProgress.add(btnSugarBarChart);
+		
+		JLabel lblBarCharts = new JLabel("Bar Charts");
+		lblBarCharts.setFont(new Font("Consolas", Font.BOLD, 17));
+		lblBarCharts.setForeground(SystemColor.textHighlight);
+		lblBarCharts.setBackground(Color.WHITE);
+		lblBarCharts.setBounds(529, 46, 140, 29);
+		viewProgress.add(lblBarCharts);
+		
+		JLabel lblLineCharts = new JLabel("Line Charts");
+		lblLineCharts.setForeground(SystemColor.textHighlight);
+		lblLineCharts.setFont(new Font("Consolas", Font.BOLD, 17));
+		lblLineCharts.setBackground(Color.WHITE);
+		lblLineCharts.setBounds(279, 43, 126, 35);
+		viewProgress.add(lblLineCharts);
+		
+		JLabel lbldBarCharts = new JLabel("3D Bar Charts");
+		lbldBarCharts.setForeground(SystemColor.textHighlight);
+		lbldBarCharts.setFont(new Font("Consolas", Font.BOLD, 17));
+		lbldBarCharts.setBackground(Color.WHITE);
+		lbldBarCharts.setBounds(39, 43, 146, 35);
+		viewProgress.add(lbldBarCharts);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBackground(Color.BLACK);
+		separator.setOrientation(SwingConstants.VERTICAL);
+		separator.setBounds(222, 0, 21, 483);
+		viewProgress.add(separator);
+		
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setOrientation(SwingConstants.VERTICAL);
+		separator_2.setBackground(Color.BLACK);
+		separator_2.setBounds(455, 0, 35, 483);
+		viewProgress.add(separator_2);
+		
+		JButton btnheightWeightLineChart = new JButton("Weight vs Height");
+		btnheightWeightLineChart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Chart heightWeightChart2 = new Chart(Globals.HEIGHTWEIGHT, Globals.LINECHART, (Patient) Globals.userDatabase.getCurrentUser());
+				heightWeightChart2.pack();
+	            RefineryUtilities.centerFrameOnScreen(heightWeightChart2);
+	            heightWeightChart2.setVisible(true);
+			}
+		});
+		btnheightWeightLineChart.setFont(new Font("Consolas", Font.PLAIN, 12));
+		btnheightWeightLineChart.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, null, null, null));
+		btnheightWeightLineChart.setBackground(Color.WHITE);
+		btnheightWeightLineChart.setBounds(260, 296, 157, 48);
+		viewProgress.add(btnheightWeightLineChart);
+		
+		JButton btnBloodPressure2 = new JButton("Blood Pressure");
+		btnBloodPressure2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Chart bloodPressureChart2 = new Chart(Globals.BLOODPRESSURE, Globals.LINECHART, (Patient) Globals.userDatabase.getCurrentUser());
+				bloodPressureChart2.pack();
+	            RefineryUtilities.centerFrameOnScreen(bloodPressureChart2);
+	            bloodPressureChart2.setVisible(true);
+			}
+		});
+		btnBloodPressure2.setFont(new Font("Consolas", Font.PLAIN, 12));
+		btnBloodPressure2.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, null, null, null));
+		btnBloodPressure2.setBackground(Color.WHITE);
+		btnBloodPressure2.setBounds(260, 358, 157, 48);
+		viewProgress.add(btnBloodPressure2);
+         
 
+		
 		editAccount = new JPanel();
 		frame.getContentPane().add(editAccount, "name_46184208883226");
 		editAccount.setBackground(Color.WHITE);
@@ -401,7 +601,7 @@ public class PatientGUI {
 		informationDisplay2.setBorder(UIManager.getBorder("TextArea.border"));
 		informationDisplay2.setEditable(false);
 		informationDisplay2.setBackground(Color.WHITE);
-		informationDisplay2.setBounds(10, 34, 664, 182);
+		informationDisplay2.setBounds(78, 11, 530, 205);
 		informationDisplay2.setText(Globals.userDatabase.getCurrentUser()
 				.print());
 		informationDisplay2.setFont(new Font("Monospaced", Font.PLAIN, 13));
@@ -413,11 +613,11 @@ public class PatientGUI {
 		separator_1.setBounds(0, 227, 684, 8);
 		editAccount.add(separator_1);
 
-		JButton btnRefresh = new JButton("REFRESH");
-		btnRefresh.setBorder(new BevelBorder(BevelBorder.RAISED,
-				Color.LIGHT_GRAY, null, null, null));
+		JButton btnRefresh = new JButton("");
+		btnRefresh.setIcon(new ImageIcon(PatientGUI.class.getResource("/images/refresh_icon&32.png")));
+		btnRefresh.setBorder(null);
 		btnRefresh.setForeground(Color.BLACK);
-		btnRefresh.setBackground(Color.LIGHT_GRAY);
+		btnRefresh.setBackground(Color.WHITE);
 		btnRefresh.setFont(new Font("Monospaced", Font.BOLD, 13));
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -426,7 +626,7 @@ public class PatientGUI {
 						.getCurrentUser().print());
 			}
 		});
-		btnRefresh.setBounds(560, 11, 114, 23);
+		btnRefresh.setBounds(618, 0, 71, 42);
 		editAccount.add(btnRefresh);
 
 		JLabel lblNewLabel = new JLabel("Phone Number");
@@ -444,11 +644,11 @@ public class PatientGUI {
 		lblAddress.setBounds(35, 411, 89, 14);
 		editAccount.add(lblAddress);
 
-		JButton btnBack = new JButton("BACK");
-		btnBack.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(160,
-				160, 160), null, null, null));
+		JButton btnBack = new JButton("");
+		btnBack.setIcon(new ImageIcon(PatientGUI.class.getResource("/images/round_arrow_left_icon&32.png")));
+		btnBack.setBorder(null);
 		btnBack.setFont(new Font("Monospaced", Font.BOLD, 13));
-		btnBack.setBackground(Color.LIGHT_GRAY);
+		btnBack.setBackground(Color.WHITE);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -461,7 +661,7 @@ public class PatientGUI {
 				textArea.setText(Globals.userDatabase.getCurrentUser().print());
 			}
 		});
-		btnBack.setBounds(10, 11, 114, 23);
+		btnBack.setBounds(0, 0, 71, 42);
 		editAccount.add(btnBack);
 
 		JButton btnSetUpSecurity = new JButton("Add Security Features");
@@ -505,56 +705,35 @@ public class PatientGUI {
 		btnEnter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				if (WeightBox.getText().length() > 0) {
-					weight = Double.parseDouble(WeightBox.getText());
-				} else
-					weight = 0;
+				
+				String[] doubleInputs = {bloodPressureTopBox.getText(), bloodPressureBotBox.getText(),bloodSugarBox.getText(),
+						 WeightBox.getText()};
+				System.out.println(WeightBox.getText());
+				Double[] doubleArray = Globals.inputHandler.checkDoubleInputs(doubleInputs);
+				if(doubleArray != null)
+				{
+					int day = Integer.parseInt(dayComboBox.getSelectedItem()
+							.toString());
+					int month = Integer.parseInt(monthComboBox.getSelectedItem()
+							.toString());
+					int year = Integer.parseInt(yearComboBox.getSelectedItem()
+							.toString());
 
-				if (bloodPressureTopBox.getText().length() > 0) {
-					bloodPressureTop = Double.parseDouble(bloodPressureTopBox
-							.getText());
-				} else
-					bloodPressureTop = 0;
+					User tempUser = Globals.userDatabase.getCurrentUser();
 
-				if (bloodPressureBotBox.getText().length() > 0) {
-					bloodPressureBot = Double.parseDouble(bloodPressureBotBox
-							.getText());
-				} else
-					bloodPressureBot = 0;
+					if (tempUser instanceof Patient) 
+					{
 
-				if (bloodSugarBox.getText().length() > 0) {
-					bloodSugar = Double.parseDouble(bloodSugarBox.getText());
-				} else
-					bloodSugar = 0;
+						Visit newVisit = new Visit(month, day, year,
+								doubleArray[0], doubleArray[1], doubleArray[2],
+								doubleArray[3]);
+						Patient tempPatient = (Patient) tempUser;
+						tempPatient.getMedicalRecord().addVisit(newVisit);
 
-				int day = Integer.parseInt(dayComboBox.getSelectedItem()
-						.toString());
-				int month = Integer.parseInt(monthComboBox.getSelectedItem()
-						.toString());
-				int year = Integer.parseInt(yearComboBox.getSelectedItem()
-						.toString());
-
-				User tempUser = Globals.userDatabase.getCurrentUser();
-
-				if (tempUser instanceof Patient) {
-
-					Visit newVisit = new Visit(month, day, year,
-							bloodPressureTop, bloodPressureBot, bloodSugar,
-							weight);
-					Patient tempPatient = (Patient) tempUser;
-					tempPatient.getMedicalRecord().addVisit(newVisit);
-
+					}
 				}
-				bloodPressureTopBox.setText("");
-				bloodPressureBotBox.setText("");
-				WeightBox.setText("");
-				bloodSugarBox.setText("");
-				frame.getContentPane().removeAll();
-				frame.getContentPane().invalidate();
-
-				frame.getContentPane().add(mainWindow);
-				frame.getContentPane().revalidate();
-				frame.repaint();
+			
+				
 			}
 
 		});
@@ -717,26 +896,28 @@ public class PatientGUI {
 		mnNewMenu.setBackground(Color.WHITE);
 		menuBar.add(mnNewMenu);
 
-		JMenuItem menuSave = new JMenuItem("Save ");
+		JMenuItem menuSave = new JMenuItem("Save");
+		menuSave.setIcon(new ImageIcon(PatientGUI.class.getResource("/images/save_icon&16.png")));
 		mnNewMenu.add(menuSave);
 		menuSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Globals.userDatabase.saveDatabase();
-					System.out.println("saved");
-				} catch (IOException e1) {
-					Object[] options = { "OK" };
-					JOptionPane.showOptionDialog(null,
-							"There was a problem with saving to the file",
-							"Error", JOptionPane.DEFAULT_OPTION,
-							JOptionPane.WARNING_MESSAGE, null, options,
-							options[0]);
-					e1.printStackTrace();
-				}
+//				try {
+//					Globals.fileHandler.saveDatabase();
+//					System.out.println("saved");
+//				} catch (IOException e1) {
+//					Object[] options = { "OK" };
+//					JOptionPane.showOptionDialog(null,
+//							"There was a problem with saving to the file",
+//							"Error", JOptionPane.DEFAULT_OPTION,
+//							JOptionPane.WARNING_MESSAGE, null, options,
+//							options[0]);
+//					e1.printStackTrace();
+//				}
 			}
 		});
 
 		JMenuItem menuNewEntry = new JMenuItem("New Entry");
+		menuNewEntry.setIcon(new ImageIcon(PatientGUI.class.getResource("/images/doc_plus_icon&16.png")));
 		mnNewMenu.add(menuNewEntry);
 		menuNewEntry.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -750,6 +931,7 @@ public class PatientGUI {
 		});
 
 		JMenuItem menuEditAccount = new JMenuItem("Edit Account");
+		menuEditAccount.setIcon(new ImageIcon(PatientGUI.class.getResource("/images/doc_edit_icon&16.png")));
 		mnNewMenu.add(menuEditAccount);
 		menuEditAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -763,6 +945,7 @@ public class PatientGUI {
 		});
 
 		JMenuItem menuLogout = new JMenuItem("Logout");
+		menuLogout.setIcon(new ImageIcon(PatientGUI.class.getResource("/images/1366296517_logout.png")));
 		mnNewMenu.add(menuLogout);
 		menuLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

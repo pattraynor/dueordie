@@ -1,6 +1,6 @@
 
 
-import javax.swing.JFrame; 
+import javax.swing.JFrame;  
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -15,7 +15,9 @@ import javax.swing.UIManager;
 import javax.swing.JPasswordField;
 import javax.swing.border.BevelBorder;
 
-
+//GUI for logging in
+//displays login screen and then redirects 
+//users to certain screens based on user type
 public class LoginGUI {
 	
 	JFrame frame;
@@ -68,6 +70,12 @@ public class LoginGUI {
 		btnLogin.setBackground(new Color(0, 153, 204));
 		btnLogin.setForeground(SystemColor.desktop);
 		btnLogin.setFont(new Font("Monospaced", Font.BOLD, 15));
+		
+		//-------------------------------------------------
+		//Action listener for login button
+		//if user is Doctor, doctorGui is created
+		//same for for patients and nurses.
+		//--------------------------------------------------
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{	
@@ -89,26 +97,27 @@ public class LoginGUI {
 							window.frame.setVisible(true);
 							
 						}
-						if(tempUser instanceof Nurse)
+						else if(tempUser instanceof Nurse)
 						{
 							frame.dispose();
 							NurseGUI window = new NurseGUI();
 							window.frame.setVisible(true);
 							
 						}
+						else if(tempUser instanceof Doctor)
+						{
+							
+								
+						}
 						Globals.userDatabase.setCurrentUser(tempUser);
-						
 					}
 					else
 					{
 						lblWrongPasswordUser.setVisible(true);
 					}
-				
-					
-						
 				}
-						
 					
+		
 			}
 		});
 		btnLogin.setBounds(148, 140, 130, 23);

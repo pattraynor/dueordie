@@ -9,7 +9,7 @@ public class Nurse extends User
     }
 
 
-
+    //used by save
     public String toString()
     {
     	String print;
@@ -17,6 +17,7 @@ public class Nurse extends User
     	return print;
     }
     
+    //used to display info on GUI
     public String print()
     {
     	return "Name: \t\t" + userName;

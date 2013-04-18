@@ -1,4 +1,6 @@
-
+//Each time a patient visits the doctors office 
+//or enters daily values, a new instance of Visit 
+//is created and added to he medical record ArrayList
 public class Visit 
 {
 
@@ -26,15 +28,17 @@ public class Visit
 		weight = 0;
 		height = 0;
 		temperature = 0;
-		prescriptions = null;
-		symptoms = null;
-		notes = null;	
+		prescriptions = "N/A";
+		symptoms = "N/A";
+		notes = "N/A";	
 	}
 	
 	public Visit(int mon, int today, int newYear, double pressureTop, 
 			double pressureBot, double sweet, double pounds,
 			double inches, double fever, String problems)
 	{
+		if(problems.length() <= 0)
+			problems = "N/A";
 		month = mon;
 		day = today;
 		year = newYear;
@@ -45,11 +49,12 @@ public class Visit
 		height = inches;
 		temperature = fever;
 		symptoms = problems;
-		prescriptions = null;
-		notes = null;	
+		prescriptions = "N/A";
+		notes = "N/A";	
 		
 		
 	}
+
 	public Visit(int _month, int _day, int _year, double pressureTop, 
 			double pressureBot, double _sugar, double _weight,
 			double _height, double _temperature, String _symptoms,
@@ -83,9 +88,9 @@ public class Visit
 		weight = pounds;
 		height = 0;
 		temperature = 0;
-		symptoms = null;
-		prescriptions = null;
-		notes = null;
+		symptoms = "N/A";
+		prescriptions = "N/A";
+		notes = "N/A";
 		
 		
 	}
@@ -219,79 +224,65 @@ public class Visit
 		return height;
 	}
 	
-	public String print()
+	//Goes through the recorded values and makes them 
+	//suitable for printing to GUI. Turns null Strings to empty
+	//Strings and turns doubles that are 0 to empty Strings.
+	private String[] visitToArray()
 	{
-		String print;
-		String tempWeight, tempHeight, tempTemperature, tempBloodSugar, tempBloodPressure, tempDate;
-		tempDate = Integer.toString(month) + "/" + Integer.toString(day) + "/" + Integer.toString(year);
-		String prescriptionsCopy;
-		String symptomsCopy;
-		String notesCopy;
+		int index = 0, index2 = 0;
+		Double[] doubleArray = {temperature, weight, height, bloodPressureTop, bloodPressureBot, sugar};
+		String[] tempString = {prescriptions, notes, symptoms};
+		String[] visitArray = new String[9];
 		
-		if(symptoms == null)
+		while(index2 < tempString.length)
 		{
-			symptomsCopy = "";
-		}
-		else
-		{
-			symptomsCopy = symptoms;
-			
+	
+			if(tempString[index2].equals("N/A"))
+			{
+				tempString[index2] = "";
+			}
+			index2++;
 		}
 		
-		if(notes == null)
+		while(index < doubleArray.length)
 		{
-			notesCopy = "";
+			if(doubleArray[index] == 0)
+			{
+				visitArray[index] = "";
+			}
+			else
+			{
+				visitArray[index] = Double.toString(doubleArray[index]);
+			}
+			index++;
+				
 		}
-		else 
-		{
-			notesCopy = notes;
-		}
+		visitArray[6] = tempString[0];
+		visitArray[7] = tempString[1];
+		visitArray[8] = tempString[2];
 		
-		if(prescriptions == null)
-		{
-			prescriptionsCopy = "";
-		}
-		else 
-		{
-			prescriptionsCopy = prescriptions;
-		}
-		
-		if(weight == 0)
-			tempWeight = "";
-		else	
-			tempWeight = Double.toString(weight);
-		if(height == 0)
-			tempHeight = "";
-		else
-			tempHeight = Double.toString(height);
-		
-		if(temperature == 0)
-			tempTemperature = "";
-		else 
-			tempTemperature = Double.toString(temperature);
-		if(sugar == 0)
-			tempBloodSugar = "";
-		else 
-			tempBloodSugar = Double.toString(sugar);
-		if(bloodPressureTop == 0)
-			tempBloodPressure = "";
-		else
-			tempBloodPressure = Double.toString(bloodPressureTop) + "/" + Double.toString(bloodPressureBot);
-		
-
-
-		
-		print = "Date: \t\t\t" + tempDate + "\n\nTemperature(F): \t" + tempTemperature + "\n\nWeight(lbs): \t\t" + tempWeight + 
-		"\n\nHeight(inches): \t" + tempHeight+ "\n\nBloodPressure: \t\t" + tempBloodPressure + 
-		"\n\nBlood Sugar(mg/dL): \t" + tempBloodSugar + "\n\n\nPrescriptions: \n" + prescriptionsCopy + 
-		"\n\nDoctor's Notes: \n" + notesCopy + "\n\nSymptoms: \n" + symptomsCopy;
-		
-		return print;
+		return visitArray;
 	}
 	
+	//Prints out all info in a readable format for the GUI
+	public String print()
+	{
+		
+		String[] printVales = visitToArray();
+		
+		return "Date: \t\t\t" + getDate() + "\n\nTemperature(F): \t" + printVales[0] + "\n\nWeight(lbs): \t\t" +  printVales[1] + 
+		"\n\nHeight(inches): \t" +  printVales[2]+ "\n\nBloodPressure: \t\t" +  printVales[3] + "/" +  printVales[4] + 
+		"\n\nBlood Sugar(mg/dL): \t" +  printVales[5] + "\n\n\nPrescriptions: \n" +  printVales[6] + 
+		"\n\nDoctor's Notes: \n" +  printVales[7] + "\n\nSymptoms: \n" +  printVales[8];
+		
+		
+	}
+	
+	
+	//used by FileHandler to print Visit info to the textfile
 	public String toString()
 	{
-		String print;
+		
 		String tempWeight, tempHeight, tempTemperature, tempBloodSugar, tempBloodPressureTop, tempBloodPressureBot, 
 		tempDay, tempYear, tempMonth;
 		
@@ -306,12 +297,9 @@ public class Visit
 			tempDay = Integer.toString(day);
 			tempMonth = Integer.toString(month);
 			tempYear = Integer.toString(year);
-
 		
-		print = "\r\n" + tempWeight + "\r\n" + tempHeight +  "\r\n" + tempTemperature +  "\r\n" + tempBloodSugar +  "\r\n" + tempBloodPressureTop +
+		return "\r\n" + tempWeight + "\r\n" + tempHeight +  "\r\n" + tempTemperature +  "\r\n" + tempBloodSugar +  "\r\n" + tempBloodPressureTop +
 				 "\r\n" + tempBloodPressureBot +  "\r\n" + tempMonth +  "\r\n" + tempDay + "\r\n" + tempYear + "\r\n" + symptoms + "\r\n" + notes + "\r\n" + prescriptions;
-		
-		return print;
 		
 	}
 }

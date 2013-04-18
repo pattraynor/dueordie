@@ -1,6 +1,11 @@
-
-
+//Main User Class, Patient, Nurse and Doctor 
+//derive from this class.
 public class User {
+	
+	//User class holds information that is derived 
+	//by other classes. Including Name, User Type,
+	//security question answers, password and UserID
+	//User ID and Pin are used to login to the system
 	protected String userName;
 	protected String userType;
 	protected String answer1, answer2, answer3;
@@ -58,6 +63,8 @@ public String getUserName(){
 public String getUserType(){
 	return userType;
 }
+
+//compares security question answer to the one on file
 public int recoverAccount(int questionIndex, String attemptedAnswer)
 {
 	
@@ -98,6 +105,8 @@ public int recoverAccount(int questionIndex, String attemptedAnswer)
 	
 }
 
+
+//empty string print, Patient,Doctor and Nurse have overridden methods
 public String print()
 {
 
