@@ -97,15 +97,7 @@ public class guiFrame {
 		mnNewMenu.add(menuSave);
 		menuSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Globals.userDatabase.saveDatabase();
-				} catch (IOException e1) {
-					Object[] options = {"OK"};
-					JOptionPane.showOptionDialog(null, "There was a problem with saving to the file", "Error",
-					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-					null, options, options[0]);
-					e1.printStackTrace();
-				}
+			
 			}
 		});
 
