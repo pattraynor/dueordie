@@ -14,6 +14,7 @@ import java.awt.SystemColor;
 import javax.swing.UIManager;
 import javax.swing.JPasswordField;
 import javax.swing.border.BevelBorder;
+import java.awt.Toolkit;
 
 //GUI for logging in
 //displays login screen and then redirects 
@@ -47,6 +48,7 @@ public class LoginGUI {
 		
 
 		frame = new JFrame();
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(LoginGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		frame.setResizable(false);
 		frame.setBounds(700, 350, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,7 +62,7 @@ public class LoginGUI {
 		
 		userID = new JTextField();
 		userID.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, null, null, null));
-		userID.setBounds(148, 69, 130, 20);
+		userID.setBounds(162, 69, 130, 20);
 		login.add(userID);
 		userID.setColumns(10);
 		
@@ -68,8 +70,8 @@ public class LoginGUI {
 		
 		JButton btnLogin = new JButton("LOGIN");
 		btnLogin.setBackground(new Color(0, 153, 204));
-		btnLogin.setForeground(SystemColor.desktop);
-		btnLogin.setFont(new Font("Monospaced", Font.BOLD, 15));
+		btnLogin.setForeground(Color.WHITE);
+		btnLogin.setFont(new Font("Monospaced", Font.PLAIN, 17));
 		
 		//-------------------------------------------------
 		//Action listener for login button
@@ -106,10 +108,12 @@ public class LoginGUI {
 						}
 						else if(tempUser instanceof Doctor)
 						{
-							
+								frame.dispose();
+								DoctorGUI window = new DoctorGUI();
+								window.frame.setVisible(true);
 								
 						}
-						Globals.userDatabase.setCurrentUser(tempUser);
+						
 					}
 					else
 					{
@@ -120,13 +124,13 @@ public class LoginGUI {
 		
 			}
 		});
-		btnLogin.setBounds(148, 140, 130, 23);
+		btnLogin.setBounds(162, 139, 130, 23);
 		login.add(btnLogin);
 		
 		JButton btnForgotPassword = new JButton("Forgot Password");
-		btnForgotPassword.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, null, null, null));
+		btnForgotPassword.setBorder(null);
 		btnForgotPassword.setFont(new Font("Consolas", Font.PLAIN, 11));
-		btnForgotPassword.setForeground(SystemColor.textInactiveText);
+		btnForgotPassword.setForeground(SystemColor.textHighlight);
 		btnForgotPassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -136,37 +140,37 @@ public class LoginGUI {
 				
 			}
 		});
-		btnForgotPassword.setBackground(SystemColor.text);
-		btnForgotPassword.setBounds(148, 227, 130, 23);
+		btnForgotPassword.setBackground(Color.WHITE);
+		btnForgotPassword.setBounds(162, 226, 130, 23);
 		login.add(btnForgotPassword);
 		
 		JLabel lblUserName = new JLabel("User ID");
 		lblUserName.setFont(new Font("Consolas", Font.PLAIN, 13));
-		lblUserName.setBounds(74, 73, 64, 14);
+		lblUserName.setBounds(88, 73, 64, 14);
 		login.add(lblUserName);
 		
 		JLabel lblPassword = new JLabel("Password");
 		lblPassword.setFont(new Font("Consolas", Font.PLAIN, 13));
-		lblPassword.setBounds(74, 113, 64, 14);
+		lblPassword.setBounds(88, 112, 64, 14);
 		login.add(lblPassword);
 		
 		JLabel lblMedrecSoftware = new JLabel("MedRec Software");
 		lblMedrecSoftware.setFont(new Font("Consolas", Font.BOLD, 15));
 		lblMedrecSoftware.setForeground(SystemColor.textHighlight);
 		lblMedrecSoftware.setBackground(Color.WHITE);
-		lblMedrecSoftware.setBounds(148, 11, 130, 48);
+		lblMedrecSoftware.setBounds(162, 10, 130, 48);
 		login.add(lblMedrecSoftware);
 		
 		password = new JPasswordField();
 		password.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, null, null, null));
-		password.setBounds(148, 109, 130, 20);
+		password.setBounds(162, 108, 130, 20);
 		login.add(password);
 		
 		
 		lblWrongPasswordUser = new JLabel("Wrong UserID/Password");
 		lblWrongPasswordUser.setForeground(Color.RED);
 		lblWrongPasswordUser.setFont(new Font("Consolas", Font.PLAIN, 13));
-		lblWrongPasswordUser.setBounds(136, 185, 183, 14);
+		lblWrongPasswordUser.setBounds(152, 188, 183, 14);
 		login.add(lblWrongPasswordUser);
 		lblWrongPasswordUser.setVisible(false);
 	}

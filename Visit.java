@@ -199,7 +199,7 @@ public class Visit
 		weight = newWeight;
 	}
 	
-	public void setTemperature(int newTemp)
+	public void setTemperature(double newTemp)
 	{
 		temperature = newTemp;
 	}
@@ -227,7 +227,7 @@ public class Visit
 	//Goes through the recorded values and makes them 
 	//suitable for printing to GUI. Turns null Strings to empty
 	//Strings and turns doubles that are 0 to empty Strings.
-	private String[] visitToArray()
+	public String[] visitToArray()
 	{
 		int index = 0, index2 = 0;
 		Double[] doubleArray = {temperature, weight, height, bloodPressureTop, bloodPressureBot, sugar};

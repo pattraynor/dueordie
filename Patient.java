@@ -106,7 +106,7 @@ public class Patient extends User{
     	
     	String doctorName = doctor.getUserName();
     	
-    	return "\nName: \t\t\t" + userName + "\n\nInsurance: \t\t" + insurance + "\n\nAddress: \t\t" + address +
+    	return "\n\nInsurance: \t\t" + insurance + "\n\nAddress: \t\t" + address +
                 "\n\nPhone Number: \t\t" + phoneNumber + "\n\nDoctor: \t\t" + doctorName;
 
     }

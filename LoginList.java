@@ -223,6 +223,7 @@ public class LoginList {
 
 		String pin = tempUser.getPin();
 		if (loginPin.equals(pin)) {
+			Globals.userDatabase.setCurrentUser(tempUser);
 			return tempUser;
 		} else
 			return null;
@@ -238,7 +239,6 @@ public class LoginList {
 
 			if (userDatabase.get(index).getUserType().equals(Globals.DOCTOR)) {
 				doctorCount++;
-				System.out.println(userDatabase.get(index).getUserName());
 			}
 			index++;
 

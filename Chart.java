@@ -174,18 +174,18 @@ public class Chart extends JFrame{
 		}
 
 		String[] dates = currentPatient.getMedicalRecord().getDates();
-		int datesCount = dates.length;
+		int datesCount = dates.length -1;
 		if (datesCount > 15) {
 			datesCount = 15;
 		}
 		int index = 0;
-		while (index < datesCount) {
+		while (datesCount > index) {
 			if (data1[index] > 0 && data2[index] > 0) 
 			{
-				chartData.addValue(data1[index], series1, dates[index]);
-				chartData.addValue(data2[index], series2, dates[index]);
+				chartData.addValue(data1[datesCount], series1, dates[datesCount]);
+				chartData.addValue(data2[datesCount], series2, dates[datesCount]);
 			}
-			index++;
+			datesCount--;
 		}
 
 		return chartData;
@@ -209,7 +209,6 @@ public class Chart extends JFrame{
 		if (type.equals(Globals.BLOODSUGAR)) {
 			data = currentPatient.getMedicalRecord().getSugarChart();
 			series = "Blood Sugar";
-			System.out.println("!");
 		}
 		if (type.equals(Globals.BLOODPRESSURE)) {
 			data = currentPatient.getMedicalRecord()
@@ -227,35 +226,36 @@ public class Chart extends JFrame{
 		}
 
 		String[] dates = currentPatient.getMedicalRecord().getDates();
-		int datesCount = dates.length;
+		int datesCount = dates.length -1;
 		if (datesCount > 15) {
 			datesCount = 15;
 		}
 		int index = 0;
-		while (index < datesCount) {
+		while (datesCount > index) {
 			
 			if(type.equals(Globals.HEIGHTWEIGHT) || type.equals(Globals.BLOODPRESSURE))
 			{
-				if (data2[index] > 0) 
+				if (data2[datesCount] > 0) 
 				{
 					
-					chartData.addValue(data2[index], series2, dates[index]);
+					chartData.addValue(data2[datesCount], series2, dates[datesCount]);
 
 				}
 			}
 			
-			if (data[index] > 0) 
+			if (data[datesCount] > 0) 
 			{
 				
-				chartData.addValue(data[index], series, dates[index]);
+				chartData.addValue(data[datesCount], series, dates[datesCount]);
 
 			}
 			
-			index++;
+			datesCount--;
 		}
 
 		return chartData;
 
 	}
+	
 
 }

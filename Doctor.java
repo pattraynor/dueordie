@@ -24,10 +24,6 @@ public class Doctor extends User
        
     }
 
-	public void addPatient(Patient newPatient){
-		patients.add(newPatient);
-		
-	}
 	public int patientCheck(Patient _patient){
 
 		return patients.indexOf(_patient);
@@ -82,6 +78,27 @@ public class Doctor extends User
 	{
 		Patient patientSelected = patients.get(patientIndex);
 		return patientSelected;
+	}
+	
+	public void addPatient(Patient newPatient) {
+
+		int insertLocation = findInsertionPoint(newPatient.getUserName());
+		patients.add(insertLocation, newPatient);
+
+	}
+	private int findInsertionPoint(String userName) {
+		if (patients.size() == 0) {
+			return 0;
+		}
+		int searchIndex = 0;
+		while (searchIndex < patients.size()) {
+
+			if (userName.compareTo(patients.get(searchIndex).getUserName()) < 0)
+				return searchIndex;
+			searchIndex++;
+
+		}
+		return searchIndex;
 	}
 //	public void displayMedicalInformation(LoginList userDatabase, int userID){
 //		User tempUser = userDatabase.searchUserID(userID);

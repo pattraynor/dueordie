@@ -74,12 +74,12 @@ public class RecoverAccountGUI {
 		recoverAccount.setLayout(null);
 
 		answerField = new JTextField();
-		answerField.setBounds(157, 138, 189, 20);
+		answerField.setBounds(140, 169, 189, 20);
 		recoverAccount.add(answerField);
 		answerField.setColumns(10);
 
 		userIDField = new JTextField();
-		userIDField.setBounds(157, 58, 189, 20);
+		userIDField.setBounds(140, 79, 189, 20);
 		recoverAccount.add(userIDField);
 		userIDField.setColumns(10);
 
@@ -90,12 +90,12 @@ public class RecoverAccountGUI {
 				new String[] { "Where did you attend HighSchool?",
 						"What is your favorite animal?",
 						"What is your mother's maiden name?" }));
-		securityQuestionBox.setBounds(157, 103, 189, 20);
+		securityQuestionBox.setBounds(140, 126, 189, 20);
 		recoverAccount.add(securityQuestionBox);
 
-		JButton submitButton = new JButton("Submit");
+		JButton submitButton = new JButton("SUBMIT");
 		submitButton.setFont(new Font("Monospaced", Font.BOLD, 13));
-		submitButton.setForeground(Color.BLACK);
+		submitButton.setForeground(Color.WHITE);
 		submitButton.setBackground(SystemColor.textHighlight);
 		submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -146,23 +146,29 @@ public class RecoverAccountGUI {
 
 			}
 		});
-		submitButton.setBounds(157, 190, 189, 42);
+		submitButton.setBounds(164, 218, 137, 27);
 		recoverAccount.add(submitButton);
 
 		JLabel answerLabel = new JLabel("Answer");
 		answerLabel.setFont(new Font("Consolas", Font.PLAIN, 13));
-		answerLabel.setBounds(10, 140, 83, 14);
+		answerLabel.setBounds(10, 173, 83, 14);
 		recoverAccount.add(answerLabel);
 
-		JLabel userIDlabel = new JLabel("User ID or Name");
+		JLabel userIDlabel = new JLabel("User ID ");
 		userIDlabel.setFont(new Font("Consolas", Font.PLAIN, 13));
-		userIDlabel.setBounds(10, 60, 151, 14);
+		userIDlabel.setBounds(8, 83, 151, 14);
 		recoverAccount.add(userIDlabel);
 
 		JLabel lblSelectSecuritQuestion = new JLabel("Security Question");
 		lblSelectSecuritQuestion.setFont(new Font("Consolas", Font.PLAIN, 13));
-		lblSelectSecuritQuestion.setBounds(10, 105, 153, 14);
+		lblSelectSecuritQuestion.setBounds(8, 130, 153, 14);
 		recoverAccount.add(lblSelectSecuritQuestion);
+
+		JLabel lblEnterUserId = new JLabel(
+				"Enter User ID and Answer Security Question");
+		lblEnterUserId.setFont(new Font("Consolas", Font.PLAIN, 14));
+		lblEnterUserId.setBounds(62, 11, 347, 36);
+		recoverAccount.add(lblEnterUserId);
 
 		changePassword = new JPanel();
 		changePassword.setBackground(Color.WHITE);
@@ -188,7 +194,7 @@ public class RecoverAccountGUI {
 		changePassword.add(lblConfirmPassword);
 
 		JButton btnChangePassword = new JButton("Change Password");
-		btnChangePassword.setForeground(Color.BLACK);
+		btnChangePassword.setForeground(Color.WHITE);
 		btnChangePassword.setBackground(SystemColor.textHighlight);
 		btnChangePassword.setFont(new Font("Monospaced", Font.BOLD, 12));
 		btnChangePassword.addActionListener(new ActionListener() {
@@ -199,21 +205,21 @@ public class RecoverAccountGUI {
 				char[] passwordInput2 = passwordField_1.getPassword();
 				confirmPassword = new String(passwordInput2);
 
-				if (newPassword.length() < 4) {
+				if ((newPassword.length() < 4) || (newPassword.length() > 11)) {
 					Object[] options = { "OK" };
 					JOptionPane
 							.showOptionDialog(
 									null,
-									"Password is not long Enough. \nPassword must be 4 charcters long.",
-									"Password too Short",
+									"Password must be between 4 and 10 characters",
+									"Could not change Password",
 									JOptionPane.DEFAULT_OPTION,
 									JOptionPane.WARNING_MESSAGE, null, options,
 									options[0]);
+					passwordField2.setText("");
+					passwordField3.setText("");
 
-					passwordField.setText("");
-					passwordField_1.setText("");
-
-				} else {
+				}  
+				else {
 					if (confirmPassword.equals(newPassword)) {
 
 						Object[] options = { "OK" };
@@ -223,17 +229,17 @@ public class RecoverAccountGUI {
 								options[0]);
 						Globals.userDatabase.getCurrentUser().setPin(
 								newPassword);
-//						try {
-//							Globals.fileHandler.saveDatabase();
-//						} catch (IOException e1) {
-//							JOptionPane.showOptionDialog(null,
-//									"There was a problem saving changes",
-//									"Error during Save",
-//									JOptionPane.DEFAULT_OPTION,
-//									JOptionPane.WARNING_MESSAGE, null, options,
-//									options[0]);
-//							e1.printStackTrace();
-//						}
+						try {
+							Globals.fileHandler.saveDatabase();
+						} catch (IOException e1) {
+							JOptionPane.showOptionDialog(null,
+									"There was a problem saving changes",
+									"Error during Save",
+									JOptionPane.DEFAULT_OPTION,
+									JOptionPane.WARNING_MESSAGE, null, options,
+									options[0]);
+							e1.printStackTrace();
+						}
 						Globals.userDatabase.setCurrentUser(null);
 						frame.dispose();
 
@@ -250,7 +256,7 @@ public class RecoverAccountGUI {
 				}
 			}
 		});
-		btnChangePassword.setBounds(163, 190, 150, 42);
+		btnChangePassword.setBounds(163, 189, 150, 28);
 		changePassword.add(btnChangePassword);
 
 		changePasswordLoggedIn = new JPanel();
@@ -281,7 +287,7 @@ public class RecoverAccountGUI {
 		changePasswordLoggedIn.add(lblConfirmPassword2);
 
 		JButton btnChangePassword2 = new JButton("Change Password");
-		btnChangePassword2.setForeground(Color.BLACK);
+		btnChangePassword2.setForeground(Color.WHITE);
 		btnChangePassword2.setBackground(SystemColor.textHighlight);
 		btnChangePassword2.setFont(new Font("Monospaced", Font.BOLD, 12));
 		btnChangePassword2.addActionListener(new ActionListener() {
@@ -292,18 +298,21 @@ public class RecoverAccountGUI {
 				char[] passwordInput2 = passwordField3.getPassword();
 				confirmPassword = new String(passwordInput2);
 
-				if (newPassword.length() < 4) {
+				if (newPassword.length() < 4 || newPassword.length() > 11) {
 					Object[] options = { "OK" };
 					JOptionPane
 							.showOptionDialog(
 									null,
-									"Password is not long Enough. \nPassword must be 4 characters long",
-									"Password too Short",
+									"Password must be between 4 and 10 characters",
+									"Could not change Password",
 									JOptionPane.DEFAULT_OPTION,
 									JOptionPane.WARNING_MESSAGE, null, options,
 									options[0]);
 					passwordField2.setText("");
 					passwordField3.setText("");
+
+				
+				
 
 				} else {
 					if (confirmPassword.equals(newPassword)) {
@@ -315,17 +324,17 @@ public class RecoverAccountGUI {
 						Globals.userDatabase.getCurrentUser().setPin(
 								newPassword);
 
-//						try {
-//							Globals.fileHandler.saveDatabase();
-//						} catch (IOException e1) {
-//							JOptionPane.showOptionDialog(null,
-//									"There was a problem saving",
-//									"Error during Save",
-//									JOptionPane.DEFAULT_OPTION,
-//									JOptionPane.WARNING_MESSAGE, null, options,
-//									options[0]);
-//							e1.printStackTrace();
-//						}
+						try {
+							Globals.fileHandler.saveDatabase();
+						} catch (IOException e1) {
+							JOptionPane.showOptionDialog(null,
+									"There was a problem saving",
+									"Error during Save",
+									JOptionPane.DEFAULT_OPTION,
+									JOptionPane.WARNING_MESSAGE, null, options,
+									options[0]);
+							e1.printStackTrace();
+						}
 						frame.dispose();
 					} else {
 						Object[] options = { "OK" };
@@ -340,7 +349,7 @@ public class RecoverAccountGUI {
 				}
 			}
 		});
-		btnChangePassword2.setBounds(163, 190, 150, 42);
+		btnChangePassword2.setBounds(163, 192, 150, 28);
 		changePasswordLoggedIn.add(btnChangePassword2);
 
 		JLabel label = new JLabel("Confirm Password");
@@ -371,7 +380,7 @@ public class RecoverAccountGUI {
 		answer3Field.setBounds(100, 190, 238, 20);
 		answerQuestions.add(answer3Field);
 
-		JButton btnSubmit = new JButton("Submit");
+		JButton btnSubmit = new JButton("SUBMIT");
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -395,8 +404,8 @@ public class RecoverAccountGUI {
 			}
 		});
 		btnSubmit.setFont(new Font("Monospaced", Font.BOLD, 13));
-		btnSubmit.setForeground(Color.BLACK);
-		btnSubmit.setBackground(Color.LIGHT_GRAY);
+		btnSubmit.setForeground(Color.WHITE);
+		btnSubmit.setBackground(SystemColor.textHighlight);
 		btnSubmit.setBounds(161, 227, 111, 23);
 		answerQuestions.add(btnSubmit);
 
