@@ -2,27 +2,33 @@
 import java.io.FileOutputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-public class SaveLoad 
+import java.io.*;
+public class SaveLoad
 {
 	public SaveLoad()
 	{
-		
-		
-		
-		
+
+
+
 	}
-	
-	 public int save()
+
+	 public void save() throws IOException
 	 {
-	         return 0;
+		 try
+			{
+				File userDB = new File( "C:\\userDatabase.dat" );
+				FileOutputStream out = new FileOutputStream(userDB);
+			}
+			catch (Exception IOException)
+			{System.out.println("Error, problem saving file");}
      }
 
 	    //-------------------------------------------------
 	    // loads LoginList and all user information from file
 	    // -------------------------------------------------
-	    public int load()
+	    public void load() throws IOException
 	    {
-	         return 0;
+
 	    }
 
 }
